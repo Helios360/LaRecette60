@@ -4,7 +4,7 @@
     cursor: pointer;
 }
 textarea,
-select,button {
+select,button,input {
     background: transparent;
     border: 2px solid var(--secondary);
     border-radius: 8px;

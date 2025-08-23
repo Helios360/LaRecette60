@@ -1,12 +1,7 @@
 <?php
-// send_cart.php
-// -----------------------
-// CONFIG
-$to = 'commande@ton-domaine.fr'; // <-- Mets ici l'adresse de réception
-$from = 'no-reply@ton-domaine.fr'; // Un expéditeur du même domaine (SPF/DMARC)
+$to = 'commande@ton-domaine.fr';
+$from = 'no-reply@ton-domaine.fr';
 
-// Sécurité basique CORS (même origine par défaut). Si tu appelles depuis un sous-domaine, adapte.
-// header('Access-Control-Allow-Origin: https://www.larecette60.com');
 header('Content-Type: application/json; charset=utf-8');
 
 // N'autoriser que POST + JSON

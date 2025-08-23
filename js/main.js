@@ -130,7 +130,6 @@ async function sendCartByEmail() {
     return;
   }
 
-  // Optionnel: désactiver le bouton pendant l’envoi
   sendBtn.disabled = true;
   setStatus("Envoi en cours…");
 
@@ -140,7 +139,6 @@ async function sendCartByEmail() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         items: cakes,
-        // Tu peux envoyer des méta-infos utiles :
         webpage: location.href,
         sentAt: new Date().toISOString()
       })
@@ -149,8 +147,8 @@ async function sendCartByEmail() {
     const data = await res.json().catch(() => ({}));
     if (res.ok && data.success) {
       setStatus("✅ Panier envoyé avec succès !");
-      // Optionnel: vider le panier une fois envoyé
-      // localStorage.removeItem('cakes'); renderCart();
+      localStorage.removeItem('cakes'); 
+      renderCart();
     } else {
       setStatus(data.error || "Échec de l’envoi. Réessayez plus tard.", false);
     }
