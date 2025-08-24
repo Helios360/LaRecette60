@@ -123,6 +123,32 @@ function setStatus(msg, ok = true) {
   sendStatus.style.color = ok ? 'var(--secondary)' : 'crimson';
 }
 
+function getUserInfo() {
+  return {
+    email: (document.getElementById('user-email')?.value || '').trim(),
+    name: (document.getElementById('user-name-fname')?.value || '').trim(),
+    address: (document.getElementById('user-adresse')?.value || '').trim(),
+  };
+}
+function saveUserInfoToLS(info) {
+  try { localStorage.setItem('lr_user_info', JSON.stringify(info)); } catch {}
+}
+function loadUserInfoFromLS() {
+  try {
+    const raw = localStorage.getItem('lr_user_info');
+    if (!raw) return;
+    const { email, name, address } = JSON.parse(raw);
+    if (email) document.getElementById('user-email').value = email;
+    if (name) document.getElementById('user-name-fname').value = name;
+    if (address) document.getElementById('user-adresse').value = address;
+  } catch {}
+}
+
+function isValidEmail(email) {
+  // simple sanity check
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 async function sendCartByEmail() {
   const cakes = getCakes();
   if (!cakes.length) {
@@ -130,15 +156,33 @@ async function sendCartByEmail() {
     return;
   }
 
+  const user = getUserInfo();
+  if (!user.name || !user.address || !user.email) {
+    setStatus("Veuillez renseigner votre nom, votre adresse et votre email.", false);
+    return;
+  }
+  if (!isValidEmail(user.email)) {
+    setStatus("Adresse e-mail invalide.", false);
+    return;
+  }
+
   sendBtn.disabled = true;
   setStatus("Envoi en cours…");
 
   try {
+    // persist the user info for next time
+    saveUserInfoToLS(user);
+
     const res = await fetch('send_cart.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         items: cakes,
+        customer: {
+          email: user.email,
+          name: user.name,
+          address: user.address
+        },
         webpage: location.href,
         sentAt: new Date().toISOString()
       })
@@ -147,7 +191,7 @@ async function sendCartByEmail() {
     const data = await res.json().catch(() => ({}));
     if (res.ok && data.success) {
       setStatus("✅ Panier envoyé avec succès !");
-      localStorage.removeItem('cakes'); 
+      localStorage.removeItem('cakes');
       renderCart();
     } else {
       setStatus(data.error || "Échec de l’envoi. Réessayez plus tard.", false);
@@ -158,6 +202,7 @@ async function sendCartByEmail() {
     sendBtn.disabled = false;
   }
 }
+loadUserInfoFromLS();
 
 if (sendBtn) {
   sendBtn.addEventListener('click', sendCartByEmail);
