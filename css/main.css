@@ -112,11 +112,11 @@ p{
 }
 h1{
     font-family: "Artistic", serif;
-    font-size: 90px;
+    font-size: 4rem;
 }
 h2{
     font-family: "Artistic", serif;
-    font-size: 40px;
+    font-size: 2rem;
 	font-weight: bold;
 }
 h3{
@@ -209,21 +209,48 @@ li{
 .hero{
 	background-image: 
 	linear-gradient(
-		rgba(195, 106, 62, 0.5),
-		rgba(255, 194, 194, 0.5)), 
+		rgba(97, 44, 18, 0.5),
+		rgba(102, 60, 60, 0.5)), 
 	url("../images/boutique.webp");
 	background-size: cover;
 	background-position: 50% 30%;
 	background-repeat: no-repeat;
 	height: 90vh;
+	padding: 0 20px;
+	gap:2rem;
 	width: 100%;
 	color: var(--primary);
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
-	text-align: center;
 	background-attachment: fixed;
+}
+.hero > div {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 55%;
+}
+.hero > img{
+	width: 40%;
+	height: 50%;
+	border-radius: 12px;
+	object-fit: cover;
+}
+.cta{
+	font-family: "Visibility", serif;
+	font-size: 1.5rem;
+	border: 2px var(--primary) solid;
+	padding:20px;
+	margin:20px 0;
+	border-radius: 12px;
+	width: 50%;
+	text-align: center;
+	transition: all 0.5s ease-in-out;
+}
+.cta:hover{
+	background-color: var(--primary);
+	color: var(--secondary);
 }
 .page-content{
 	width: 100%;
@@ -390,6 +417,15 @@ li{
 	.feuilletes div{
 		flex-direction: column;
 		align-items: center;
+	}
+	.hero > img{
+		display: none;
+	}
+	.hero{
+		text-align: center;
+	}
+	.cta{
+		width: 100%;
 	}
 }
 @media (max-width:1400px){

@@ -99,3 +99,16 @@ td {
         grid-template-columns: 1fr;
     }
 }
+@media (hover: none), (pointer: coarse) {
+  .menu-gallery > a::after {
+    opacity: 1;
+  }
+  .gallery img {
+    height: 500px;
+  }
+  .menu-gallery > a,
+  .menu-gallery > a::after,
+  .gallery img {
+    transition: none;
+  }
+}
