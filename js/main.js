@@ -283,6 +283,14 @@
         DATA.traiteur.miniMozza.nom,
         DATA.traiteur.feuilletes.titre
       ];
+
+      const typeSel = el('select', { id: 'traiteur-type' });
+      // Placeholder non-envoyable
+      typeSel.append(
+        el('option', { value: '', disabled: true, selected: true, hidden: true }, '— Sélectionnez —')
+      );
+      types.forEach(t => typeSel.append(opt(t)));
+
       const dyn = el('div', { id: 'traiteur-dynamic' });
 
       const refresh = () => {
@@ -293,25 +301,33 @@
             numberInput('qty', DATA.traiteur.feuilletes.lot, DATA.traiteur.feuilletes.lot),
             note(DATA.traiteur.feuilletes.note)
           );
-        } else {
+        } else if (val) {
           const cfg = [DATA.traiteur.miniHotdog, DATA.traiteur.miniBurger, DATA.traiteur.miniKebab, DATA.traiteur.navetteFraicheur, DATA.traiteur.miniMozza]
             .find(x => x.nom === val);
           replace(dyn,
             note(`${cfg?.description || ''} — Minimum 20 pièces.`),
             numberInput('qty', 20, 1)
           );
+        } else {
+          // état initial (placeholder sélectionné) : rien encore
+          replace(dyn);
         }
       };
 
-      setTimeout(() => qs('#traiteur-type')?.addEventListener('change', refresh));
+      // brancher + forcer un rendu initial
+      setTimeout(() => {
+        qs('#traiteur-type')?.addEventListener('change', refresh);
+        refresh(); // <<< affiche le bon bloc dès l’ouverture du formulaire
+      });
+
       return [
-        select('traiteur-type', 'Sélection', types),
+        field('traiteur-type', 'Sélection', typeSel),
         dyn,
         textarea('custom', 'Vos demandes personnalisées…'),
         addBtn()
       ];
     }
-  };
+  }
 
   function renderForm(kind) {
     if (!formPlace) return;
