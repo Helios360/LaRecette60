@@ -120,6 +120,8 @@ h2{
     font-size: 2rem;
 	font-weight: bold;
 }
+.lisible{color: var(--primary);}
+.lisible2{color: var(--secondary);}
 h3{
     font-family: "Artistic", serif;
     font-size: 30px;
@@ -380,6 +382,17 @@ li{
 	flex-direction: column;
 	justify-content: center;
 	gap:2rem;
+}
+.form-account{
+	padding: 2rem;
+	background-color: var(--primary);
+	border-radius: 8px;
+	width:500px;
+}
+.form-account > form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 }
 @media (max-width:640px) {
     .hero{

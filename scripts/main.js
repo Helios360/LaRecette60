@@ -476,7 +476,7 @@
     saveUser(user);
 
     try {
-      const { ok, data } = await fetchJSON('send_cart.php', {
+      const { ok, data } = await fetchJSON('send_cart', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items: cakes, customer: user, webpage: location.href, sentAt: new Date().toISOString() })
