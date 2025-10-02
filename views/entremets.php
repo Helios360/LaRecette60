@@ -71,10 +71,10 @@
                     <h3>La charlotte poire chocolat</h3>
                     <p>Biscuit cacao, mousse légère au chocolat, poires caramélisées. </p>
                 </span>
-                <img src="../styles/images/charlotte-poire-chocolat.jpg" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../styles/images/charlotte-poire-chocolat.webp" alr="Le Fraisier" width="200px" height="200px">
             </div>
             <div class="container">
-                <img src="../styles/images/biscoff.jpg" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../styles/images/biscoff.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>Le Biscoff</h3>
                     <p>Biscuit madeleine, crémeux caramel, craquant speculoos mousse vanille</p>
@@ -85,10 +85,10 @@
                     <h3>Le Royal</h3>
                     <p>Dacquoise aux amandes, praliné feuilletine, mousse au chocolat.</p>
                 </span>
-                <img src="../styles/images/le-royal.jpg" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../styles/images/le-royal.webp" alr="Le Fraisier" width="200px" height="200px">
             </div>
             <div class="container">
-                <img src="../styles/images/trois-choco.jpg" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../styles/images/trois-choco.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>Le Trois Chocolat</h3>
                     <p>Mousses bavaroises aux trois chocolats, biscuit moelleux au chocolat.</p>

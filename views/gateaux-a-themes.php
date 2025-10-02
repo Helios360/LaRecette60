@@ -68,14 +68,14 @@
             </div>
             <div class="gallery">
                     <img src="../styles/images/cake.webp" alt="cake">
-                    <img src="../styles/images/athxs60q-scaled.bmp" alt="cake">
-                    <img src="../styles/images/5sb5930g-scaled.bmp" alt="cake">
-                    <img src="../styles/images/98bzwja5-scaled.bmp" alr="cake">
-                    <img src="../styles/images/c9r9tjc6-scaled.bmp" alr="cake">
-                    <img src="../styles/images/dkhlncat-scaled.bmp" alr="cake">
-                    <img src="../styles/images/tnmwbhm5-scaled.bmp" alr="cake">
-                    <img src="../styles/images/onc2a19z-scaled.bmp" alr="cake">
-                    <img src="../styles/images/tb0ep2cl-scaled.bmp" alr="cake">
+                    <img src="../styles/images/athxs60q-scaled.webp" alt="cake">
+                    <img src="../styles/images/5sb5930g-scaled.webp" alt="cake">
+                    <img src="../styles/images/98bzwja5-scaled.webp" alr="cake">
+                    <img src="../styles/images/c9r9tjc6-scaled.webp" alr="cake">
+                    <img src="../styles/images/dkhlncat-scaled.webp" alr="cake">
+                    <img src="../styles/images/tnmwbhm5-scaled.webp" alr="cake">
+                    <img src="../styles/images/onc2a19z-scaled.webp" alr="cake">
+                    <img src="../styles/images/tb0ep2cl-scaled.webp" alr="cake">
             </div>
         </div>
     </main>

@@ -31,7 +31,7 @@
         <div class="page-content">
             <div class="details">
                 <div class="div1">
-                    <img src="../styles/images/macaron-tower.bmp" width="400px" height="auto" alr="Macaron tower">
+                    <img src="../styles/images/macaron-tower.webp" width="400px" height="auto" alr="Macaron tower">
                     <span>
                         <h3>Les Macarons:</h3>
                         <p>

@@ -1,3 +1,17 @@
+<?php
+declare(strict_types=1);
+session_start();
+
+if (empty($_SESSION['csrf'])) {
+    $_SESSION['csrf'] = bin2hex(random_bytes(32));
+}
+$csrf = $_SESSION['csrf'];
+$isAuth = isset($_SESSION['user']);
+$user = $_SESSION['user'] ?? null;
+
+$err = $_GET['err'] ?? '';
+$ok = $_GET['ok'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -26,35 +40,59 @@
     <?php include_once "components/header.php"?>
     <main>
         <div class="hero">
-            <h2>📌 Espace compte</h2>
+            <h1>📌 Espace compte</h1>
         </div>
         <div class="page-content">
+            <?php if ($err): ?>
+                <div class="alert error">Erreur : <?= htmlspecialchars($err, ENT_QUOTES) ?></div>
+            <?php endif; ?>
+            <?php if ($ok): ?>
+                <div class="alert success">OK : <?= htmlspecialchars($ok, ENT_QUOTES) ?></div>
+            <?php endif; ?>
+            <?php if ($isAuth):?>
+                <!-- ==== CRUD ==== -->
+                <section class="dashboard">
+                <p>Bonjour <strong><?= htmlspecialchars($user['email'] ?? '', ENT_QUOTES) ?></strong></p>
+
+                <!-- Bouton logout : visible uniquement si connecté -->
+                <form action="../middleware/auth.php" method="post" style="margin:1rem 0;">
+                    <input type="hidden" name="action" value="logout" />
+                    <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES) ?>" />
+                    <button type="submit">Se déconnecter</button>
+                </form>
+
+                <!-- Ta page CRUD remplace les formulaires -->
+                <?php include __DIR__ . "/components/crud.php"; ?>
+            </section>
+            <?php else :?>
             <div class="form-account">
-                <form action="../scripts/login.php" method="get" id="connexion-form">
-                    <input type="hidden" name="action" value="connexion">
+                <form action="../middleware/auth.php" method="post" id="connexion-form" autocomplete="on">
+                    <input type="hidden" name="action" value="login" />
+                    <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES) ?>" />
                     <h2 class="lisible2">Connexion</h2>
-                    <input type="email" name="email" placeholder="Adresse e-mail" required>
-                    <input type="password" name="password" placeholder="Mot de passe" required>
+                    <input type="email" name="email" placeholder="Adresse e-mail" required />
+                    <input type="password" name="password" placeholder="Mot de passe" required />
                     <button type="submit">Se connecter</button>
-                    <span style="display:flex;justify-content:space-between; color:var(--secondary)">
-                        <a id="register"><u>S'enregistrer</u></a>
-                        <a id="forgotten-pwd"><u>Mot de passe oublié ?</u></a>
+                    <span style="display:flex;justify-content:space-between;color:var(--secondary)">
+                    <a id="register"><u>S'enregistrer</u></a>
+                    <a id="forgotten-pwd"><u>Mot de passe oublié ?</u></a>
                     </span>
                 </form>
-                <form action="../scripts/login.php" method="get" id="register-form">
-                    <input type="hidden" name="action" value="register">
+                <form action="../middleware/auth.php" method="post" id="register-form" autocomplete="on">
+                    <input type="hidden" name="action" value="register" />
+                    <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES) ?>" />
                     <h2 class="lisible2">Enregistrement</h2>
-                    <input type="email" name="email" placeholder="Adresse e-mail" required>
-                    <input type="password" name="password" placeholder="Mot de passe" required>
-                    <input type="text" name="adress" placeholder="Adresse" required>
+                    <input type="email" name="email" placeholder="Adresse e-mail" required />
+                    <input type="password" name="password" placeholder="Mot de passe (min. 8)" required />
+                    <input type="text" name="address" placeholder="Adresse" required />
                     <button type="submit">S'enregistrer</button>
-                    <span style="display:flex; justify-content:space-between; color:var(--secondary)">
-                        <a id="connexion"><u>Se connecter</u></a>
-                        <a id="forgotten-pwd"><u>Mot de passe oublié ?</u></a>
+                    <span style="display:flex;justify-content:space-between;color:var(--secondary)">
+                    <a id="connexion"><u>Se connecter</u></a>
+                    <a id="forgotten-pwd"><u>Mot de passe oublié ?</u></a>
                     </span>
                 </form>
-                <a href="../scripts/logout.php">Logout</a>
             <div>
+            <?php endif; ?>
         </div>
     </main>
     <?php include_once "components/footer.php"?>
