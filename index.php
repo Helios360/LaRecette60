@@ -1,8 +1,9 @@
 <?php
-$request = $_SERVER['REQUEST_URI'];
+$request = $_SERVER['REQUEST_URI'] ?? '/';
+$path = parse_url($request, PHP_URL_PATH) ?: '/';
 $viewDir = '/views/';
 
-switch ($request) {
+switch ($path) {
     case '':
     case '/':
         require __DIR__ . $viewDir . 'home.php';

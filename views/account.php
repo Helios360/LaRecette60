@@ -47,7 +47,7 @@ $ok = $_GET['ok'] ?? '';
                 <div class="alert error">Erreur : <?= htmlspecialchars($err, ENT_QUOTES) ?></div>
             <?php endif; ?>
             <?php if ($ok): ?>
-                <div class="alert success">OK : <?= htmlspecialchars($ok, ENT_QUOTES) ?></div>
+                <div class="alert success">Ok : <?= htmlspecialchars($ok, ENT_QUOTES) ?></div>
             <?php endif; ?>
             <?php if ($isAuth):?>
                 <!-- ==== CRUD ==== -->
@@ -62,7 +62,7 @@ $ok = $_GET['ok'] ?? '';
                 </form>
 
                 <!-- Ta page CRUD remplace les formulaires -->
-                <?php include __DIR__ . "/components/crud.php"; ?>
+                <?php include_once __DIR__ . "/components/crud.php"; ?>
             </section>
             <?php else :?>
             <div class="form-account">

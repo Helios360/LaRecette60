@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 session_set_cookie_params([
-    'lifetime' => 0,
+    'lifetime' => 60*60*2, // 2h
     'path' => '/',
     'domain' => '',
     'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
@@ -45,13 +45,13 @@ if ($action === 'login') {
     $email = trim((string)($_POST['email'] ?? ''));
     $password = (string)($_POST['password'] ?? '');
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $password === '') redirect('/views/account.php?err=bad_credentials');
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $password === '') redirect('/account?err=bad_credentials');
 
-    $stmt = $pdo->prepare("SELECT id, email, password_hash FROM  users WHERE email = ? LIMIT 1");
+    $stmt = $pdo->prepare("SELECT id, email, password_hash, role FROM  users WHERE email = ? LIMIT 1");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if(!$user || !password_verify($password, $user['password_hash'])) redirect('/views/account.php?err=bad_credentials');
+    if(!$user || !password_verify($password, $user['password_hash'])) redirect('/account?err=bad_credentials');
 
     session_regenerate_id(true);
 
@@ -61,7 +61,7 @@ if ($action === 'login') {
         'role' => $user['role'] ?: 'client',
     ];
     
-    redirect('/views/account.php?ok=login');
+    redirect('/account?ok=login');
 
 } elseif ($action === 'register') {
     require_post();
@@ -71,13 +71,13 @@ if ($action === 'login') {
     $password = (string)($_POST['password'] ?? '');
     $address  = trim((string)($_POST['address'] ?? ''));
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $password === '' || $address === '') redirect('/views/account.php?err=missing_fields');
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $password === '' || $address === '') redirect('/account?err=missing_fields');
 
-    if (strlen($password) < 8) redirect('/views/account.php?err=weak_password');
+    if (strlen($password) < 8) redirect('/account?err=weak_password');
 
     $stmt = $pdo->prepare('SELECT 1 FROM users WHERE email = ?');
     $stmt->execute([$email]);
-    if ($stmt->fetch()) redirect('/views/account.php?err=email_taken');
+    if ($stmt->fetch()) redirect('/account?err=email_taken');
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -92,13 +92,12 @@ if ($action === 'login') {
         'role'  => 'client',
     ];
 
-    redirect('/views/account.php?ok=registered');
+    redirect('/account?ok=registered');
 
 } elseif ($action === 'logout') {
     session_unset();
     session_destroy();
-    redirect('/?ok=logout');
-
+    redirect('/account?ok=logout');
 } else {
     redirect('/?err=unknown_action');
 }
