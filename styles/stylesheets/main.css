@@ -57,8 +57,8 @@ a:focus {
 /* Reset done */
 @font-face {
     font-family: "Artistic";
-    src: url("../fonts/Nickainley-Normal.otf");
-    font-weight: 800;
+    src: url("../fonts/Arimo/Arimo-VariableFont_wght.ttf");
+    font-weight: 200;
     font-style: normal;
 }
 @font-face {
@@ -152,9 +152,7 @@ li{
 }
 .menu a {
     color: var(--primary);
-	text-shadow: 3px 3px 2px var(--secondary);
     font-size: 40px;
-	text-decoration: underline;
 }
 .burger{
 	border: 2px solid var(--primary);
