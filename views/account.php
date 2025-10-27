@@ -84,7 +84,10 @@ $ok = $_GET['ok'] ?? '';
                     <h2 class="lisible2">Enregistrement</h2>
                     <input type="email" name="email" placeholder="Adresse e-mail" required />
                     <input type="password" name="password" placeholder="Mot de passe (min. 8)" required />
-                    <input type="text" name="address" placeholder="Adresse" required />
+                    <input type="text" name="street" placeholder="Numéro de rue" required />
+                    <input type="text" name="street-number" placeholder="Rue" required />
+                    <input type="text" name="city " placeholder="Ville" required />
+                    <input type="number" name="tel" placeholder="Numéro de téléphone" required /> 
                     <button type="submit">S'enregistrer</button>
                     <span style="display:flex;justify-content:space-between;color:var(--secondary)">
                     <a id="connexion"><u>Se connecter</u></a>
