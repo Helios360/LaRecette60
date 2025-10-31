@@ -32,8 +32,8 @@ $ok = $_GET['ok'] ?? '';
     <meta name="author" content="LaRecette"> 
     <link rel="preload" as="image" href="../styles/images/boutique.webp">
     
-    <link rel="stylesheet" href="../styles/stylesheets/main.css">
-    <link rel="stylesheet" href="../styles/stylesheets/commander.css">
+    <link rel="stylesheet" href="../../styles/stylesheets/main.css">
+    <link rel="stylesheet" href="../../styles/stylesheets/commander.css">
     <script src="../scripts/account.js" defer></script>
 </head>
 <body>
@@ -47,23 +47,12 @@ $ok = $_GET['ok'] ?? '';
                 <div class="alert error">Erreur : <?= htmlspecialchars($err, ENT_QUOTES) ?></div>
             <?php endif; ?>
             <?php if ($ok): ?>
-                <div class="alert success">Ok : <?= htmlspecialchars($ok, ENT_QUOTES) ?></div>
+                <div class="alert success">Succés : <?= htmlspecialchars($ok, ENT_QUOTES) ?></div>
             <?php endif; ?>
             <?php if ($isAuth):?>
-                <!-- ==== CRUD ==== -->
                 <section class="dashboard">
-                <p>Bonjour <strong><?= htmlspecialchars($user['email'] ?? '', ENT_QUOTES) ?></strong></p>
-
-                <!-- Bouton logout : visible uniquement si connecté -->
-                <form action="../middleware/auth.php" method="post" style="margin:1rem 0;">
-                    <input type="hidden" name="action" value="logout" />
-                    <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES) ?>" />
-                    <button type="submit">Se déconnecter</button>
-                </form>
-
-                <!-- Ta page CRUD remplace les formulaires -->
-                <?php include_once __DIR__ . "/components/crud.php"; ?>
-            </section>
+                <?php include_once "components/CRUD.php"?>
+                </section>
             <?php else :?>
             <div class="form-account">
                 <form action="../middleware/auth.php" method="post" id="connexion-form" autocomplete="on">
@@ -84,9 +73,9 @@ $ok = $_GET['ok'] ?? '';
                     <h2 class="lisible2">Enregistrement</h2>
                     <input type="email" name="email" placeholder="Adresse e-mail" required />
                     <input type="password" name="password" placeholder="Mot de passe (min. 8)" required />
-                    <input type="text" name="street" placeholder="Numéro de rue" required />
-                    <input type="text" name="street-number" placeholder="Rue" required />
-                    <input type="text" name="city " placeholder="Ville" required />
+                    <input type="text" name="street-number" placeholder="Numéro de rue" required />
+                    <input type="text" name="street" placeholder="Rue" required />
+                    <input type="text" name="city" placeholder="Ville" required />
                     <input type="number" name="tel" placeholder="Numéro de téléphone" required /> 
                     <button type="submit">S'enregistrer</button>
                     <span style="display:flex;justify-content:space-between;color:var(--secondary)">

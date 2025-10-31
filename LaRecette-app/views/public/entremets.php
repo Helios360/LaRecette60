@@ -6,7 +6,7 @@
     <title>Pâtisseries artisanales dans l'Oise | La Recette</title>
     <meta name="description" content="Pâtisseries artisanales dans l'Oise : number cakes, gâteaux à thèmes, petits fours sucrés/salés. Ingrédients de qualité et décors faits main. Commandez en ligne.">
     <link rel="canonical" href="https://www.larecette60.com/entremets">
-    <link rel="icon" href="../styles/images/larecetteIcon.ico">
+    <link rel="icon" href="../../styles/images/larecetteIcon.ico">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:title" content="Pâtisseries artisanales dans l'Oise | La Recette">
@@ -16,11 +16,11 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="keywords" content="La recette, Larecette, larecette60, patisserie, oise, compiegne, recette, gourmandises, number cake, cake topper, gateaux a themes, petits fours, artisans, artisan, salé, sucré">
     <meta name="author" content="Hellios"> 
-    <link rel="preload" as="image" href="../styles/images/boutique.webp">
+    <link rel="preload" as="image" href="../../styles/images/boutique.webp">
 
-    <link rel="stylesheet" href="../styles/stylesheets/main.css">
-    <link rel="stylesheet" href="../styles/stylesheets/entremets.css">
-    <script src="../scripts/main.js" defer></script>
+    <link rel="stylesheet" href="../../styles/stylesheets/main.css">
+    <link rel="stylesheet" href="../../styles/stylesheets/entremets.css">
+    <script src="../../scripts/main.js" defer></script>
 </head>
 <body>
     <?php include_once "components/header.php"?>
@@ -31,7 +31,7 @@
         <div class="page-content">
             <h2>Les Entremets fruités</h2>
             <div class="container">
-                <img src="../styles/images/fraisier.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/fraisier.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>Le Fraisier</h3>
                     <p>Le Fraisier: Génoise, crème mousseline, fraises.</p>
@@ -42,10 +42,10 @@
                     <h3>Macaron Coeur Framboise</h3>
                     <p>Biscuit macaron, ganache chocolat blanc, framboises</p>
                 </span>
-                <img src="../styles/images/macaron-coeur-framboise.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/macaron-coeur-framboise.webp" alr="Le Fraisier" width="200px" height="200px">
             </div>
             <div class="container">
-                <img src="../styles/images/schuss.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/schuss.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>Schuss aux fruits des bois</h3>
                     <p>Mousse au fromage blanc, biscuit cuillère, insert fruits des bois.</p>
@@ -56,10 +56,10 @@
                     <h3>Framboisier</h3>
                     <p>Génoise, crème mousseline, framboise, chantilly. </p>
                 </span>
-                <img src="../styles/images/framboisier.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/framboisier.webp" alr="Le Fraisier" width="200px" height="200px">
             </div>
             <div class="container">
-                <img src="../styles/images/la-seraphine.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/la-seraphine.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>La Seraphine</h3>
                     <p>Le Séraphine : Mousse passion, mousse vanille, biscuit coco, sirop passoa.</p>
@@ -71,10 +71,10 @@
                     <h3>La charlotte poire chocolat</h3>
                     <p>Biscuit cacao, mousse légère au chocolat, poires caramélisées. </p>
                 </span>
-                <img src="../styles/images/charlotte-poire-chocolat.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/charlotte-poire-chocolat.webp" alr="Le Fraisier" width="200px" height="200px">
             </div>
             <div class="container">
-                <img src="../styles/images/biscoff.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/biscoff.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>Le Biscoff</h3>
                     <p>Biscuit madeleine, crémeux caramel, craquant speculoos mousse vanille</p>
@@ -85,10 +85,10 @@
                     <h3>Le Royal</h3>
                     <p>Dacquoise aux amandes, praliné feuilletine, mousse au chocolat.</p>
                 </span>
-                <img src="../styles/images/le-royal.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/le-royal.webp" alr="Le Fraisier" width="200px" height="200px">
             </div>
             <div class="container">
-                <img src="../styles/images/trois-choco.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/trois-choco.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>Le Trois Chocolat</h3>
                     <p>Mousses bavaroises aux trois chocolats, biscuit moelleux au chocolat.</p>

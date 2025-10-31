@@ -1,8 +1,4 @@
 <?php
-/*******************************
- * La Recette – send_cart.php
- * Remake for the new JS schema
- *******************************/
 $to   = 'commande@email.fr';
 $from = 'no-reply@domainname.com';
 

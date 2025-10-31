@@ -6,7 +6,7 @@
     <title>Pâtisseries artisanales dans l'Oise | La Recette</title>
     <meta name="description" content="Pâtisseries artisanales dans l'Oise : number cakes, gâteaux à thèmes, petits fours sucrés/salés. Ingrédients de qualité et décors faits main. Commandez en ligne.">
     <link rel="canonical" href="https://www.larecette60.com/classiques">
-    <link rel="icon" href="../styles/images/larecetteIcon.ico">
+    <link rel="icon" href="../../styles/images/larecetteIcon.ico">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:title" content="Pâtisseries artisanales dans l'Oise | La Recette">
@@ -16,10 +16,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="keywords" content="La recette, Larecette, larecette60, patisserie, oise, compiegne, recette, gourmandises, number cake, cake topper, gateaux a themes, petits fours, artisans, artisan, salé, sucré">
     <meta name="author" content="Hellios"> 
-    <link rel="preload" as="image" href="../styles/images/boutique.webp">
-    <link rel="stylesheet" href="../styles/stylesheets/main.css">
-    <link rel="stylesheet" href="../styles/stylesheets/entremets.css">
-    <script src="../scripts/main.js" defer></script>
+    <link rel="preload" as="image" href="../../styles/images/boutique.webp">
+    <link rel="stylesheet" href="../../styles/stylesheets/main.css">
+    <link rel="stylesheet" href="../../styles/stylesheets/entremets.css">
+    <script src="../../scripts/main.js" defer></script>
 </head>
 <body>
     <?php include_once "components/header.php"?>
@@ -29,7 +29,7 @@
         </div>
         <div class="page-content">
             <div class="container">
-                <img src="../styles/images/giga-eclair.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/giga-eclair.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>Eclair chocolat à partager</h3>
                     <p>En 8,10,12 parts</p>
@@ -40,10 +40,10 @@
                     <h3>Paris brest</h3>
                     <p>En 8,10,12 parts</p>
                 </span>
-                <img src="../styles/images/paris-brest.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/paris-brest.webp" alr="Le Fraisier" width="200px" height="200px">
             </div>
             <div class="container">
-                <img src="../styles/images/tarte-citron.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/tarte-citron.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>Tarte au citron</h3>
                     <p>En 6 ou 8 parts</p>
@@ -54,10 +54,10 @@
                     <h3>Le flan à l’ancienne et à la vanille bourbon</h3>
                     <p>En 8,10,12 parts</p>
                 </span>
-                <img src="../styles/images/flan-vanille-bourbon.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/flan-vanille-bourbon.webp" alr="Le Fraisier" width="200px" height="200px">
             </div>
             <div class="container">
-                <img src="../styles/images/giga-cookie-trois-choco.webp" alr="Le Fraisier" width="200px" height="200px">
+                <img src="../../styles/images/giga-cookie-trois-choco.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
                     <h3>Le cookie à partager aux trois chocolats</h3>
                     <p>En 6,8,10,12 parts</p>

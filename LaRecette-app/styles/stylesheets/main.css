@@ -112,6 +112,7 @@ footer{
 	color: var(--secondary);
 	align-items: center;
 	justify-content: space-between;
+	box-shadow: inset 0px 5px 5px var(--tertiary);
 }
 br{margin:10px;}
 p{

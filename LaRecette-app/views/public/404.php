@@ -16,7 +16,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="keywords" content="La recette, Larecette, larecette60, patisserie, oise, compiegne, recette, gourmandises, number cake, cake topper, gateaux a themes, petits fours, artisans, artisan, salé, sucré">
     <meta name="author" content="Hellios"> 
-    <link rel="preload" as="image" href="../styles/images/boutique.webp">
+    <link rel="preload" as="image" href="../../styles/images/boutique.webp">
     <link rel="stylesheet" href="css/main.css">
     <script src="js/main.js" defer></script>
 </head>
@@ -24,31 +24,11 @@
     <?php include_once "components/header.php"?>
     <main>
         <div class="hero">
-            <h2>📌 Conditions générales d’utilisation (CGU)</h2>
+            <h2>404 : Page non trouvé</h2>
         </div>
         <div class="page-content">
         <div class="about">
             <pre>
-Objet
-Les présentes CGU définissent les conditions d’accès et d’utilisation du site larecette60.com.
-
-Accès au site
-Le site est accessible gratuitement à tout utilisateur disposant d’un accès à Internet. Les coûts liés à cet accès sont à la charge de l’utilisateur.
-
-Contenu
-Les informations fournies sur le site sont données à titre indicatif et peuvent être modifiées à tout moment.
-
-Propriété intellectuelle
-Toute utilisation, reproduction ou représentation, totale ou partielle, du contenu du site sans autorisation est interdite.
-
-Responsabilité de l’utilisateur
-L’utilisateur s’engage à utiliser le site dans le respect des lois et réglementations en vigueur, et à ne pas porter atteinte aux droits d’autrui.
-
-Données personnelles
-Aucune donnée personnelle n’est collectée via le site.
-
-Cookies
-Le site n’utilise pas de cookies de suivi.
             </pre>
         </div>
         </div>

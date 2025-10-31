@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pâtisseries artisanales dans l'Oise | La Recette</title>
     <meta name="description" content="Pâtisseries artisanales dans l'Oise : number cakes, gâteaux à thèmes, petits fours sucrés/salés. Ingrédients de qualité et décors faits main. Commandez en ligne.">
-    <link rel="canonical" href="https://www.larecette60.com/mentions-legales">
+    <link rel="canonical" href="https://www.larecette60.com/cgv">
     <link rel="icon" href="../styles/images/larecetteIcon.ico">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
@@ -16,41 +16,46 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="keywords" content="La recette, Larecette, larecette60, patisserie, oise, compiegne, recette, gourmandises, number cake, cake topper, gateaux a themes, petits fours, artisans, artisan, salé, sucré">
     <meta name="author" content="Hellios"> 
-    <link rel="preload" as="image" href="../styles/images/boutique.webp">
-
-    <link rel="stylesheet" href="../styles/stylesheets/main.css">
-    <script src="../scripts/main.js" defer></script>
+    <link rel="preload" as="image" href="../../styles/images/boutique.webp">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body>
     <?php include_once "components/header.php"?>
     <main>
         <div class="hero">
-            <h2>📌 Mentions légales</h2>
+            <h2>📌 Conditions générales de vente (CGV)</h2>
         </div>
         <div class="page-content">
-            <div class="about">
+        <div class="about">
             <pre>
-Éditeur du site
-Nom commercial : La Recette 60
-Statut : Micro-entreprise
+Entreprise
+La Recette 60 – Micro-entreprise
 SIRET : 753 763 788 00019
-Adresse : 1459 rue de Picardie, 60310 Canny-sur-Matz, France
-E-mail : larecette60@gmail.com
-Responsable de la publication : Treguier Elias
+Adresse : 1459 rue de Picardie, 60310 Canny-sur-Matz
 
-Hébergement
-Le site est hébergé par :
-Hostinger International Ltd.
-Adresse : 61 Lordou Vironos Street, 6023 Larnaca, Chypre
-Site web : https://www.hostinger.fr
+Produits et services
+Le site présente les produits et services proposés. Les demandes de devis sont gratuites et n’engagent le client qu’après validation écrite et acceptation du devis.
 
-Propriété intellectuelle
-L’ensemble du contenu présent sur le site larecette60.com (textes, images, logos, graphismes, etc.) est protégé par le droit d’auteur. Toute reproduction sans autorisation est interdite.
+Prix
+Les prix indiqués sur les devis sont exprimés en euros, toutes taxes comprises.
+
+Commande
+Toute commande n’est définitive qu’après signature du devis par le client.
+
+Paiement
+Les modalités de paiement (virement, chèque, espèces) sont précisées sur le devis.
+
+Droit de rétractation
+Conformément à l’article L221-18 du Code de la consommation, le client consommateur dispose d’un délai de 14 jours pour exercer son droit de rétractation à compter de la signature du devis, sauf cas d’exécution immédiate du service.
 
 Responsabilité
-La Recette 60 met tout en œuvre pour fournir des informations fiables. Toutefois, elle ne saurait être tenue responsable d’éventuelles erreurs ou omissions.
+La Recette 60 ne pourra être tenue responsable des dommages indirects liés à l’exécution de la prestation.
+
+Litiges
+Les présentes CGV sont soumises au droit français. En cas de litige, les parties chercheront d’abord une solution amiable. À défaut, le litige sera porté devant les tribunaux compétents.
             </pre>
-            </div>
+        </div>
         </div>
     </main>
     <?php include_once "components/footer.php"?>
