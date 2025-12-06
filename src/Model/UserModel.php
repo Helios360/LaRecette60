@@ -32,7 +32,7 @@ final class UserModel {
     public function getName(): string{ return $this->name;}
     public function getFname(): string{ return $this->fname;}
     public function getPhone(): string{ return $this->phone;}
-    public function getPasswordHash(): string{ return $this->PasswordHash;}
+    public function getPasswordHash(): string{ return $this->passwordHash;}
     public function getRole(): int{ return $this->id;}
 
 }

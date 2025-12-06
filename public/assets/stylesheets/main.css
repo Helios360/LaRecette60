@@ -67,14 +67,14 @@ input {
 /* Reset done */
 @font-face {
     font-family: "Artistic";
-    src: url("../fonts/1/Croissant_One/CroissantOne-Regular.ttf");
+    src: url("../fonts/Nickainley-Normal.otf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "Visibility";
-    src: url("../fonts/Arimo/Arimo-VariableFont_wght.ttf");
-    font-weight: normal;
+    src: url("../fonts/1/Arimo/Arimo-VariableFont_wght.ttf");
+    font-weight: 200!important;
     font-style: normal;
 }
 *{
@@ -82,7 +82,7 @@ input {
     scrollbar-width: none;
 }
 :root{
-    --primary:rgb(255, 236, 218);
+    --primary:rgb(255, 224, 197);
     --secondary:rgb(195, 106, 62);
     --tertiary:rgb(240, 182, 182);
     transition: all 0.5s ease;
@@ -112,7 +112,6 @@ footer{
 	color: var(--secondary);
 	align-items: center;
 	justify-content: space-between;
-	box-shadow: inset 0px 5px 5px var(--tertiary);
 }
 br{margin:10px;}
 p{
@@ -127,9 +126,9 @@ h1{
     font-size: 3.2rem;
 }
 h2{
-    font-family: "Artistic", serif;
+    font-family: "Visibility", serif;
     font-size: 1.5rem;
-	font-weight: bold;
+	font-weight: lighter;
 }
 .lisible{color: var(--primary);}
 .lisible2{color: var(--secondary);}
@@ -151,6 +150,7 @@ ul{
 	gap:20px;
 	font-family: "Visibility", serif;
 	font-size: 1.1rem;
+	font-weight: 200;
 }
 li{
 	padding-left:1.5rem;
@@ -223,7 +223,7 @@ li{
 	linear-gradient(
 		rgba(97, 44, 18, 0.5),
 		rgba(102, 60, 60, 0.5)), 
-	url("../images/boutique.webp");
+	var(--hero-bg);
 	background-size: cover;
 	background-position: 50%;
 	background-repeat: no-repeat;
@@ -250,7 +250,7 @@ li{
 	object-fit: cover;
 }
 .cta{
-	font-family: "Artistic", serif;
+	font-family: "Visibility", serif;
 	font-size: 1.5rem;
 	border: 2px var(--primary) solid;
 	padding:20px;
@@ -284,7 +284,7 @@ li{
 	justify-content: center;
 	flex-wrap: wrap;
 	gap:2rem;
-	border-radius: 8px;
+	border-radius: 15px;
 	color: var(--secondary);
 	background-color: var(--primary);
 }
@@ -292,7 +292,10 @@ li{
   margin: 0 0 1rem 0; /* only bottom margin */
   line-height: 1.6;   /* comfortable line spacing */
 }
-
+.about h2 {
+	font-family: 'Artistic', sans-serif;
+	font-size: 2rem;
+}
 .about > * {
   	flex:1 1 100px;
   	min-width:200px;
@@ -450,6 +453,7 @@ li{
 		align-items: center;
 	}
 	.hero > img{
+		background-attachment: scroll;
 		display: none;
 	}
 	.hero > div{width: 100%;}

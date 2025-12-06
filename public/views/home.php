@@ -19,16 +19,17 @@
     <link rel="preload" as="image" href="/assets/images/boutique.webp">
     
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
+    <link rel="stylesheet" href="/assets/stylesheets/menu.css">
     <script src="/scripts/main.js" defer></script>
 </head>
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero">
+        <div class="hero" style="--hero-bg: url('../images/boutique.webp')">
             <div>
-                <h1>La Recette Pâtisseries artisanales</h1>
+                <h1>La Recette Pâtisserie</h1>
                 <h2>Bienvenue dans un monde de douceur et de gourmandises</h2><br><br><br><br><br>
-                <a class="cta" href="menu">Voir la carte</a>
+                <a class="cta" href="commander">Commander</a>
             </div>
             <img src="/assets/images/fraisier.webp" alt="Fraisier" width="200px" height="200px">
         </div>
@@ -42,12 +43,63 @@
                 <p>Toujours à l’écoute, je prends le temps de comprendre vos demandes afin de créer des douceurs uniques, pour vos occasions spéciales ou simplement pour le plaisir.</p>
                 </span>
             </div>
-            <div class="showcase">
+            <div class="menu-gallery">
+                <a href="gateaux-a-themes" class="div1" alt="Gâteaux à thèmes">
+                    <img src="/assets/images/rabbit.webp" 
+                        alt="Gâteaux à thèmes" 
+                        height="200px" 
+                        width="auto" 
+                        loading="lazy" 
+                        decoding="async">
+                </a>
+                <a href="entremets" class="div2" alt="Les entremets">
+                    <img src="/assets/images/fraisier.webp" 
+                        alt="Les entremets" 
+                        height="200px" 
+                        width="auto" 
+                        loading="lazy" 
+                        decoding="async">
+                </a>
+                <a href="mignardises" class="div3" alt="Les mignardises">
+                    <img src="/assets/images/mignardises.webp" 
+                        alt="Les mignardises" 
+                        height="200px" 
+                        width="auto" 
+                        loading="lazy" 
+                        decoding="async">
+                </a>
+                <a href="classiques" class="div4" alt="Les classiques">
+                    <img src="/assets/images/classique.webp" 
+                        alt="Les classiques" 
+                        height="200px" 
+                        width="auto" 
+                        loading="lazy" 
+                        decoding="async">
+                </a>
+                <a href="number-cakes" class="div5" alt="Number cakes">
+                    <img src="/assets/images/numberCakeE.webp" 
+                        alt="Number cakes" 
+                        height="200px" 
+                        width="auto" 
+                        loading="lazy" 
+                        decoding="async">
+                </a>
+                <a href="traiteur" class="div6" alt="Le traiteur">
+                    <img src="/assets/images/traiteur.webp" 
+                        alt="Le traiteur" 
+                        height="200px" 
+                        width="auto" 
+                        loading="lazy" 
+                        decoding="async">
+                </a>
+            </div>
+        </div>
+            <!--<div class="showcase">
                 <img src="/assets/images/cake.webp" alt="gâteaux gourmands" width="500" height="300" loading="lazy" decoding="async">
                 <img src="/assets/images/fourburger.webp" alt="petits fours" width="500" height="300" loading="lazy" decoding="async">
                 <img src="/assets/images/numberCakeE.webp" alt="number cake" width="500" height="300" loading="lazy" decoding="async">
                 <img src="/assets/images/mignardises.webp" alt="migniardises" width="500" height="300" loading="lazy" decoding="async">
-            </div>
+            </div>-->
         </div>
     </main>
     <?php include_once __DIR__ . "/../components/footer.php"?>
