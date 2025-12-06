@@ -40,7 +40,8 @@ $ok = $_GET['ok'] ?? '';
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
         <div class="hero">
-            <h1>📌 Espace compte</h1>
+            <!--<h1>📌 Espace compte</h1>-->
+            <h1>Page en construction !</h1>
         </div>
         <div class="page-content">
             <?php if ($err): ?>

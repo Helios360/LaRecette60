@@ -24,14 +24,13 @@
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero">
+        <div class="hero" style="--hero-bg: url('../images/')">
             <div>
                 <h1>Passer commande</h1>
-                <h2>Faites une estimation/commande simple et rapide</h2>
             </div>
         </div>
         <div class="page-content">
-            <a href="account"><h2 class="lisible"><u>Client régulier ? Connectez vous et profitez des avantages</u></h2></a>
+            <a href="account"><h2 class="lisible"><u>Client régulier ? Connectez vous !</u></h2></a>
             <div class="add">
                 <div class="add1">
                     <h2 id="addShow">Ajouter un item</h2>
