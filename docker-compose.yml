@@ -19,7 +19,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: Dockerfile.php
+      dockerfile: ./infra/docker/Dockerfile.php
     env_file:
       - .env
     depends_on:
@@ -34,7 +34,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: Dockerfile.nginx
+      dockerfile: ./infra/docker/Dockerfile.nginx
     depends_on:
       php:
         condition: service_healthy
