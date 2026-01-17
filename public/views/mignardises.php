@@ -25,82 +25,62 @@
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero">
+        <div class="hero" style="--hero-bg: url('../images/macaron-tower.webp')">
             <h1>Les Mignardises</h1>
         </div>
         <div class="page-content">
             <div class="details">
-                <div class="div1">
-                    <img src="/assets/images/macaron-tower.webp" width="400px" height="auto" alr="Macaron tower">
-                    <span>
-                        <h3>Les Macarons:</h3>
-                        <p>
-                            Pistache, chocolat/ nutella®, Caramel au beurre salé, citron, fruits rouges, framboise, praliné, cappuccino, vanille, spéculoos, noix de coco, cerise.
-                            <p>Dix pièces identiques par parfum.</p>
-                        </p>
-                    </span>
+                <div>
+                    <img src="/assets/images/Bunnies.webp" alt="Macarons perso" width="400px" height="auto">
+                    <h3>Les Macarons:</h3>
+                    <p>Pistache, chocolat/ nutella®, Caramel au beurre salé, citron, fruits rouges, framboise, praliné, cappuccino, vanille, spéculoos, noix de coco, cerise. Dix pièces identiques par parfum.</p>
+                    <p>N’hésitez pas a demander un devis si vous souhaitez une personnalisation sur vos magnum cakes, cupcakes, ou pop cakes. Concernant les mini donuts, je peux personnaliser leurs couleurs.</p>
                 </div>
-                <div class="div2">
-                    <img src="/assets/images/mignardises.webp" width="400px" height="auto" alr="Mignardises">
-                    <span>
-                        <h3>Migniardises :</h3>
-                        <p>
-                            Tartelettes citron, chou chocolat, mini pécan vanille, mini mousse au chocolat, pavlova fruits exotiques, tartelette framboise, paris-brest. <p>Dix unités minimum par variétés.</p>
-                        </p>
-                    </span>
+                <div>
+                    <img src="/assets/images/mignardises.webp" width="400px" height="auto" alt="Mignardises">
+                    <h3>Migniardises :</h3>
+                    <p>Tartelettes citron, chou chocolat, mini pécan vanille, mini mousse au chocolat, pavlova fruits exotiques, tartelette framboise, paris-brest. </p>
+                    <p><em>Dix unités minimum par variétés.</em></p>
                 </div>
-                <div class="div3">
-                    <h3>Personnalisations:</h3>
-                    <img src="/assets/images/Bunnies.webp" alr="Personnalized cakes" width="300px" height="auto">
-                    <p>
-                        N’hésitez pas a demander un devis si vous souhaitez une personnalisation sur vos magnum cakes, cupcakes, ou pop cakes. Concernant les mini donuts, je peux personnaliser leurs couleurs. 
-                    </p>
-                </div>
-                <div class="div4">
-                    <div class="mignardises">
-                    <img src="/assets/images/popcake.webp" alr="Popcakes" width="300px" height="auto">
-                    <span>
-                        <h3>Minis donuts :</h3>
-                        <p>Chocolat, oreo, speculoos, vanille.
-                        15 pièces minimum par variétés.</p><br>
+                <div>
+                    <img src="/assets/images/popcake.webp" alt="Popcakes" width="400px" height="auto">
+                    <h3>Minis donuts :</h3>
+                    <p>Chocolat, oreo, speculoos, vanille.
+                    15 pièces minimum par variétés.</p>
 
-                        <h3>Cakes pops :</h3>
-                        <p>Chocolat, speculoos, citron.
-                        10 pièces minimum par variétés.</p><br>
+                    <h3>Cakes pops :</h3>
+                    <p>Chocolat, speculoos, citron.
+                    10 pièces minimum par variétés.</p>
 
-                        <h3>Magnums cakes :</h3>
-                        <p>Chocolat, speculoos, citron.
-                        5 pièces minimum par variétés.</p>
-                    </span>
-                    </div>
+                    <h3>Magnums cakes :</h3>
+                    <p>Chocolat, speculoos, citron.
+                    5 pièces minimum par variétés.</p>
                 </div>
             </div>
             <div class="cupcakes">
-                <h2>Cupcakes :</h2>
-                <img src="/assets/images/cupcakes.webp" alr="Cupcakes" width="100%" height="auto">
                 <div>
-                    <span>
-                        <h3>Les Cupcakes individuels :</h3><br>
-                        <ul>
-                            <li>Kinder : Base chocolat, croustillant à la noisette, crème chocolat.</li>
-                            <li>Croustipomme : Base vanille, pommes caramélisées, crumble, crème caramel.</li>
-                            <li>Marbré : Base vanille et chocolat pépites de chocolat, crème vanille et chocolat.</li>
-                            <li>Rose : Base nature et pépites de chocolat blanc, framboises, crème vanille.</li>
-                            <li>M et M’s : Base vanille, crémeux cacahuète, crème chocolat au lait, M et M’s.</li>
-                        </ul><br>
-                        <p>5 pièces minimum par variété</p>
-                    </span>
-                    <span>
-                        <h3>Les minis cupcakes :</h3><br>
+                    <img src="/assets/images/cupcakesPerso.webp" alt="Macarons perso" width="400px" height="auto">
+                    <h3>Les Cupcakes individuels :</h3>
+                    <ul>
+                        <li>Kinder : Base chocolat, croustillant à la noisette, crème chocolat.</li>
+                        <li>Croustipomme : Base vanille, pommes caramélisées, crumble, crème caramel.</li>
+                        <li>Marbré : Base vanille et chocolat pépites de chocolat, crème vanille et chocolat.</li>
+                        <li>Rose : Base nature et pépites de chocolat blanc, framboises, crème vanille.</li>
+                        <li>M et M’s : Base vanille, crémeux cacahuète, crème chocolat au lait, M et M’s.</li>
+                    </ul>
+                    <p><em>5 pièces minimum par variété</em></p>
+                </div>
+                <div>
+                    <img src="/assets/images/foxes.webp" width="400px" height="auto" alt="Mignardises">
+                    <h3>Les minis cupcakes :</h3>
                         <ul>
                             <li>Marieke : base vanille chantilly spéculoos.</li>
                             <li>Rose : base vanille compotée de framboises chantilly chocolat blanc.</li>
                             <li>M et M’s : base vanille chantilly chocolat au lait et M et M’s.</li>
                             <li>Oréos : base vanile chantilly chocolat blanc Oréos.</li>
                             <li>Kinder bueno : base vanille chantilly chocolat au lait kinder bueno.</li>
-                        </ul><br>
-                        <p>Dix pièces minimum par variété pour les minis cupcakes.</p>
-                    </span>
+                        </ul>
+                        <p><em>Dix pièces minimum par variété pour les minis cupcakes.</em></p>
                 </div>
             </div>
         </div>

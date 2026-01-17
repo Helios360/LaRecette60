@@ -16,7 +16,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="keywords" content="La recette, Larecette, larecette60, patisserie, oise, compiegne, recette, gourmandises, number cake, cake topper, gateaux a themes, petits fours, artisans, artisan, salé, sucré">
     <meta name="author" content="Hellios"> 
-    <link rel="preload" as="image" href="/assets/images/boutique.webp">
+    <link rel="preload" as="image" href="/assets/images/theme-cake.webp">
 
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
     <link rel="stylesheet" href="/assets/stylesheets/menu.css">
@@ -25,7 +25,7 @@
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero">
+        <div class="hero" style="--hero-bg: url('../images/theme-cake.webp')">
             <div>
                 <h1>Gâteaux à thèmes</h1><br><br>
                 <h2>Les gâteaux en pâtes à sucre permettent de réaliser une multitude de décors et de formes, si vous avez des idées n’hésitez pas à me consulter !</h2>
@@ -35,9 +35,11 @@
             <div class="content2">
                 <div class="bases">
                     <h3>Bases :</h3>
-                    <p>- Moelleux Vanille</p>
-                    <p>- Moelleux Chocolat</p>
-                </div>
+                    <span>
+                        <p>. Moelleux Vanille</p>
+                        <p>. Moelleux Chocolat</p>
+                    </span>
+                </div><hr>
                 <div class="fourrages">
                     <h3>Fourrages :</h3>
                     <table>
@@ -67,15 +69,15 @@
                 </div>
             </div>
             <div class="gallery">
-                    <img src="/assets/images/cake.webp" alt="cake">
-                    <img src="/assets/images/athxs60q-scaled.webp" alt="cake">
-                    <img src="/assets/images/5sb5930g-scaled.webp" alt="cake">
-                    <img src="/assets/images/98bzwja5-scaled.webp" alr="cake">
-                    <img src="/assets/images/c9r9tjc6-scaled.webp" alr="cake">
-                    <img src="/assets/images/dkhlncat-scaled.webp" alr="cake">
-                    <img src="/assets/images/tnmwbhm5-scaled.webp" alr="cake">
-                    <img src="/assets/images/onc2a19z-scaled.webp" alr="cake">
-                    <img src="/assets/images/tb0ep2cl-scaled.webp" alr="cake">
+                <img src="/assets/images/cake.webp" alt="cake">
+                <img src="/assets/images/rabbit.webp" alt="cake">
+                <img src="/assets/images/5sb5930g-scaled.webp" alt="cake">
+                <img src="/assets/images/98bzwja5-scaled.webp" alt="cake">
+                <img src="/assets/images/c9r9tjc6-scaled.webp" alt="cake">
+                <img src="/assets/images/dkhlncat-scaled.webp" alt="cake">
+                <img src="/assets/images/tnmwbhm5-scaled.webp" alt="cake">
+                <img src="/assets/images/onc2a19z-scaled.webp" alt="cake">
+                <img src="/assets/images/tb0ep2cl-scaled.webp" alt="cake">
             </div>
         </div>
     </main>

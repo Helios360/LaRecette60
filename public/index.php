@@ -64,11 +64,11 @@ switch ($path) {
     case '/mentions-legales':
         require __DIR__ . $viewDir . 'mentions-legales.php';
         break;
-
+/*
     case '/account':
         require __DIR__ . $viewDir . 'account.php';
         break;
-
+*/
     case '/send_cart':
         require __DIR__ . '/scripts/send_cart.php';
         break;

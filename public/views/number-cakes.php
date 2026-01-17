@@ -24,7 +24,7 @@
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero">
+        <div class="hero" style="--hero-bg: url('../images/6cake.avif')">
             <div>
                 <h1>Number Cakes</h1>
                 <h2>Et les lettres aussi !</h2>

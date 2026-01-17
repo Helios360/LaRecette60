@@ -24,44 +24,46 @@
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero">
+        <div class="hero" style="--hero-bg: url('../images/classique.webp')">
             <h1>Les Classiques</h1>
         </div>
         <div class="page-content">
-            <div class="container">
-                <img src="/assets/images/giga-eclair.webp" alr="Le Fraisier" width="200px" height="200px">
-                <span class="details">
-                    <h3>Eclair chocolat à partager</h3>
-                    <p>En 8,10,12 parts</p>
-                </span>
-            </div>
-            <div class="container right">
-                <span class="details">
-                    <h3>Paris brest</h3>
-                    <p>En 8,10,12 parts</p>
-                </span>
-                <img src="/assets/images/paris-brest.webp" alr="Le Fraisier" width="200px" height="200px">
-            </div>
-            <div class="container">
-                <img src="/assets/images/tarte-citron.webp" alr="Le Fraisier" width="200px" height="200px">
-                <span class="details">
-                    <h3>Tarte au citron</h3>
-                    <p>En 6 ou 8 parts</p>
-                </span>
-            </div>
-            <div class="container right">
-                <span class="details">
-                    <h3>Le flan à l’ancienne et à la vanille bourbon</h3>
-                    <p>En 8,10,12 parts</p>
-                </span>
-                <img src="/assets/images/flan-vanille-bourbon.webp" alr="Le Fraisier" width="200px" height="200px">
-            </div>
-            <div class="container">
-                <img src="/assets/images/giga-cookie-trois-choco.webp" alr="Le Fraisier" width="200px" height="200px">
-                <span class="details">
-                    <h3>Le cookie à partager aux trois chocolats</h3>
-                    <p>En 6,8,10,12 parts</p>
-                </span>
+            <div class="containers">
+                <div class="container">
+                    <img src="/assets/images/giga-eclair.webp" alr="Le Fraisier" width="200px" height="200px">
+                    <span class="details">
+                        <h3>Eclair chocolat à partager</h3>
+                        <p>En 8,10,12 parts</p>
+                    </span>
+                </div>
+                <div class="container right">
+                    <span class="details">
+                        <h3>Paris brest</h3>
+                        <p>En 8,10,12 parts</p>
+                    </span>
+                    <img src="/assets/images/paris-brest.webp" alr="Le Fraisier" width="200px" height="200px">
+                </div>
+                <div class="container">
+                    <img src="/assets/images/tarte-citron.webp" alr="Le Fraisier" width="200px" height="200px">
+                    <span class="details">
+                        <h3>Tarte au citron</h3>
+                        <p>En 6 ou 8 parts</p>
+                    </span>
+                </div>
+                <div class="container right">
+                    <span class="details">
+                        <h3>Le flan à l’ancienne et à la vanille bourbon</h3>
+                        <p>En 8,10,12 parts</p>
+                    </span>
+                    <img src="/assets/images/flan-vanille-bourbon.webp" alr="Le Fraisier" width="200px" height="200px">
+                </div>
+                <div class="container">
+                    <img src="/assets/images/giga-cookie-trois-choco.webp" alr="Le Fraisier" width="200px" height="200px">
+                    <span class="details">
+                        <h3>Le cookie à partager aux trois chocolats</h3>
+                        <p>En 6,8,10,12 parts</p>
+                    </span>
+                </div>
             </div>
         </div>
     </main>

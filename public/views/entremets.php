@@ -25,11 +25,11 @@
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero">
+        <div class="hero" style="--hero-bg: url('../images/la-seraphine.webp')">
             <h1>Les Entremets</h1>
         </div>
         <div class="page-content">
-            <h2>Les Entremets fruités</h2>
+            <h2>Les entremets fruités</h2>
             <div class="container">
                 <img src="/assets/images/fraisier.webp" alr="Le Fraisier" width="200px" height="200px">
                 <span class="details">
@@ -65,7 +65,9 @@
                     <p>Le Séraphine : Mousse passion, mousse vanille, biscuit coco, sirop passoa.</p>
                 </span>
             </div>
-            <h2>Les Entremets chocolat et praliné</h2>
+            <br>
+            <hr>
+            <h2>Les entremets chocolat et praliné</h2>
             <div class="container right">
                 <span class="details">
                     <h3>La charlotte poire chocolat</h3>
