@@ -1,7 +1,6 @@
 (() => {
   // ================== mini-utils ==================
   const qs  = (s, r = document) => r.querySelector(s);
-  const qsa = (s, r = document) => [...r.querySelectorAll(s)];
   const el  = (tag, props = {}, ...kids) => {
     const node = document.createElement(tag);
     const { dataset, ...rest } = props || {};
@@ -12,7 +11,17 @@
   };
   const replace = (node, ...kids) => node && node.replaceChildren(...kids);
   const opt = (v, label = v) => el('option', { value: v }, label);
+  ['#user-file-1', '#user-file-2', '#user-file-3'].forEach((sel, i) => {
+    const input = qs(sel);
+    const label = qs(`#file-name-${i + 1}`);
+    if (!input || !label) return;
 
+    input.addEventListener('change', () => {
+      label.textContent = input.files.length
+        ? input.files[0].name
+        : 'Aucun fichier sélectionné';
+    });
+  });
   // ================== DOM refs ==================
   const burgerMenu  = qs('#burger-menu');
   const burger      = qs('#burger');
@@ -421,36 +430,28 @@
   // ================== User info ==================
   const getUserInfo = () => ({
     email:   qs('#user-email')?.value?.trim() || '',
-    name:    qs('#user-name-fname')?.value?.trim() || '',
-    address: qs('#user-adresse')?.value?.trim() || ''
+    phone:   qs('#user-phone')?.value?.trim() || '',
+    name:    qs('#user-name')?.value?.trim() || '',
+    fname:    qs('#user-fname')?.value?.trim() || '',
+    retrieval:    qs('#retrieval')?.value?.trim() || '',
   });
   const saveUser = info => storage.set(LS_KEYS.user, info);
   const loadUser = () => {
     const info = storage.get(LS_KEYS.user, null);
     if (!info) return;
     if (info.email && qs('#user-email')) qs('#user-email').value = info.email;
-    if (info.name && qs('#user-name-fname')) qs('#user-name-fname').value = info.name;
-    if (info.address && qs('#user-adresse')) qs('#user-adresse').value = info.address;
+    if (info.phone && qs('#user-phone')) qs('#user-phone').value = info.phone;
+    if (info.name && qs('#user-name')) qs('#user-name').value = info.name;
+    if (info.fname && qs('#user-fname')) qs('#user-fname').value = info.fname;
+    if (info.retrieval && qs('#retrieval')) qs('#retrieval').value = info.retrieval;
   };
   const isValidEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-
+  const isValidPhone = p => /^[0-9+\s().-]{8,}$/.test(p);
   // ================== statut ==================
   function setStatus(msg, ok = true) {
     if (!sendStatus) return;
     sendStatus.textContent = msg;
     sendStatus.style.color = ok ? 'var(--secondary)' : 'crimson';
-  }
-
-  // ================== fetch JSON (timeout) ==================
-  async function fetchJSON(url, options = {}, ms = 15000) {
-    const ctrl = new AbortController();
-    const to = setTimeout(() => ctrl.abort(), ms);
-    try {
-      const res = await fetch(url, { ...options, signal: ctrl.signal });
-      let data = null;
-      try { data = await res.json(); } catch {}
-      return { ok: res.ok, status: res.status, data };
-    } finally { clearTimeout(to); }
   }
 
   // ================== Envoi panier ==================
@@ -459,16 +460,27 @@
     if (!cakes.length) return setStatus('Votre panier est vide.', false);
 
     const user = getUserInfo();
-    if (!user.name || !user.address || !user.email) return setStatus('Veuillez renseigner votre nom, votre adresse et votre email.', false);
-    if (!isValidEmail(user.email)) return setStatus('Adresse e-mail invalide.', false);
 
-    // règles globales
+    const missing = [];
+    if (!user.fname) missing.push('Prénom');
+    if (!user.retrieval) missing.push('Créneau');
+    if (!user.name) missing.push('Nom');
+    if (!user.email) missing.push('Email');
+    if (!user.phone) missing.push('Téléphone');
+
+    if (missing.length) return setStatus(`Champs manquants : ${missing.join(', ')}.`, false);
+    if (!isValidEmail(user.email)) return setStatus('Adresse e-mail invalide.', false);
+    if (!isValidPhone(user.phone)) return setStatus('Numéro de téléphone invalide.', false);
+
+    // règles globales (identiques à ton code)
     const totalTraiteur = cakes
       .filter(it => typeof it?.gateau === 'string' && it.gateau.startsWith('Traiteur -') && !/feuillet/i.test(it.gateau))
       .reduce((s, it) => s + Number(it.quantite || 0), 0);
     if (totalTraiteur > 0 && totalTraiteur < 100) return setStatus('Veuillez commander un minimum de 100 pièces au total pour le traiteur.', false);
 
-    const totalMignardises = cakes.filter(it => it?.gateau === 'Mignardises').reduce((s, it) => s + Number(it.quantite || 0), 0);
+    const totalMignardises = cakes
+      .filter(it => it?.gateau === 'Mignardises')
+      .reduce((s, it) => s + Number(it.quantite || 0), 0);
     if (totalMignardises > 0 && totalMignardises < 60) return setStatus('Veuillez commander un minimum de 60 pièces au total pour les mignardises.', false);
 
     sendBtn && (sendBtn.disabled = true);
@@ -476,17 +488,39 @@
     saveUser(user);
 
     try {
-      const { ok, data } = await fetchJSON('send_cart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: cakes, customer: user, webpage: location.href, sentAt: new Date().toISOString() })
+      const fd = new FormData();
+      fd.append('payload', JSON.stringify({
+        items: cakes,
+        customer: user,
+        webpage: location.href,
+        sentAt: new Date().toISOString(),
+        website: '' // honeypot (doit rester vide)
+      }));
+
+      ['#user-file-1', '#user-file-2', '#user-file-3'].forEach((sel, i) => {
+        const file = qs(sel)?.files?.[0];
+        if (file) fd.append(`file${i + 1}`, file);
       });
 
-      if (ok && data?.success === true) {
-        setStatus('✅ Panier envoyé avec succès ! Je vous réponds au plus vite');
+      const res = await fetch('/api/send_cart.php', {
+        method: 'POST',
+        body: fd
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (res.ok && data?.success === true) {
+        setStatus('✅ Panier envoyé avec succès !');
         storage.remove(LS_KEYS.cakes);
         renderCart();
+
+        // optionnel: reset des fichiers
+        ['#user-file-1', '#user-file-2', '#user-file-3'].forEach(sel => {
+          const input = qs(sel);
+          if (input) input.value = '';
+        });
       } else {
+        // markFieldErrors(data?.fields || {});
         setStatus(data?.error || 'Échec de l’envoi. Réessayez plus tard.', false);
       }
     } catch (err) {

@@ -24,7 +24,7 @@
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero">
+        <div class="hero" style="--hero-bg: url('../images/traiteur.webp')">
             <h1>Le Traiteur</h1>
         </div>
         <div class="page-content">
@@ -52,7 +52,7 @@
             </div>
             <div class="feuilletes">
                 <h2>Feuilletés pur beurre :</h2>
-                <h3>Par vingt pièces identiques.</h3>
+                <p><em>Par vingt pièces identiques</em></p>
                 <div>
                     <img src="/assets/images/traiteur.webp" alr="Traiteur" height="200px" width="300px">
                     <span>

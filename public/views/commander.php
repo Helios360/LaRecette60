@@ -24,13 +24,13 @@
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero" style="--hero-bg: url('../images/')">
+        <div class="hero" style="--hero-bg: url('../images/boutique-irl.webp')">
             <div>
                 <h1>Passer commande</h1>
             </div>
         </div>
         <div class="page-content">
-            <a href="account"><h2 class="lisible"><u>Client régulier ? Connectez vous !</u></h2></a>
+            <!--<a href="account"><h2 class="lisible"><u>Client régulier ? Connectez vous !</u></h2></a>-->
             <div class="add">
                 <div class="add1">
                     <h2 id="addShow">Ajouter un item</h2>
@@ -65,9 +65,34 @@
                 <h2>Panier :</h2>
                 <div class="cart" id="cart">
                 </div>
-                <input type="email" id="user-email" placeholder="Entrez votre email . . .">
-                <input type="Nom Prénom" id="user-name-fname" placeholder="Entrez votre Nom Prénom . . .">
-                <input type="Adresse" id="user-adresse" placeholder="Entrez votre adresse . . .">
+                <hr>
+                <input type="email" id="user-email" placeholder="*Entrez votre email . . ." autocomplete="email" required>
+                <input type="tel" id="user-phone" placeholder="*Entrez votre numéro . . ." autocomplete="tel" required>
+                <input type="text" id="user-name" placeholder="*Entrez votre Nom . . ." autocomplete="family-name" required>
+                <input type="text" id="user-fname" placeholder="*Entrez votre Prénom . . ." autocomplete="given-name" required>
+                <select name="retrieval" id="retrieval" required>
+                    <option value="" disabled>Séléctionnez un créneau horaire pour venir chercher la commande</option>
+                    <option value="11h-12h">11h-12h</option>
+                    <option value="15h-16h">15h-16h</option>
+                </select>
+                <hr>
+                <p>Vous pouvez ci-dessous lier des images qui représentent vos besoins</p>
+                <div class="file-upload">
+                    <input type="file" id="user-file-1" class="file-input" accept="image/*">
+                    <label for="user-file-1" class="file-label">Ajouter une 1ere photo</label>
+                    <span class="file-name" id="file-name-1">Aucun fichier sélectionné</span>
+                </div>
+                <div class="file-upload">
+                    <input type="file" id="user-file-2" class="file-input" accept="image/*">
+                    <label for="user-file-2" class="file-label">Ajouter une 2eme photo</label>
+                    <span class="file-name" id="file-name-2">Aucun fichier sélectionné</span>
+                </div>
+                <div class="file-upload">
+                    <input type="file" id="user-file-3" class="file-input" accept="image/*">
+                    <label for="user-file-3" class="file-label">Ajouter une 3eme photo</label>
+                    <span class="file-name" id="file-name-3">Aucun fichier sélectionné</span>
+                </div>
+                <hr>
                 <button type="button" id="send-cart" class="send-cart-btn">Envoyer le panier par e-mail</button>
                 <p id="sendStatus" role="status" aria-live="polite"></p>
             </div>

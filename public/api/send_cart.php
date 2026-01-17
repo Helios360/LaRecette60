@@ -1,68 +1,80 @@
 <?php
-$to   = 'commande@email.fr';
-$from = 'no-reply@domainname.com';
+declare(strict_types=1);
 
 header('Content-Type: application/json; charset=utf-8');
 
-// Only allow POST with JSON body
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   http_response_code(405);
   echo json_encode(['success' => false, 'error' => 'Méthode non autorisée']);
   exit;
 }
 
-$raw  = file_get_contents('php://input');
-$data = json_decode($raw, true);
-
-if (!is_array($data) || !isset($data['items']) || !is_array($data['items'])) {
-  http_response_code(400);
-  echo json_encode(['success' => false, 'error' => 'Payload invalide']);
+// ---------------- helpers ----------------
+function e(string $str): string {
+  return htmlspecialchars($str, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+function json_error(int $status, string $msg, array $fields = []): void {
+  http_response_code($status);
+  echo json_encode(['success' => false, 'error' => $msg, 'fields' => $fields]);
   exit;
 }
-
-// Honeypot "website" (should be empty)
-if (!empty($data['website'] ?? '')) {
-  echo json_encode(['success' => true]); // pretend success for bots
-  exit;
+function strip_crlf(string $s): string {
+  return str_replace(["\r", "\n"], '', $s);
 }
-
-$items = $data['items'];
-if (!count($items)) {
-  http_response_code(400);
-  echo json_encode(['success' => false, 'error' => 'Panier vide']);
-  exit;
-}
-
-// --------- customer parsing / validation ---------
-$customer = $data['customer'] ?? [];
-$clientEmail   = trim((string)($customer['email'] ?? ''));
-$clientName    = trim((string)($customer['name'] ?? ''));
-$clientAddress = trim((string)($customer['address'] ?? ''));
-
-if ($clientName === '' || $clientAddress === '' || $clientEmail === '') {
-  http_response_code(422);
-  echo json_encode(['success' => false, 'error' => 'Nom, adresse et e-mail sont requis.']);
-  exit;
-}
-if (!filter_var($clientEmail, FILTER_VALIDATE_EMAIL)) {
-  http_response_code(422);
-  echo json_encode(['success' => false, 'error' => 'Adresse e-mail invalide.']);
-  exit;
-}
-
-// --------- helpers ---------
-function e($str) {
-  return htmlspecialchars((string)$str, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-}
-function strip_crlf($s) {
-  return str_replace(["\r", "\n"], '', (string)$s);
-}
-function dash_if_empty($v) {
+function dash_if_empty($v): string {
   $v = trim((string)$v);
   return $v === '' ? '–' : $v;
 }
 
-// --------- server-side business rules (mirror of front) ---------
+// ---------------- read payload (multipart/FormData OR JSON) ----------------
+$contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+$data = null;
+
+if (stripos($contentType, 'application/json') !== false) {
+  $raw = file_get_contents('php://input');
+  $data = json_decode($raw ?: '', true);
+} else {
+  $payload = $_POST['payload'] ?? '';
+  $data = json_decode($payload, true);
+}
+
+if (!is_array($data)) json_error(400, 'Payload invalide');
+if (!isset($data['items']) || !is_array($data['items'])) json_error(400, 'Payload invalide (items manquant)');
+
+// Honeypot anti-bot
+if (!empty($data['website'] ?? '')) {
+  echo json_encode(['success' => true]);
+  exit;
+}
+
+$items = $data['items'];
+if (!count($items)) json_error(400, 'Panier vide');
+
+// ---------------- customer validation ----------------
+$customer = $data['customer'] ?? [];
+$clientEmail     = trim((string)($customer['email'] ?? ''));
+$clientName      = trim((string)($customer['name'] ?? ''));
+$clientFname     = trim((string)($customer['fname'] ?? ''));
+$clientPhone     = trim((string)($customer['phone'] ?? ''));
+$clientRetrieval = trim((string)($customer['retrieval'] ?? ''));
+
+$fieldErrors = [];
+if ($clientFname === '')     $fieldErrors['fname'] = 'Prénom requis';
+if ($clientName === '')      $fieldErrors['name']  = 'Nom requis';
+if ($clientEmail === '')     $fieldErrors['email'] = 'E-mail requis';
+if ($clientPhone === '')     $fieldErrors['phone'] = 'Téléphone requis';
+if ($clientRetrieval === '') $fieldErrors['retrieval'] = 'Créneau requis';
+
+if ($fieldErrors) json_error(422, 'Veuillez compléter vos informations.', $fieldErrors);
+
+if (!filter_var($clientEmail, FILTER_VALIDATE_EMAIL)) {
+  json_error(422, 'Adresse e-mail invalide.', ['email' => 'invalide']);
+}
+if (!preg_match('/^[0-9+\s().-]{8,}$/', $clientPhone)) {
+  json_error(422, 'Numéro de téléphone invalide.', ['phone' => 'invalide']);
+}
+
+// ---------------- business rules server-side ----------------
 $totalTraiteur = 0;
 $totalMignardises = 0;
 
@@ -79,64 +91,51 @@ foreach ($items as $it) {
 }
 
 if ($totalTraiteur > 0 && $totalTraiteur < 100) {
-  http_response_code(422);
-  echo json_encode(['success' => false, 'error' => 'Veuillez commander un minimum de 100 pièces au total pour le traiteur.']);
-  exit;
+  json_error(422, 'Veuillez commander un minimum de 100 pièces au total pour le traiteur.');
 }
 if ($totalMignardises > 0 && $totalMignardises < 60) {
-  http_response_code(422);
-  echo json_encode(['success' => false, 'error' => 'Veuillez commander un minimum de 60 pièces au total pour les mignardises.']);
-  exit;
+  json_error(422, 'Veuillez commander un minimum de 60 pièces au total pour les mignardises.');
 }
 
-// --------- build email body ---------
-$webpage = e($data['webpage'] ?? '');
-$sentAt  = e($data['sentAt'] ?? date('c'));
+// ---------------- email body ----------------
+$webpage = e((string)($data['webpage'] ?? ''));
+$sentAt  = e((string)($data['sentAt'] ?? date('c')));
 
 $clientBlock = "
-  <table cellspacing='0' cellpadding='0' style='border-collapse:collapse;border:1px solid #ddd;margin:0 0 16px 0;'>
-    <thead>
-      <tr style='background:#f5f5f5;'>
-        <th colspan='2' style='padding:8px;border:1px solid #ddd;text-align:left;'>Informations client</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style='padding:8px;border:1px solid #ddd;font-weight:600;'>Nom</td>
-        <td style='padding:8px;border:1px solid #ddd;'>" . e($clientName) . "</td>
-      </tr>
-      <tr>
-        <td style='padding:8px;border:1px solid #ddd;font-weight:600;'>E-mail</td>
-        <td style='padding:8px;border:1px solid #ddd;'>" . e($clientEmail) . "</td>
-      </tr>
-      <tr>
-        <td style='padding:8px;border:1px solid #ddd;font-weight:600;'>Adresse</td>
-        <td style='padding:8px;border:1px solid #ddd;white-space:pre-line;'>" . nl2br(e($clientAddress)) . "</td>
-      </tr>
-    </tbody>
-  </table>
-";
-
-// Fixed columns to cover all cases from the new JS
-$thead = "
+<table cellspacing='0' cellpadding='0' style='border-collapse:collapse;border:1px solid #ddd;margin:0 0 16px 0;'>
   <thead>
     <tr style='background:#f5f5f5;'>
-      <th style='padding:8px;border:1px solid #ddd;'>#</th>
-      <th style='padding:8px;border:1px solid #ddd;'>Catégorie</th>
-      <th style='padding:8px;border:1px solid #ddd;'>Produit</th>
-      <th style='padding:8px;border:1px solid #ddd;'>Variété</th>
-      <th style='padding:8px;border:1px solid #ddd;'>Style</th>
-      <th style='padding:8px;border:1px solid #ddd;'>Base</th>
-      <th style='padding:8px;border:1px solid #ddd;'>Fourrage</th>
-      <th style='padding:8px;border:1px solid #ddd;'>Parts</th>
-      <th style='padding:8px;border:1px solid #ddd;'>Quantité</th>
-      <th style='padding:8px;border:1px solid #ddd;'>Notes</th>
+      <th colspan='2' style='padding:8px;border:1px solid #ddd;text-align:left;'>Informations client</th>
     </tr>
   </thead>
+  <tbody>
+    <tr><td style='padding:8px;border:1px solid #ddd;font-weight:600;'>Nom</td><td style='padding:8px;border:1px solid #ddd;'>" . e($clientFname . " " . $clientName) . "</td></tr>
+    <tr><td style='padding:8px;border:1px solid #ddd;font-weight:600;'>Créneau retrait</td><td style='padding:8px;border:1px solid #ddd;'>" . e($clientRetrieval) . "</td></tr>
+    <tr><td style='padding:8px;border:1px solid #ddd;font-weight:600;'>E-mail</td><td style='padding:8px;border:1px solid #ddd;'>" . e($clientEmail) . "</td></tr>
+    <tr><td style='padding:8px;border:1px solid #ddd;font-weight:600;'>Téléphone</td><td style='padding:8px;border:1px solid #ddd;'>" . e($clientPhone) . "</td></tr>
+  </tbody>
+</table>
+";
+
+$thead = "
+<thead>
+  <tr style='background:#f5f5f5;'>
+    <th style='padding:8px;border:1px solid #ddd;'>#</th>
+    <th style='padding:8px;border:1px solid #ddd;'>Catégorie</th>
+    <th style='padding:8px;border:1px solid #ddd;'>Produit</th>
+    <th style='padding:8px;border:1px solid #ddd;'>Variété</th>
+    <th style='padding:8px;border:1px solid #ddd;'>Style</th>
+    <th style='padding:8px;border:1px solid #ddd;'>Base</th>
+    <th style='padding:8px;border:1px solid #ddd;'>Fourrage</th>
+    <th style='padding:8px;border:1px solid #ddd;'>Parts</th>
+    <th style='padding:8px;border:1px solid #ddd;'>Quantité</th>
+    <th style='padding:8px;border:1px solid #ddd;'>Notes</th>
+  </tr>
+</thead>
 ";
 
 $rows = '';
-$idx  = 1;
+$idx = 1;
 foreach ($items as $it) {
   $gateau   = dash_if_empty($it['gateau']   ?? '');
   $produit  = dash_if_empty($it['produit']  ?? '');
@@ -146,70 +145,123 @@ foreach ($items as $it) {
   $fourrage = dash_if_empty($it['fourrage'] ?? '');
   $parts    = dash_if_empty($it['nbParts']  ?? '');
   $qty      = dash_if_empty($it['quantite'] ?? '');
-  $custom   = $it['custom'] ?? '';
+  $custom   = (string)($it['custom'] ?? '');
   $custom   = $custom === '' ? '–' : nl2br(e($custom));
 
   $rows .= "
-    <tr>
-      <td style='padding:8px;border:1px solid #ddd;text-align:center;'>" . $idx . "</td>
-      <td style='padding:8px;border:1px solid #ddd;'>" . e($gateau)   . "</td>
-      <td style='padding:8px;border:1px solid #ddd;'>" . e($produit)  . "</td>
-      <td style='padding:8px;border:1px solid #ddd;'>" . e($variete)  . "</td>
-      <td style='padding:8px;border:1px solid #ddd;'>" . e($style)    . "</td>
-      <td style='padding:8px;border:1px solid #ddd;'>" . e($base)     . "</td>
-      <td style='padding:8px;border:1px solid #ddd;'>" . e($fourrage) . "</td>
-      <td style='padding:8px;border:1px solid #ddd;text-align:right;'>" . e($parts) . "</td>
-      <td style='padding:8px;border:1px solid #ddd;text-align:right;'>" . e($qty)   . "</td>
-      <td style='padding:8px;border:1px solid #ddd;'>" . $custom . "</td>
-    </tr>";
+  <tr>
+    <td style='padding:8px;border:1px solid #ddd;text-align:center;'>" . $idx . "</td>
+    <td style='padding:8px;border:1px solid #ddd;'>" . e($gateau)   . "</td>
+    <td style='padding:8px;border:1px solid #ddd;'>" . e($produit)  . "</td>
+    <td style='padding:8px;border:1px solid #ddd;'>" . e($variete)  . "</td>
+    <td style='padding:8px;border:1px solid #ddd;'>" . e($style)    . "</td>
+    <td style='padding:8px;border:1px solid #ddd;'>" . e($base)     . "</td>
+    <td style='padding:8px;border:1px solid #ddd;'>" . e($fourrage) . "</td>
+    <td style='padding:8px;border:1px solid #ddd;text-align:right;'>" . e($parts) . "</td>
+    <td style='padding:8px;border:1px solid #ddd;text-align:right;'>" . e($qty)   . "</td>
+    <td style='padding:8px;border:1px solid #ddd;'>" . $custom . "</td>
+  </tr>";
   $idx++;
 }
 
 $totalsBlock = "";
 if ($totalTraiteur > 0 || $totalMignardises > 0) {
   $totalsBlock = "
-    <p style='margin:12px 0 16px 0;'>
-      <strong>Total traiteur (hors feuilletés) :</strong> " . (int)$totalTraiteur . " pièces<br>
-      <strong>Total mignardises :</strong> " . (int)$totalMignardises . " pièces
-    </p>
-  ";
+  <p style='margin:12px 0 16px 0;'>
+    <strong>Total traiteur (hors feuilletés) :</strong> " . (int)$totalTraiteur . " pièces<br>
+    <strong>Total mignardises :</strong> " . (int)$totalMignardises . " pièces
+  </p>";
 }
 
 $subject = 'Nouvelle commande – Panier site La Recette';
 
 $body = "
-  <html><body style='font-family:Arial,Helvetica,sans-serif;line-height:1.4;color:#222;'>
-    <h2 style='margin:0 0 12px 0;'>Panier envoyé depuis le site</h2>
-    <p style='margin:0 0 16px 0;'>
-      <strong>Page :</strong> {$webpage}<br>
-      <strong>Envoyé le :</strong> {$sentAt}
-    </p>
-
-    {$clientBlock}
-    {$totalsBlock}
-
-    <table cellspacing='0' cellpadding='0' style='border-collapse:collapse;border:1px solid #ddd;'>
-      {$thead}
-      <tbody>
-        {$rows}
-      </tbody>
-    </table>
-  </body></html>
+<html><body style='font-family:Arial,Helvetica,sans-serif;line-height:1.4;color:#222;'>
+  <h2 style='margin:0 0 12px 0;'>Panier envoyé depuis le site</h2>
+  <p style='margin:0 0 16px 0;'>
+    <strong>Page :</strong> {$webpage}<br>
+    <strong>Envoyé le :</strong> {$sentAt}
+  </p>
+  {$clientBlock}
+  {$totalsBlock}
+  <table cellspacing='0' cellpadding='0' style='border-collapse:collapse;border:1px solid #ddd;'>
+    {$thead}
+    <tbody>{$rows}</tbody>
+  </table>
+</body></html>
 ";
 
-// --------- headers & send ---------
-$headers = [];
-$headers[] = "MIME-Version: 1.0";
-$headers[] = "Content-Type: text/html; charset=UTF-8";
-$headers[] = "From: La Recette <" . strip_crlf($from) . ">";
-$headers[] = "Reply-To: " . strip_crlf($clientName) . " <" . strip_crlf($clientEmail) . ">";
-$headers[] = "X-Mailer: PHP/" . phpversion();
+// ---------------- attachments (limit + mime) ----------------
+$maxFiles = 3;
+$maxSizeBytes = 5 * 1024 * 1024; // 5MB par fichier
 
-$ok = @mail($to, $subject, $body, implode("\r\n", $headers));
+$accepted = [
+  'image/jpeg' => 'jpg',
+  'image/png'  => 'png',
+  'image/webp' => 'webp',
+  'image/gif'  => 'gif',
+];
 
-if ($ok) {
+// ---------------- send via SMTP (PHPMailer) ----------------
+require __DIR__ . '/vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+$SMTP_HOST = 'smtp.titan.email';     // ou smtp.hostinger.com / smtp.titan.email selon ton mail Hostinger
+$SMTP_PORT = 587;                   // 587 TLS (recommandé)
+$SMTP_USER = 'commande@tondomaine.fr';
+$SMTP_PASS = 'TON_MDP_EMAIL';
+
+$TO_EMAIL  = 'commande@email.fr';   // destination (peut être la même boîte ou une autre)
+$FROM_NAME = 'La Recette';
+
+try {
+  $mail = new PHPMailer(true);
+  $mail->CharSet = 'UTF-8';
+  $mail->isSMTP();
+  $mail->Host       = $SMTP_HOST;
+  $mail->SMTPAuth   = true;
+  $mail->Username   = $SMTP_USER;
+  $mail->Password   = $SMTP_PASS;
+  $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+  $mail->Port       = $SMTP_PORT;
+
+  // expéditeur = boîte authentifiée (important anti-spoof)
+  $mail->setFrom($SMTP_USER, $FROM_NAME);
+
+  // destinataire(s)
+  $mail->addAddress($TO_EMAIL);
+
+  // reply-to = client
+  $mail->addReplyTo(strip_crlf($clientEmail), strip_crlf($clientFname . ' ' . $clientName));
+
+  $mail->Subject = $subject;
+  $mail->isHTML(true);
+  $mail->Body    = $body;
+
+  // PJ
+  $added = 0;
+  foreach ($_FILES as $f) {
+    if ($added >= $maxFiles) break;
+    if (!isset($f['tmp_name']) || $f['error'] !== UPLOAD_ERR_OK) continue;
+    if (($f['size'] ?? 0) > $maxSizeBytes) continue;
+
+    $tmp = (string)$f['tmp_name'];
+    $mime = @mime_content_type($tmp) ?: '';
+    if (!isset($accepted[$mime])) continue;
+
+    $safeName = preg_replace('/[^a-zA-Z0-9._-]+/', '_', (string)$f['name']);
+    $mail->addAttachment($tmp, $safeName);
+    $added++;
+  }
+
+  $mail->send();
   echo json_encode(['success' => true]);
-} else {
+} catch (Exception $ex) {
   http_response_code(500);
-  echo json_encode(['success' => false, 'error' => 'Échec mail() sur l’hébergement']);
+  echo json_encode([
+    'success' => false,
+    'error' => 'Erreur SMTP : ' . ($ex->getMessage() ?: 'inconnue')
+  ]);
 }

@@ -25,13 +25,15 @@
 <body>
     <?php include_once __DIR__ . "/../components/header.php"?>
     <main>
-        <div class="hero" style="--hero-bg: url('../images/boutique.webp')">
+        <div class="hero" style="--hero-bg: url('../images/Boutique.png')">
             <div>
                 <h1>La Recette Pâtisserie</h1>
                 <h2>Bienvenue dans un monde de douceur et de gourmandises</h2><br><br><br><br><br>
                 <a class="cta" href="commander">Commander</a>
             </div>
-            <img src="/assets/images/fraisier.webp" alt="Fraisier" width="200px" height="200px">
+            <span>
+                <img src="/assets/images/cakesHero.webp" alt="Fraisier" width="200px" height="200px">
+            </span>
         </div>
         <div class="page-content">
             <div class="about">

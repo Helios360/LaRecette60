@@ -13,7 +13,9 @@
             "email": "elias.treguier@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "phpmailer/phpmailer": "^7.0"
+    },
     "scripts": {
         "start": "php -S localhost:8000 -t public public/index.php"
     }
