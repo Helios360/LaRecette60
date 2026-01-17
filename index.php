@@ -20,11 +20,11 @@ switch ($path) {
     case '/':
         require __DIR__ . $viewDir . 'home.php';
         break;
-
+/*
     case '/menu':
         require __DIR__ . $viewDir . 'menu.php';
         break;
-
+*/
     case '/classiques':
         require __DIR__ . $viewDir . 'classiques.php';
         break;
