@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -203,35 +206,30 @@ $accepted = [
 ];
 
 // ---------------- send via SMTP (PHPMailer) ----------------
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-$SMTP_HOST = 'smtp.titan.email';     // ou smtp.hostinger.com / smtp.titan.email selon ton mail Hostinger
-$SMTP_PORT = 587;                   // 587 TLS (recommandé)
-$SMTP_USER = 'commande@tondomaine.fr';
-$SMTP_PASS = 'TON_MDP_EMAIL';
-
-$TO_EMAIL  = 'commande@email.fr';   // destination (peut être la même boîte ou une autre)
-$FROM_NAME = 'La Recette';
+$envPath = __DIR__ . '/../.env';
+if (file_exists($envPath)) {
+    foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        if (str_starts_with(trim($line), '#')) continue;
+        [$key, $value] = array_map('trim', explode('=', $line, 2));
+        $_ENV[$key] = $value;
+    }
+}
 
 try {
-  $mail = new PHPMailer(true);
-  $mail->CharSet = 'UTF-8';
-  $mail->isSMTP();
-  $mail->Host       = $SMTP_HOST;
-  $mail->SMTPAuth   = true;
-  $mail->Username   = $SMTP_USER;
-  $mail->Password   = $SMTP_PASS;
-  $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-  $mail->Port       = $SMTP_PORT;
+$mail = new PHPMailer(true);
+$mail->CharSet = 'UTF-8';
+$mail->isSMTP();
+$mail->Host       = $_ENV['SMTP_HOST'];
+$mail->Port       = (int) $_ENV['SMTP_PORT'];
+$mail->SMTPAuth   = true;
+$mail->Username   = $_ENV['SMTP_USER'];
+$mail->Password   = $_ENV['SMTP_PASS'];
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
-  // expéditeur = boîte authentifiée (important anti-spoof)
-  $mail->setFrom($SMTP_USER, $FROM_NAME);
-
-  // destinataire(s)
-  $mail->addAddress($TO_EMAIL);
+$mail->setFrom($_ENV['SMTP_USER'], $_ENV['MAIL_FROM_NAME']);
+$mail->addAddress($_ENV['MAIL_TO']);
 
   // reply-to = client
   $mail->addReplyTo(strip_crlf($clientEmail), strip_crlf($clientFname . ' ' . $clientName));
@@ -255,6 +253,8 @@ try {
     $mail->addAttachment($tmp, $safeName);
     $added++;
   }
+$mail->SMTPDebug = 2;
+$mail->Debugoutput = function($str) { error_log("SMTP: ".$str); };
 
   $mail->send();
   echo json_encode(['success' => true]);
