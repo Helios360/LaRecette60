@@ -85,7 +85,7 @@
             {#each filteredArticles as article (article.id)}
             <Card
                 itemId={article.id}
-                img={article.cover_image_key ? `/images/${article.cover_image_key}` : `/images/${article.slug}.webp`}
+                img={article.cover_image_key ? `/uploads/${article.cover_image_key}` : `/images/${article.slug}.webp`}
                 title={article.title}
                 subtitle={article.subtitle}
                 ration={article.slices.match(/\d+/g)?.map(Number) || []}
