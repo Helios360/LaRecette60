@@ -1,7 +1,15 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
     import '../styles/app.css';
-	let { children } = $props();
+    import { page } from '$app/state';
+    let { children, data } = $props();
+    let menuOpen = $state(false);
+    $effect(() => { void page.url.pathname; menuOpen = false; });
+    function isActive(href: string) {
+        const path = page.url.pathname;
+        if (href === '/') return path === '/';
+        return path === href || path.startsWith(href + '/');
+    }
 </script>
 
 <svelte:head>
@@ -26,9 +34,40 @@
 
 <header>
     <a href="/"><img src="../images/larecette.webp" height="90" width="90" alt="LaRecette" decoding="async"></a>
-    <nav class="burger-menu" id="burger-menu">
-        <a href="menu">Menu</a>
-        <a href="articles">Commander</a>
+    <nav class="desktop-nav">
+        <a href="/events" class:active={isActive('/events')} aria-current={isActive('/events') ? 'page' : undefined}>Evenements</a>
+        <a href="/articles" class:active={isActive('/articles')} aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a>
+        <a href="/about" class:active={isActive('/about')} aria-current={isActive('/about') ? 'page' : undefined}>A propos</a>
+        <a href="/cart" class:active={isActive('/cart')} aria-current={isActive('/cart') ? 'page' : undefined}>Panier</a>
+        {#if data?.isAdmin}
+            <a href="/admin" class:active={isActive('/admin')} aria-current={isActive('/admin') ? 'page' : undefined}>Admin</a>
+        {/if}
+        <a href="/account" aria-label="Mon compte" class="account-link" class:active={isActive('/account')} aria-current={isActive('/account') ? 'page' : undefined}>
+            <svg width="50" height="50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5m0-8a3 3 0 1 1-3 3 3 3 0 0 1 3-3m9 17v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1Z"/>
+            </svg>
+        </a>
+    </nav>
+    <button
+        type="button"
+        class="burger-toggle"
+        class:open={menuOpen}
+        aria-label="Ouvrir le menu"
+        aria-expanded={menuOpen}
+        aria-controls="burger-menu"
+        onclick={() => (menuOpen = !menuOpen)}
+    >
+        <span></span><span></span><span></span>
+    </button>
+    <nav class="burger-menu" class:open={menuOpen} id="burger-menu">
+        <a href="/events" class:active={isActive('/events')} aria-current={isActive('/events') ? 'page' : undefined}>Evenements</a>
+        <a href="/articles" class:active={isActive('/articles')} aria-current={isActive('/articles') ? 'page' : undefined}>Commander</a>
+        <a href="/account" class:active={isActive('/account')} aria-current={isActive('/account') ? 'page' : undefined}>Mon compte</a>
+        <a href="/about" class:active={isActive('/about')} aria-current={isActive('/about') ? 'page' : undefined}>A propos</a>
+        <a href="/cart" class:active={isActive('/cart')} aria-current={isActive('/cart') ? 'page' : undefined}>Panier</a>
+        {#if data?.isAdmin}
+            <a href="/admin" class:active={isActive('/admin')} aria-current={isActive('/admin') ? 'page' : undefined}>Admin</a>
+        {/if}
     </nav>
 </header>
 
@@ -66,63 +105,109 @@
 </footer>
 
 <style>
-/* Header */
-.burger-menu{
-    font-size: 30px;
-    color: var(--primary);
-	text-shadow: 3px 3px 2px var(--secondary);
-    position:absolute;
-    right: 25px;
-    top:110px;
-    text-align: right;
-    display: flex;
-    gap: 15px;
+.desktop-nav > a {
+    transition: color 0.2s ease;
+}
+.desktop-nav > a.active {
+    color: var(--tertiary);
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
+.account-link {
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+.account-link:hover { transform: scale(1.1); }
+.account-link.active {
+    color: var(--tertiary);
+    text-decoration: none;
+}
+
+.burger-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+    width: 44px;
+    height: 44px;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    cursor: pointer;
+}
+.burger-toggle:hover { background: transparent; }
+.burger-toggle > span {
+    display: block;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+.burger-toggle.open > span:nth-child(1) { transform: translateY(12.5px) rotate(45deg); }
+.burger-toggle.open > span:nth-child(2) { opacity: 0; }
+.burger-toggle.open > span:nth-child(3) { transform: translateY(-12.5px) rotate(-45deg); }
+
+.burger-menu {
+    position: absolute;
+    right: 25px;
+    top: 110px;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-	font-weight: 600;
-    transition: max-height 1s ease, opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--headers);
+    align-items: end;
+    gap: 15px;
+    padding:1rem;
+    border-radius: var(--smaller-radius);
+    text-align: right;
+    font-size: 30px;
+    font-weight: 600;
+    transition: max-height 0.5s ease, opacity 0.3s ease;
+    pointer-events: none;
+}
+.burger-menu.open {
+    max-height: 80vh;
+    opacity: 1;
+    pointer-events: auto;
+}
+.burger-menu > a {
+    color: var(--primary);
+    transition: color 0.2s ease;
+}
+.burger-menu > a.active {
+    color: var(--tertiary);
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
+.social-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.mentions {
+    font-family: "Visibility", serif;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: right;
 }
 
-/* Footer */
-.social-footer{
-	display: flex;
-	gap:10px;
-	justify-content: center;
+@media (max-width: 800px), (hover: none), (pointer: coarse) {
+    .desktop-nav { display: none; }
+    .burger-toggle { display: flex; }
 }
-.mentions{
-	font-family: "Visibility", serif;
-	display: flex;
-	flex-direction: column;
-	gap:10px;
-	text-align: right;
+
+@media (max-width: 640px) {
+    footer {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 30px;
+    }
+    .mentions { text-align: center; }
 }
-@media (max-width:640px) {
-	footer{
-		flex-direction: column;
-		justify-content: center;
-		text-align: center;
-		gap:30px;
-	}
-	.mentions{
-		text-align: center;
-	}
-}
-/*
-.page-content{
-    position:relative;
-	width: 100%;
-	background-color: var(--tertiary);
-	margin-top: -25px;
-	border-radius: 30px 30px 0 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding:4rem 3rem;
-	gap:1rem;
-}
-.page-content > div{
-    max-width: 1400px;
-}*/
 </style>

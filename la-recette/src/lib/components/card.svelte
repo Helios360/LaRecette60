@@ -31,31 +31,48 @@
         <h4>{data.subtitle}</h4>
         <p>Taille : {data.ration}</p>
         <span class="buttons-holder">
-            <button onclick={()=>window.location.href=data.seemore}>VOIR PLUS</button>
+            <a class="cta seemore" href="/articles/{data.seemore}">VOIR PLUS</a>
             <button onclick={()=>popup.showModal()}>AJOUTER</button>
         </span>
     </span>
 </div>
 <style>
-.card{
+.card {
     z-index: 5;
+    width: 300px;
     border-radius: var(--smaller-radius);
-    border: 4px dashed var(--secondary);
     overflow: hidden;
     background-color: var(--primary);
-    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-.card-img{
-    width: 100%;
+.card-img {
+    height: 200px;
+    object-fit: cover;
 }
-
-.infos{
+.infos {
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    gap:1rem;
+    gap: 1rem;
+    height:100%;
+    justify-content: space-between;
 }
-button{
-    width:100%;
+button { width: 100%; }
+.seemore {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary)
+}
+.seemore:hover {color:var(--secondary)}
+@media (max-width:614px){
+    .card {
+        width: 100%;
+    }
 }
 </style>

@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { randomUUID } from 'node:crypto';
 import type { Cookies } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 
@@ -178,6 +178,79 @@ export async function deleteItemFromCart(
 	}
 	return getCartById(cart!.id);
 }
+export async function getCartHistoryForUser(userId: string) {
+	const [rows] = await db.query(
+		`
+		SELECT c.*, COALESCE(SUM(ci.unit_price), 0) AS total
+		FROM carts c
+		LEFT JOIN cart_items ci ON ci.cart_id = c.id
+		WHERE c.user_id = ?
+		GROUP BY c.id
+		ORDER BY c.created_at DESC
+		`,
+		[userId]
+	);
+	return rows as any[];
+}
+
+export async function getCartItems(cartId: string) {
+	const [rows] = await db.query(
+		`
+		SELECT ci.*, a.title, a.slug
+		FROM cart_items ci
+		LEFT JOIN articles a ON a.id = ci.article_id
+		WHERE ci.cart_id = ?
+		ORDER BY ci.id DESC
+		`,
+		[cartId]
+	);
+	return rows as any[];
+}
+
+export async function clearCart(cartId: string) {
+	await db.query(`DELETE FROM cart_items WHERE cart_id = ?`, [cartId]);
+}
+
+export async function attachCartMetadata(
+	cartId: string,
+	message: string | null,
+	photosFolder: string | null,
+	deliveryDate: Date
+) {
+	await db.query(
+		`UPDATE carts SET customer_message = ?, photos_folder = ?, delivery_date = ? WHERE id = ?`,
+		[message, photosFolder, deliveryDate, cartId]
+	);
+}
+
+export async function completeCart(cartId: string, userId: string | null) {
+	if (userId) {
+		await db.query(
+			`UPDATE carts SET status = 'completed' WHERE id = ? AND user_id = ?`,
+			[cartId, userId]
+		);
+	} else {
+		await db.query(
+			`UPDATE carts SET status = 'completed' WHERE id = ? AND user_id IS NULL`,
+			[cartId]
+		);
+	}
+}
+
+export async function cancelCart(cartId: string, userId: string | null) {
+	if (userId) {
+		await db.query(
+			`UPDATE carts SET status = 'cancelled' WHERE id = ? AND user_id = ?`,
+			[cartId, userId]
+		);
+	} else {
+		await db.query(
+			`UPDATE carts SET status = 'cancelled' WHERE id = ? AND user_id IS NULL`,
+			[cartId]
+		);
+	}
+}
+
 export async function mergeCartIntoUserCart(sourceCartId: string, targetCartId: string) {
 	const [sourceItemsRows] = await db.query(
 		`
