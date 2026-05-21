@@ -1,5 +1,4 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
     import '../styles/app.css';
     import { page } from '$app/state';
     let { children, data } = $props();
@@ -10,30 +9,70 @@
         if (href === '/') return path === '/';
         return path === href || path.startsWith(href + '/');
     }
+
+    const SITE_URL = 'https://www.larecette60.com';
+    const SITE_NAME = 'La Recette';
+    const DEFAULT_TITLE = "Pâtisseries artisanales dans l'Oise | La Recette";
+    const DEFAULT_DESCRIPTION = "Pâtisseries artisanales dans l'Oise : number cakes, gâteaux à thèmes, petits fours sucrés/salés. Ingrédients de qualité et décors faits main. Commandez en ligne.";
+    const OG_IMAGE = `${SITE_URL}/images/larecette.webp`;
+
+    let canonical = $derived(`${SITE_URL}${page.url.pathname === '/' ? '/' : page.url.pathname.replace(/\/$/, '')}`);
+
+    const structuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'Bakery',
+        name: SITE_NAME,
+        url: SITE_URL,
+        image: OG_IMAGE,
+        description: DEFAULT_DESCRIPTION,
+        priceRange: '€€',
+        address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Canny-sur-Matz',
+            addressRegion: 'Oise',
+            addressCountry: 'FR'
+        },
+        areaServed: { '@type': 'AdministrativeArea', name: "Oise" },
+        sameAs: [
+            'https://www.facebook.com/larecette60/',
+            'https://www.instagram.com/larecette_60',
+            'https://www.tiktok.com/@mimimacaron60'
+        ]
+    };
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
-	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pâtisseries artisanales dans l'Oise | La Recette</title>
-    <meta name="description" content="Pâtisseries artisanales dans l'Oise : number cakes, gâteaux à thèmes, petits fours sucrés/salés. Ingrédients de qualité et décors faits main. Commandez en ligne.">
-    <link rel="canonical" href="https://www.larecette60.com/index">
-    <link rel="icon" href="../images/larecette.webp">
+    <title>{DEFAULT_TITLE}</title>
+    <meta name="description" content={DEFAULT_DESCRIPTION}>
+    <link rel="canonical" href={canonical}>
+    <meta name="author" content={SITE_NAME}>
+    <meta name="keywords" content="La recette, Larecette, larecette60, patisserie, oise, compiegne, gourmandises, number cake, cake topper, gateaux a themes, petits fours, artisan, salé, sucré">
+
+    <link rel="icon" type="image/webp" sizes="180x180" href="/images/larecette.webp">
+    <link rel="shortcut icon" href="/images/larecetteIcon.ico">
+    <link rel="apple-touch-icon" href="/images/larecette.webp">
+
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
-    <meta property="og:title" content="Pâtisseries artisanales dans l'Oise | La Recette">
-    <meta property="og:description" content="Number cakes, gâteaux à thèmes, petits fours sucrés/salés. Décors faits main.">
-    <meta property="og:url" content="https://www.larecette60.com/">
-    <meta property="og:image" content="https://www.larecette60.com/styles/images/larecette.webp">
+    <meta property="og:site_name" content={SITE_NAME}>
+    <meta property="og:title" content={DEFAULT_TITLE}>
+    <meta property="og:description" content={DEFAULT_DESCRIPTION}>
+    <meta property="og:url" content={canonical}>
+    <meta property="og:image" content={OG_IMAGE}>
+    <meta property="og:image:alt" content="La Recette — pâtisseries artisanales">
+
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="keywords" content="La recette, Larecette, larecette60, patisserie, oise, compiegne, recette, gourmandises, number cake, cake topper, gateaux a themes, petits fours, artisans, artisan, salé, sucré">
-    <meta name="author" content="LaRecette"> 
-    <link rel="preload" as="image" href="../images/Boutique.png">
+    <meta name="twitter:title" content={DEFAULT_TITLE}>
+    <meta name="twitter:description" content={DEFAULT_DESCRIPTION}>
+    <meta name="twitter:image" content={OG_IMAGE}>
+
+    <link rel="preload" as="image" href="/images/Boutique.png">
+
+    {@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</` + `script>`}
 </svelte:head>
 
 <header>
-    <a href="/"><img src="../images/larecette.webp" height="90" width="90" alt="LaRecette" decoding="async"></a>
+    <a href="/"><img src="/images/larecette.webp" height="90" width="90" alt="La Recette - pâtisserie artisanale" decoding="async"></a>
     <nav class="desktop-nav">
         <a href="/events" class:active={isActive('/events')} aria-current={isActive('/events') ? 'page' : undefined}>Evenements</a>
         <a href="/articles" class:active={isActive('/articles')} aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a>

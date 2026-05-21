@@ -8,11 +8,39 @@
     let rations = $derived(article.slices.match(/\d+/g)?.map(Number) ?? []);
 
     let popup: HTMLDialogElement;
+
+    const SITE_URL = 'https://www.larecette60.com';
+    let imageUrl = $derived(
+        `${SITE_URL}${article.cover_image_key ? `/uploads/${article.cover_image_key}` : `/images/${article.slug}.webp`}`
+    );
+    let productSchema = $derived({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: article.title,
+        description: article.subtitle,
+        image: imageUrl,
+        brand: { '@type': 'Brand', name: 'La Recette' },
+        offers: {
+            '@type': 'Offer',
+            url: `${SITE_URL}/articles/${article.slug}`,
+            priceCurrency: 'EUR',
+            price: String(article.price),
+            availability: 'https://schema.org/InStock'
+        }
+    });
 </script>
 
 <svelte:head>
     <title>{article.title} — La Recette</title>
     <meta name="description" content={article.subtitle} />
+    <meta property="og:type" content="product">
+    <meta property="og:title" content={`${article.title} — La Recette`}>
+    <meta property="og:description" content={article.subtitle}>
+    <meta property="og:image" content={imageUrl}>
+    <meta name="twitter:title" content={`${article.title} — La Recette`}>
+    <meta name="twitter:description" content={article.subtitle}>
+    <meta name="twitter:image" content={imageUrl}>
+    {@html `<script type="application/ld+json">${JSON.stringify(productSchema)}</` + `script>`}
 </svelte:head>
 
 <Hero
@@ -23,7 +51,7 @@
 
 <div class="page-content">
     <article class="detail">
-        <img class="detail-img" src="/images/{article.slug}.webp" alt={article.title} />
+        <img class="detail-img" src={article.cover_image_key ? `/uploads/${article.cover_image_key}` : `/images/${article.slug}.webp`} alt={article.title} />
         <div class="detail-body">
             <h1 class="section-title">{article.title}</h1>
             <h3>{article.subtitle}</h3>
