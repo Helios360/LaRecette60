@@ -12,5 +12,10 @@ export const auth = betterAuth({
             city:    { type: "string", required: false },
             role:    { type: "number", required: false, defaultValue: 0, input: false },
         },
-    }
+        deleteUser: { enabled: true },
+        changeEmail: { enabled: true },
+    },
 });
+
+export type Auth = typeof auth;
+export type SessionData = Awaited<ReturnType<typeof auth.api.getSession>>;

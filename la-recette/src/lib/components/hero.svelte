@@ -1,11 +1,25 @@
 <script lang="ts">
-    let { title, subtitle, cta, link, img, background = "/images/Boutique.png" } = $props();
+    let {
+        title,
+        subtitle,
+        cta = '',
+        link = '',
+        img = '',
+        background = "/images/Boutique.png"
+    }: {
+        title: string;
+        subtitle: string;
+        cta?: string;
+        link?: string;
+        img?: string;
+        background?: string;
+    } = $props();
 </script>
 
-<div class="hero" style="--hero-bg: url('{background}')">
+<div class="hero" class:has-img={!!img} style="--hero-bg: url('{background}')">
     <div id="infos">
         <h1>{title}</h1>
-        <h2>{subtitle}</h2><br><br><br><br><br>
+        <h2>{subtitle}</h2>
 		{#if cta}
 			<a class="cta" href="/{link}">{cta}</a>
 		{/if}
@@ -18,83 +32,73 @@
 </div>
 
 <style>
-.hero{
-	background-image: 
-	linear-gradient(
-		rgba(97, 44, 18, 0.8),
-		rgba(102, 60, 60, 0.4)), 
-	var(--hero-bg);
+h1, h2 { color: var(--primary); }
+.hero {
+	background-image:
+		linear-gradient(rgba(97, 44, 18, 0.8), rgba(102, 60, 60, 0.4)),
+		var(--hero-bg);
 	background-size: cover;
 	background-position: 50%;
 	background-repeat: no-repeat;
+	background-attachment: fixed;
 	min-height: 90svh;
 	height: 90vh;
-	padding: 0rem 2rem;
+	padding: 0 2rem;
 	width: 100%;
 	color: var(--primary);
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	background-attachment: fixed;
 }
 .hero > div {
-	width:50vw;
+	width: 50vw;
+	height: 50%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	height: 50%;
+	gap: 1.5rem;
 }
-.hero > span > img{
-	top:40%;
-	left:40%;
+.hero > span > img {
 	position: absolute;
+	top: 40%;
+	left: 40%;
 	z-index: 2;
-	width:60%;
+	width: 60%;
 	height: auto;
 	border-radius: 40px;
 	object-fit: contain;
 }
-.cta{
-	font-family: "Visibility", serif;
+.hero :global(.cta) {
+	border-color: var(--primary);
+	background-color: transparent;
+	color: var(--primary);
 	font-size: 1.5rem;
-	border: 2px var(--primary) solid;
-	padding:20px;
-	margin:20px 0;
-	border-radius: 12px;
+	padding: 20px;
+	margin: 20px 0;
 	width: 50%;
-	text-align: center;
-	transition: all 0.5s ease-in-out;
 }
-.cta:hover{
+.hero :global(.cta:hover) {
 	background-color: var(--primary);
 	color: var(--secondary);
 }
 
-
-@media (max-width:640px) {
-    .hero{
-        background-position: 50% 50%;
-    }
-}
-@media (max-width:1700px){
-	.hero > span > img{
-		top:40%;
-	}
-}
-@media (max-width:800px), (hover: none), (pointer: coarse){
-	.hero{
+@media (max-width: 800px), (hover: none), (pointer: coarse) {
+	.hero {
 		text-align: center;
-		background-attachment: scroll;
 	}
-	.hero > div{width: 100%;}
-	.hero > span > img{
-		top:65%;
-		left:10%;
-		width:80%;
+	.hero > div {
+		width: 100%;
+		justify-content: center;
 	}
-	.cta{width: 100%;}
+	.hero.has-img > div { height: 50%; justify-content: space-around; }
+	.hero > span > img {
+		top: 65%;
+		left: 10%;
+		width: 80%;
+	}
+	.hero :global(.cta) { width: 100%; }
 }
-@media (max-width:400px) {
-	.hero > span > img{ top:70%; }
+@media (max-width: 400px) {
+	.hero > span > img { top: 70%; }
 }
 </style>
