@@ -20,7 +20,7 @@
 
     function imgFor(article: any) {
         return article.cover_image_key
-            ? `/images/${article.cover_image_key}`
+            ? `/uploads/${article.cover_image_key}`
             : `/images/${article.slug}.webp`;
     }
     function fmtPrice(n: any) {

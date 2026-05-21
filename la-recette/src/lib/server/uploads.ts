@@ -1,6 +1,7 @@
 import { mkdir, unlink, writeFile } from 'node:fs/promises';
-import { extname, join } from 'node:path';
+import { extname, isAbsolute, join, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import { env } from '$env/dynamic/private';
 
 export const MAX_CART_PHOTOS = 3;
 export const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
@@ -14,8 +15,16 @@ const MIME_EXTENSIONS: Record<string, string> = {
     'image/gif': '.gif'
 };
 
-export const CART_PHOTOS_ROOT = join(process.cwd(), 'uploads', 'cart-photos');
-export const ARTICLE_IMAGES_ROOT = join(process.cwd(), 'static', 'images', 'articles');
+// Root for runtime-written files. Must live OUTSIDE the build output so it
+// survives redeploys. Override with UPLOADS_DIR (absolute path) in production.
+export const UPLOADS_ROOT = (() => {
+    const configured = env.UPLOADS_DIR?.trim();
+    if (configured) return isAbsolute(configured) ? configured : resolve(configured);
+    return join(process.cwd(), 'uploads');
+})();
+
+export const CART_PHOTOS_ROOT = join(UPLOADS_ROOT, 'cart-photos');
+export const ARTICLE_IMAGES_ROOT = join(UPLOADS_ROOT, 'articles');
 
 export function validateCartPhoto(file: File): string | null {
     if (file.size === 0) return 'Fichier vide';
@@ -70,7 +79,7 @@ export async function deleteArticleImage(coverImageKey: string | null | undefine
     const safe = coverImageKey.replace(/^\/+/, '');
     if (!safe.startsWith('articles/')) return;
     try {
-        await unlink(join(process.cwd(), 'static', 'images', safe));
+        await unlink(join(UPLOADS_ROOT, safe));
     } catch {
         // file may not exist anymore — ignore
     }

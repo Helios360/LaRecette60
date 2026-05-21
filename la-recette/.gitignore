@@ -22,6 +22,8 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# User uploads
+# User uploads (runtime-written; must persist across deploys but stay out of git)
 /uploads/cart-photos/*
 !/uploads/cart-photos/.gitkeep
+/uploads/articles/*
+!/uploads/articles/.gitkeep
