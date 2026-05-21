@@ -1,12 +1,10 @@
 <script lang="ts">
     import Hero from '$lib/components/hero.svelte';
     import Card from '$lib/components/card.svelte';
-    import { onMount } from 'svelte';
     import type { PageData } from '../$types';
     import { enhance } from '$app/forms';
     let { data } : { data: PageData } = $props();
 
-    let canvas: HTMLCanvasElement;
     let search = $state('');
     let selectedCategory = $state('');
     function normalize(value: string) { return value.toLowerCase().trim(); }
@@ -23,37 +21,6 @@
             return matchesSearch && matchesCategory;
         })
     })
-
-    onMount(() => {
-        let ctx = canvas.getContext("2d");
-        if (!ctx) return;
-        function drawDots(){
-            const parent = canvas.parentElement;
-            if(!parent) return;
-            const rect = parent.getBoundingClientRect();
-            const dpr = window.devicePixelRatio || 1;
-
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-            canvas.style.width = `${rect.width}px`;
-            canvas.style.height = `${rect.height}px`;
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            ctx.clearRect(0, 0, rect.width, rect.height);
-            const spacing = 28;
-            const radius = 2;
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-            for(let y = spacing / 2; y < rect.height; y += spacing){
-                for (let x = spacing; x < rect.width; x+= spacing){
-                    ctx.beginPath();
-                    ctx.arc(x, y, radius, 0, Math.PI * 2 );
-                    ctx.fill();
-                }
-            }
-        }
-        drawDots();
-        window.addEventListener('resize', drawDots);
-        return () => { window.removeEventListener('resize', drawDots) };
-    });
 </script>
 <Hero 
     title="Commande" 
@@ -80,34 +47,37 @@
         </div>
         <div class="cart">
             <span><p>Panier :</p><hr></span>
-            {#if !data.cart?.items?.length}
-                <h3>Votre panier est vide</h3>
-            {:else}
-                {#each data.cart.items as item}
-                {@const article = data.articles.find(a=>a.id === item.article_id)}
-                <span class="cart-item">
-                    <p>{item.quantity} {article?.title}</p>
-                    <p>{item.slices} parts</p>
-                    <span class="buttons-holder">
-                        <form method="POST" action="?/deleteFromCart" use:enhance>
-                            <input type="hidden" name="articleId" value={item.article_id}/>
-                            <input type="hidden" name="slices" value={item.slices}/>
-                            <input type="hidden" name="quantity" value={item.quantity}/>
-                            <button class="common-button" type="submit">-</button>
-                        </form>
-                        <form method="POST" action="?/addToCart" use:enhance>
-                            <input type="hidden" name="articleId" value={item.article_id}/>
-                            <input type="hidden" name="slices" value={item.slices}/>
-                            <input type="hidden" name="quantity" value={item.quantity}/>
-                            <button class="common-button" type="submit">+</button>
-                        </form>
+            <div>
+                {#if !data.cart?.items?.length}
+                    <h3>Votre panier est vide</h3>
+                {:else}
+                    {#each data.cart.items as item}
+                    {@const article = data.articles.find(a=>a.id === item.article_id)}
+                    <span class="cart-item">
+                        <p>{item.quantity} {article?.title}</p>
+                        <p>{item.slices} parts</p>
+                        <span class="buttons-holder">
+                            <form method="POST" action="?/deleteFromCart" use:enhance>
+                                <input type="hidden" name="articleId" value={item.article_id}/>
+                                <input type="hidden" name="slices" value={item.slices}/>
+                                <input type="hidden" name="quantity" value={item.quantity}/>
+                                <button class="common-button" type="submit">-</button>
+                            </form>
+                            <form method="POST" action="?/addToCart" use:enhance>
+                                <input type="hidden" name="articleId" value={item.article_id}/>
+                                <input type="hidden" name="slices" value={item.slices}/>
+                                <input type="hidden" name="quantity" value={item.quantity}/>
+                                <button class="common-button" type="submit">+</button>
+                            </form>
+                        </span>
                     </span>
-                </span>
-                {/each}
-            {/if}
+                    {/each}
+                {/if}
             </div>
+            <br><a class="order-link" href="/cart">Commander</a>
+        </div>
+
     </aside>
-    <canvas bind:this={canvas} class="bg-canvas"></canvas>
     <div class="contain-cards">
         {#if filteredArticles.length === 0}
             <p>Aucun article n'as été trouvé...</p>
@@ -115,7 +85,7 @@
             {#each filteredArticles as article (article.id)}
             <Card
                 itemId={article.id}
-                img="/images/{article.slug}.webp"
+                img={article.cover_image_key ? `/images/${article.cover_image_key}` : `/images/${article.slug}.webp`}
                 title={article.title}
                 subtitle={article.subtitle}
                 ration={article.slices.match(/\d+/g)?.map(Number) || []}
@@ -126,82 +96,78 @@
     </div>
 </div>
 <style>
-.page-content{
-    position:relative;
-	width: 100%;
-	background-color: var(--tertiary);
-	margin-top: -25px;
-	border-radius: var(--bigger-radius) var(--bigger-radius) 0 0;
-	display: flex;
-	flex-direction: row;
+.page-content {
+    flex-direction: row;
     justify-content: center;
-	padding:4rem 3rem;
-	gap:2rem;
+    align-items: flex-start;
+    gap: 2rem;
 }
-.page-content > div{
-    max-width: 1400px;
-}
-.contain-cards{
+.contain-cards {
     display: flex;
     flex-wrap: wrap;
-    gap:2rem;
+    gap: 2rem;
 }
 aside {
     z-index: 5;
+    min-width: 250px;
+    height: 700px;
+    padding: 1rem;
     border-radius: 14px;
-    border: 4px dashed var(--secondary);
     overflow: hidden;
     background-color: var(--primary);
-    min-width: 250px;
-    padding:1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.search{
+.search,
+.cart > div {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 1rem;
 }
-.cart{
-    display: flex;
-    flex-direction: column;
-    gap:1rem;
-}
-.cart-item{
-    display: flex;
-    flex-direction: column;
-    gap:0.2rem;
-    padding:0.5rem;
+.search { gap: 0.7rem; }
+.cart-item {
+    width: 100%;
+    padding: 0.5rem;
     border: solid 2px var(--secondary);
     border-radius: var(--smaller-radius);
-    width: 100%;
-}
-.common-button{
     display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.common-button {
     width: 100%;
-    font-size: 25px;
     padding: 0;
+    font-size: 25px;
     line-height: 1;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
-form{width: 100%;}
-@media (max-width:800px), (hover: none), (pointer: coarse){
-	.page-content{padding: 2rem 1rem;}
+form { width: 100%; }
+.order-link {
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--secondary);
+    background-color: var(--secondary);
+    color: var(--primary);
+    border-radius: var(--smaller-radius);
+    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-/* Canvas */
-.bg-canvas{
-    position:absolute;
-    width: 100%;
-    height: 100%;
-    top:0;
-    left:-10px;
-    z-index: 0;
-    pointer-events: none;
-}
-.page-content > *:not(.bg-canvas){
-    position: relative;
-    z-index: 1;
+.order-link:hover { background-color: var(--primary); color: var(--secondary); }
+@media (max-width:614px){
+    .page-content{
+        flex-direction: column;
+    }
+    aside{
+        width: 100%;
+        height: 500px;
+    }
+    .cart > div {
+        height:200px;
+        overflow: scroll;
+    }
 }
 </style>
