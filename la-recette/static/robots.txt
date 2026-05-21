@@ -1,4 +1,11 @@
-# allow crawling everything by default
 User-agent: *
-Disallow:
-    true
+Allow: /
+
+# Private areas — no SEO value, often gated anyway
+Disallow: /admin
+Disallow: /account
+Disallow: /cart
+Disallow: /uploads/cart-photos
+Disallow: /api/
+
+Sitemap: https://www.larecette60.com/sitemap.xml

@@ -22,9 +22,17 @@
         })
     })
 </script>
-<Hero 
-    title="Commande" 
-    subtitle="Feuilletez, Trouvez, commandez." 
+
+<svelte:head>
+    <title>Nos pâtisseries | La Recette</title>
+    <meta name="description" content="Découvrez et commandez nos pâtisseries artisanales : number cakes, gâteaux à thèmes, petits fours sucrés et salés, fait main dans l'Oise.">
+    <meta property="og:title" content="Nos pâtisseries | La Recette">
+    <meta property="og:description" content="Découvrez et commandez nos pâtisseries artisanales : number cakes, gâteaux à thèmes, petits fours sucrés et salés.">
+</svelte:head>
+
+<Hero
+    title="Commande"
+    subtitle="Feuilletez, Trouvez, commandez."
     background="/images/boutique-irl.webp"
     />
     
