@@ -7,7 +7,6 @@ INSERT INTO categories (name) VALUES
   ('Gâteaux à thème'),
   ('Macarons'),
   ('Mignardises'),
-  ('Moelleux'),
   ('Cupcakes'),
   ('Traiteur');
 

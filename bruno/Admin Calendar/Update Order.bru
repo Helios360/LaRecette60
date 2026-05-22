@@ -1,0 +1,18 @@
+meta {
+  name: Update Order
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/admin/calendar?/update
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  id: {{orderId}}
+  status: completed
+  delivery_date: 2026-07-01
+  customer_message: Commande prête à 14h
+}

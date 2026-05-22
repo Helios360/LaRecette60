@@ -1,16 +1,65 @@
+# docker-compose.yaml
+# Stack complet pour La Recette : app SvelteKit + MySQL + Adminer.
+# Lancement : `docker compose up` (depuis la racine du projet).
+
 services:
+  # API / front SvelteKit (Node.js)
+  app:
+    build:
+      context: ./la-recette
+    container_name: larecette-app
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    ports:
+      - "5173:5173"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 5173
+      ORIGIN: http://localhost:5173
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: http://localhost:5173
+    volumes:
+      # Bind mount du code pour le hot reload via Vite
+      - ./la-recette:/app
+      # Volume anonyme pour préserver node_modules du conteneur
+      - /app/node_modules
+
+  # Base de données MySQL
   mysql:
-    image: mysql:latest
+    image: mysql:8
     container_name: larecette-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: larecette
-      MYSQL_USER: larecetteuser
-      MYSQL_PASSWORD: macaronnette
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3305:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      # Scripts SQL exécutés au premier démarrage, dans l'ordre alphabétique :
+      # 01-init.sql (schéma) puis 02-seed.sql (données).
+      - ./db/init/01-init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+
+  # Adminer : interface web pour MySQL (équivalent de Mongo Express)
+  adminer:
+    image: adminer:latest
+    container_name: larecette-adminer
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+
 volumes:
   mysql_data:

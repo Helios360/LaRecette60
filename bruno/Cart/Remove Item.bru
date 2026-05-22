@@ -1,0 +1,15 @@
+meta {
+  name: Remove Item
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/cart?/removeItem
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  itemId: {{cartItemId}}
+}

@@ -1,0 +1,16 @@
+meta {
+  name: Checkout
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/cart?/checkout
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  deliveryDate: 2026-07-01
+  message: Merci d'écrire "Bon anniversaire" sur le gâteau
+}

@@ -1,0 +1,16 @@
+meta {
+  name: Delete From Cart
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/cart?/deleteFromCart
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  articleId: {{articleId}}
+  slices: 8
+}

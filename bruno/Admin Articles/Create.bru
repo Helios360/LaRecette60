@@ -1,0 +1,21 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/admin/articles?/create
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  slug: tarte-pommes-test
+  title: Tarte aux pommes (test)
+  subtitle: Une tarte de test depuis Bruno
+  slices: 6,8,10
+  price: 18.50
+  category_id: 1
+  details_html: <p>Délicieuse tarte aux pommes</p>
+}

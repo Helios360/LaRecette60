@@ -1,0 +1,16 @@
+meta {
+  name: Add to Cart
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/cart?/addToCart
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  articleId: {{articleId}}
+  slices: 8
+}

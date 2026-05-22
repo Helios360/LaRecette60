@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "La Recette 60 API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
