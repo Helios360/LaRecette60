@@ -45,8 +45,8 @@ input {
 /* Fonts */
 @font-face {
     font-family: "Artistic";
-    src: url("/Fonts/Arimo/Arimo-VariableFont_wght.ttf");
-    font-weight: normal;
+    src: url("/Fonts/Nickainley/Nickainley.ttf");
+    font-weight: 500;
     font-style: normal;
 }
 @font-face {

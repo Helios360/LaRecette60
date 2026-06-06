@@ -9,7 +9,7 @@
     }
 </script>
 <Hero 
-    title="La Recette Pâtisserie"
+    title="La Recette Patisserie"
     subtitle="INTERFACE ADMIN"
     background="/images/Boutique.png"
     />

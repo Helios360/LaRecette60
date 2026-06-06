@@ -422,7 +422,7 @@
         </section>
 
         <section class="account-card card">
-            <h2>Mes données (RGPD)</h2>
+            <h2>Mes donnees (RGPD)</h2>
             <p>Exportez l'ensemble de vos données personnelles (article 20 du RGPD) ou supprimez définitivement votre compte (article 17).</p>
             <div class="actions">
                 <form method="POST" action="?/exportData" use:enhance>

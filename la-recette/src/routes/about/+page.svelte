@@ -8,7 +8,7 @@
 </svelte:head>
 
 <Hero
-    title="À propos de La Recette"
+    title="A propos de La Recette"
     subtitle="Une pâtisserie artisanale au cœur de l'Oise"
     background="/images/Boutique.png"
 />
@@ -88,7 +88,7 @@
                 <p class="detail">en 8 / 10 / 12 parts</p>
             </div>
             <div class="tarif-item card">
-                <h3>Gâteaux à thème</h3>
+                <h3>Gateaux a theme</h3>
                 <p class="price">à partir de 5,50 € la part</p>
                 <p class="detail">décors personnalisés</p>
             </div>
@@ -121,7 +121,7 @@
     </section>
 
     <section class="decors card split-content">
-        <h2 class="section-title">Plus de décors .</h2>
+        <h2 class="section-title">Plus de decors .</h2>
         <span>
             <p><strong>Plaque décor fait main :</strong> 10 € (en fonction de la taille du décor).</p>
             <p><strong>Photo en sucre / disque :</strong> 10 €.</p>
@@ -130,7 +130,7 @@
     </section>
 
     <section class="cta-section card">
-        <h2 class="section-title">Prêt à commander ?</h2>
+        <h2 class="section-title">Pret a commander ?</h2>
         <p>Découvrez la carte et passez commande en ligne, ou contactez-nous directement pour un projet sur mesure.</p>
         <div class="cta-buttons">
             <a class="cta" href="/articles">Voir la carte</a>

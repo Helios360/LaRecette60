@@ -8,7 +8,7 @@
 </svelte:head>
 
 <Hero
-    title="Mariages & Baptêmes"
+    title="Mariages & Baptemes"
     subtitle="Des créations sur mesure pour vos plus beaux jours"
     cta="Demander un devis"
     link="about"
@@ -17,7 +17,7 @@
 
 <div class="page-content events-page">
     <section class="card split-content intro">
-        <h2 class="section-title">Vos grands événements .</h2>
+        <h2 class="section-title">Vos grands evenements .</h2>
         <span>
             <p>La Recette accompagne vos plus belles occasions : mariages, baptêmes, communions et fiançailles.</p>
             <p>De la <em>pièce montée classique</em> au <em>fameux wedding cake</em>, chaque création est imaginée avec vous pour clore le repas sur une note gourmande et inoubliable.</p>
@@ -47,7 +47,7 @@
         <div class="event-card card">
             <div class="event-image" style="background-image: url('/images/cupcakes-perso.webp')"></div>
             <div class="event-content">
-                <h2 class="section-title">Baptêmes & Communions</h2>
+                <h2 class="section-title">Baptemes & Communions</h2>
                 <p>Pour célébrer l'arrivée d'un enfant ou un moment de partage en famille, La Recette imagine des douceurs tendres et joyeuses.</p>
                 <p>Des décors faits main, des couleurs douces et des saveurs choisies avec soin pour faire briller les yeux des petits comme des grands.</p>
                 <ul class="feature-list">
@@ -62,7 +62,7 @@
     </section>
 
     <section class="card split-content traiteur">
-        <h2 class="section-title">Et côté salé ?</h2>
+        <h2 class="section-title">Et cote sale ?</h2>
         <span>
             <p>Pour compléter le buffet, je propose également une sélection <strong>traiteur</strong> : navettes fraîcheur, mini-burgers, mini-kebabs et plateaux apéritifs.</p>
             <p>De quoi prolonger le plaisir tout au long de la réception, avec une qualité artisanale et des saveurs travaillées.</p>
@@ -71,16 +71,16 @@
     </section>
 
     <section class="steps">
-        <h2 class="section-title steps-title">Comment ça se passe .</h2>
+        <h2 class="section-title steps-title">Comment ca se passe .</h2>
         <div class="steps-grid">
             <div class="step card">
                 <span class="step-number">1</span>
-                <h3>Échange</h3>
+                <h3>Echange</h3>
                 <p>Vous me contactez par téléphone ou par mail pour me parler de votre événement, de la date et du nombre de convives.</p>
             </div>
             <div class="step card">
                 <span class="step-number">2</span>
-                <h3>Création</h3>
+                <h3>Creation</h3>
                 <p>Je vous propose une création sur mesure : saveurs, formes, décors, couleurs. Tout est adaptable à vos envies.</p>
             </div>
             <div class="step card">
@@ -90,14 +90,14 @@
             </div>
             <div class="step card">
                 <span class="step-number">4</span>
-                <h3>Réception</h3>
+                <h3>Reception</h3>
                 <p>Vous récupérez votre commande à la boutique de Canny-sur-Matz, fraîche et prête pour le grand jour.</p>
             </div>
         </div>
     </section>
 
     <section class="cta-section card">
-        <h2 class="section-title">Parlons de votre événement .</h2>
+        <h2 class="section-title">Parlons de votre evenement .</h2>
         <p>Chaque mariage et chaque baptême est unique. Contactez-moi pour un devis personnalisé et donnons vie à votre projet gourmand.</p>
         <div class="cta-buttons">
             <a class="cta" href="tel:0659723666">06 59 72 36 66</a>
