@@ -48,11 +48,10 @@
     });
 </script>
 <Hero
-    title="La Recette Pâtisserie"
+    title="La Recette Patisserie"
     subtitle="Bienvenue dans un monde de douceur et de gourmandises"
     cta="Commander"
     link="articles"
-    img="/images/cakesHero.webp"
     background="/images/Boutique.png"
     />
 <div class="page-content home">
@@ -67,7 +66,7 @@
     </section>
 
     <section class="gallery-section">
-        <h2 class="section-title gallery-title">Découvrez la carte .</h2>
+        <h2 class="section-title gallery-title">Decouvrez la carte .</h2>
         <p class="gallery-subtitle">Cliquez sur une catégorie pour la parcourir</p>
         <div class="menu-gallery">
             {#each galleryItems as item, idx (item.category.id)}
@@ -135,7 +134,7 @@
 
     <section class="events-teaser card">
         <div class="events-content">
-            <h2 class="section-title">Mariages & Baptêmes</h2>
+            <h2 class="section-title">Mariages & Baptemes</h2>
             <p>De la pièce montée traditionnelle au wedding cake à étages, La Recette accompagne vos plus belles occasions avec des créations sur mesure.</p>
             <a class="cta" href="/events">Découvrir les prestations</a>
         </div>

@@ -7,6 +7,8 @@
     let { data, form }: { data: PageData; form: ActionData } = $props();
 
     const MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    // Used in the Artistic-font h2 (Nickainley misses è/û/é glyphs).
+    const MONTHS_ASCII = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
     const WEEKDAYS = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
 
     function buildMatrix(year: number, month: number, orders: any[]) {
@@ -118,7 +120,7 @@
 
 <div class="admin-card card">
     <div class="head">
-        <h2>Agenda — {MONTHS[data.month]} → {MONTHS[(data.month + data.agendaMonths - 1) % 12]}</h2>
+        <h2>Agenda — {MONTHS_ASCII[data.month]} → {MONTHS_ASCII[(data.month + data.agendaMonths - 1) % 12]}</h2>
         <span class="head-count">{data.agenda.length} commande{data.agenda.length > 1 ? 's' : ''}</span>
     </div>
     {#if !data.agenda.length}
