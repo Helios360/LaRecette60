@@ -117,7 +117,7 @@
 <footer>
     <img src="/images/larecette.webp" width="120" height="120" alt="La Recette" loading="lazy" decoding="async">
     <div class="socials">
-        <h3>Réseaux sociaux</h3><br>
+        <h3>Reseaux sociaux</h3><br>
         <div class="social-footer">
             <a href="https://www.facebook.com/larecette60/" aria-label="Facebook LaRecette60">
             <svg width="50" height="50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" fill="var(--secondary)">
@@ -145,6 +145,8 @@
 
 <style>
 .desktop-nav > a {
+    font-family: "Visibility", serif;
+    font-weight:400;
     transition: color 0.2s ease;
 }
 .desktop-nav > a.active {

@@ -91,7 +91,7 @@
     {#if form?.message}<p class="alert ok">{form.message}</p>{/if}
 
     <section class="card cart-panel">
-        <h2 class="section-title">Récapitulatif</h2>
+        <h2 class="section-title">Recapitulatif</h2>
 
         {#if !items.length}
             <p>Votre panier est vide.</p>
