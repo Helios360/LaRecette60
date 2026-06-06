@@ -3,10 +3,11 @@
     import Card from '$lib/components/card.svelte';
     import type { PageData } from '../$types';
     import { enhance } from '$app/forms';
+    import { page } from '$app/state';
     let { data } : { data: PageData } = $props();
 
     let search = $state('');
-    let selectedCategory = $state('');
+    let selectedCategory = $state(page.url.searchParams.get('category') ?? '');
     function normalize(value: string) { return value.toLowerCase().trim(); }
 
     let filteredArticles = $derived.by(() => {
