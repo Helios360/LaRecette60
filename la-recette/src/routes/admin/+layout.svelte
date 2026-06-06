@@ -9,7 +9,7 @@
     }
 </script>
 <Hero 
-    title="La Recette Pâtisserie" 
+    title="La Recette Pâtisserie"
     subtitle="INTERFACE ADMIN"
     background="/images/Boutique.png"
     />
@@ -21,6 +21,7 @@
             <a href="/admin/clients" class:active={isActive('/admin/clients')}>Clients</a>
             <a href="/admin/calendar" class:active={isActive('/admin/calendar')}>Calendrier</a>
             <a href="/admin/articles" class:active={isActive('/admin/articles')}>Articles</a>
+            <a href="/admin/categories" class:active={isActive('/admin/categories')}>Catégories</a>
         </nav>
     </aside>
     <section class="admin-content">

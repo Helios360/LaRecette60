@@ -191,3 +191,32 @@ export async function listCategories() {
     const [rows] = await db.query(`SELECT * FROM categories ORDER BY name`);
     return rows as any[];
 }
+
+export async function listCategoriesWithCounts() {
+    const [rows] = await db.query(
+        `SELECT c.id, c.name, COUNT(a.id) AS article_count
+         FROM categories c
+         LEFT JOIN articles a ON a.category_id = c.id
+         GROUP BY c.id
+         ORDER BY c.name`
+    );
+    return rows as any[];
+}
+
+export async function getCategory(id: number) {
+    const [rows] = await db.query(`SELECT * FROM categories WHERE id = ? LIMIT 1`, [id]);
+    return (rows as any[])[0] ?? null;
+}
+
+export async function createCategory(name: string) {
+    const [result]: any = await db.query(`INSERT INTO categories (name) VALUES (?)`, [name]);
+    return result.insertId as number;
+}
+
+export async function updateCategory(id: number, name: string) {
+    await db.query(`UPDATE categories SET name = ? WHERE id = ?`, [name, id]);
+}
+
+export async function deleteCategory(id: number) {
+    await db.query(`DELETE FROM categories WHERE id = ?`, [id]);
+}
