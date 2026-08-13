@@ -1,5 +1,6 @@
 <script lang="ts">
     import Hero from '$lib/components/hero.svelte';
+    import { base } from '$app/paths';
     import { onMount } from 'svelte';
     import type { PageData } from './$types';
 
@@ -52,7 +53,7 @@
     subtitle="Bienvenue dans un monde de douceur et de gourmandises"
     cta="Commander"
     link="articles"
-    background="/images/Boutique.png"
+    background="/images/cakesHero.webp"
     />
 <div class="page-content home">
     <section class="about card split-content">
@@ -76,7 +77,7 @@
                     {:else}
                         {#each item.articles as article, i (article.id)}
                             <img
-                                src="/images/{article.slug}.webp"
+                                src={article.cover_image_key ? `${base}${article.cover_image_key.includes('/') ? '/uploads/' : '/images/'}${article.cover_image_key}` : `${base}/images/${article.slug}.webp`}
                                 alt={article.title}
                                 class="slide"
                                 class:active={activeIndices[idx] === i}
@@ -138,7 +139,7 @@
             <p>De la pièce montée traditionnelle au wedding cake à étages, La Recette accompagne vos plus belles occasions avec des créations sur mesure.</p>
             <a class="cta" href="/events">Découvrir les prestations</a>
         </div>
-        <div class="events-image" style="background-image: url('/images/macaron-tower.webp')"></div>
+        <div class="events-image" style="background-image: url('{base}/images/macaron-tower.webp')"></div>
     </section>
 
     <section class="cta-section card">

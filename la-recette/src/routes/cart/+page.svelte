@@ -1,5 +1,6 @@
 <script lang="ts">
     import Hero from '$lib/components/hero.svelte';
+    import { base } from '$app/paths';
     import { enhance } from '$app/forms';
     import type { PageData, ActionData } from './$types';
 
@@ -102,7 +103,7 @@
                     <li class="cart-row">
                         <img
                             class="thumb"
-                            src="/images/{item.slug}.webp"
+                            src={item.cover_image_key ? `${base}${item.cover_image_key.includes('/') ? '/uploads/' : '/images/'}${item.cover_image_key}` : `${base}/images/${item.slug}.webp`}
                             alt={item.title ?? `Article #${item.article_id}`}
                         />
                         <div class="info">

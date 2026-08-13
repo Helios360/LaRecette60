@@ -1,5 +1,6 @@
 <script lang="ts">
     import '../styles/app.css';
+    import { base } from '$app/paths';
     import { page } from '$app/state';
     let { children, data } = $props();
     let menuOpen = $state(false);
@@ -14,7 +15,7 @@
     const SITE_NAME = 'La Recette';
     const DEFAULT_TITLE = "Pâtisseries artisanales dans l'Oise | La Recette";
     const DEFAULT_DESCRIPTION = "Pâtisseries artisanales dans l'Oise : number cakes, gâteaux à thèmes, petits fours sucrés/salés. Ingrédients de qualité et décors faits main. Commandez en ligne.";
-    const OG_IMAGE = `${SITE_URL}/images/larecette.webp`;
+    const OG_IMAGE = `${SITE_URL}${base}/images/larecette.webp`;
 
     let canonical = $derived(`${SITE_URL}${page.url.pathname === '/' ? '/' : page.url.pathname.replace(/\/$/, '')}`);
 
@@ -48,9 +49,9 @@
     <meta name="author" content={SITE_NAME}>
     <meta name="keywords" content="La recette, Larecette, larecette60, patisserie, oise, compiegne, gourmandises, number cake, cake topper, gateaux a themes, petits fours, artisan, salé, sucré">
 
-    <link rel="icon" type="image/webp" sizes="180x180" href="/images/larecette.webp">
-    <link rel="shortcut icon" href="/images/larecetteIcon.ico">
-    <link rel="apple-touch-icon" href="/images/larecette.webp">
+    <link rel="icon" type="image/webp" sizes="180x180" href="{base}/images/larecette.webp">
+    <link rel="shortcut icon" href="{base}/images/larecetteIcon.ico">
+    <link rel="apple-touch-icon" href="{base}/images/larecette.webp">
 
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
@@ -66,13 +67,13 @@
     <meta name="twitter:description" content={DEFAULT_DESCRIPTION}>
     <meta name="twitter:image" content={OG_IMAGE}>
 
-    <link rel="preload" as="image" href="/images/Boutique.png">
+    <link rel="preload" as="image" href="{base}/images/Boutique.png">
 
     {@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</` + `script>`}
 </svelte:head>
 
 <header>
-    <a href="/"><img src="/images/larecette.webp" height="90" width="90" alt="La Recette - pâtisserie artisanale" decoding="async"></a>
+    <a href="{base}/"><img src="{base}/images/larecette.webp" height="90" width="90" alt="La Recette - pâtisserie artisanale" decoding="async"></a>
     <nav class="desktop-nav">
         <a href="/events" class:active={isActive('/events')} aria-current={isActive('/events') ? 'page' : undefined}>Evenements</a>
         <a href="/articles" class:active={isActive('/articles')} aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a>
@@ -115,7 +116,7 @@
 </main>
 
 <footer>
-    <img src="/images/larecette.webp" width="120" height="120" alt="La Recette" loading="lazy" decoding="async">
+    <img src="{base}/images/larecette.webp" width="120" height="120" alt="La Recette" loading="lazy" decoding="async">
     <div class="socials">
         <h3>Reseaux sociaux</h3><br>
         <div class="social-footer">

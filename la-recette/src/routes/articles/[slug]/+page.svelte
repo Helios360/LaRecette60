@@ -1,5 +1,6 @@
 <script lang="ts">
     import Hero from '$lib/components/hero.svelte';
+    import { base } from '$app/paths';
     import { enhance } from '$app/forms';
     import type { PageData } from './$types';
 
@@ -11,7 +12,7 @@
 
     const SITE_URL = 'https://www.larecette60.com';
     let imageUrl = $derived(
-        `${SITE_URL}${article.cover_image_key ? `/uploads/${article.cover_image_key}` : `/images/${article.slug}.webp`}`
+        `${SITE_URL}${base}${article.cover_image_key ? `${article.cover_image_key.includes('/') ? '/uploads/' : '/images/'}${article.cover_image_key}` : `/images/${article.slug}.webp`}`
     );
     let productSchema = $derived({
         '@context': 'https://schema.org',
@@ -22,7 +23,7 @@
         brand: { '@type': 'Brand', name: 'La Recette' },
         offers: {
             '@type': 'Offer',
-            url: `${SITE_URL}/articles/${article.slug}`,
+            url: `${SITE_URL}${base}/articles/${article.slug}`,
             priceCurrency: 'EUR',
             price: String(article.price),
             availability: 'https://schema.org/InStock'
@@ -51,7 +52,7 @@
 
 <div class="page-content">
     <article class="detail">
-        <img class="detail-img" src={article.cover_image_key ? `/uploads/${article.cover_image_key}` : `/images/${article.slug}.webp`} alt={article.title} />
+        <img class="detail-img" src={article.cover_image_key ? `${base}${article.cover_image_key.includes('/') ? '/uploads/' : '/images/'}${article.cover_image_key}` : `${base}/images/${article.slug}.webp`} alt={article.title} />
         <div class="detail-body">
             <h1 class="section-title">{article.title}</h1>
             <h3>{article.subtitle}</h3>
@@ -129,7 +130,10 @@
     margin-top: auto;
     padding-top: 1.5rem;
 }
-.actions > * { flex: 1; }
+.actions > * {
+    flex: 1;
+    min-width: 0;
+}
 .back {
     font-family: "Visibility", serif;
     color: var(--secondary);
@@ -144,6 +148,7 @@
     transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .back:hover { background-color: var(--secondary); color: var(--primary); }
+.add { width: 100%; }
 
 @media (max-width: 800px), (hover: none), (pointer: coarse) {
     .detail { flex-direction: column; padding: 1rem; }

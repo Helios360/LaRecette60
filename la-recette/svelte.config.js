@@ -7,7 +7,11 @@ const config = {
 			out: 'build',
 			precompress: true,
 			envPrefix: ''
-		})
+		}),
+		paths: {
+			base: '',
+			relative: false
+		}
 	}
 };
 

@@ -1,5 +1,6 @@
 <script lang="ts">
     import Hero from '$lib/components/hero.svelte';
+    import { base } from '$app/paths';
 </script>
 
 <svelte:head>
@@ -27,7 +28,7 @@
 
     <section class="event-block">
         <div class="event-card card">
-            <div class="event-image" style="background-image: url('/images/theme-cake.webp')"></div>
+            <div class="event-image" style="background-image: url('{base}/images/theme-cake.webp')"></div>
             <div class="event-content">
                 <h2 class="section-title">Mariages</h2>
                 <p>Un mariage, c'est une journée unique. Le gâteau qui la clôture doit l'être aussi.</p>
@@ -45,7 +46,7 @@
 
     <section class="event-block reversed">
         <div class="event-card card">
-            <div class="event-image" style="background-image: url('/images/cupcakes-perso.webp')"></div>
+            <div class="event-image" style="background-image: url('{base}/images/cupcakesPerso.webp')"></div>
             <div class="event-content">
                 <h2 class="section-title">Baptemes & Communions</h2>
                 <p>Pour célébrer l'arrivée d'un enfant ou un moment de partage en famille, La Recette imagine des douceurs tendres et joyeuses.</p>

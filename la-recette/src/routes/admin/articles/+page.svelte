@@ -1,5 +1,6 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
+    import { base } from '$app/paths';
     import type { ActionData, PageData } from './$types';
 
     let { data, form }: { data: PageData; form: ActionData } = $props();
@@ -20,8 +21,8 @@
 
     function imgFor(article: any) {
         return article.cover_image_key
-            ? `/uploads/${article.cover_image_key}`
-            : `/images/${article.slug}.webp`;
+            ? `${base}${article.cover_image_key.includes('/') ? '/uploads/' : '/images/'}${article.cover_image_key}`
+            : `${base}/images/${article.slug}.webp`;
     }
     function fmtPrice(n: any) {
         return Number(n ?? 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });

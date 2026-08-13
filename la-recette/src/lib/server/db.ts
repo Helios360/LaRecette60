@@ -7,6 +7,7 @@ export const db = createPool({
     user: env.DB_USER,
     password: env.DB_PASSWORD,
     database: env.DB_NAME,
+    charset: 'utf8mb4',
     waitForConnections: true,
     connectionLimit: 20,
     queueLimit: 0,

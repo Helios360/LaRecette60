@@ -196,7 +196,7 @@ export async function getCartHistoryForUser(userId: string) {
 export async function getCartItems(cartId: string) {
 	const [rows] = await db.query(
 		`
-		SELECT ci.*, a.title, a.slug
+		SELECT ci.*, a.title, a.slug, a.cover_image_key
 		FROM cart_items ci
 		LEFT JOIN articles a ON a.id = ci.article_id
 		WHERE ci.cart_id = ?

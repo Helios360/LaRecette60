@@ -12,5 +12,33 @@ services:
       - "3305:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - proxy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: larecette-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file: .env
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - uploads_data:/app/uploads
+    networks:
+      - proxy
+
 volumes:
   mysql_data:
+  uploads_data:
+
+networks:
+  proxy:
+    external: true
