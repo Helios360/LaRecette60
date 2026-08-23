@@ -202,7 +202,7 @@
                 </select>
             </label>
             <label>
-                Date de livraison
+                Date de retrait
                 <input type="datetime-local" name="delivery_date" value={fmtDateTimeLocal(o.delivery_date)} />
             </label>
             <label class="wide">

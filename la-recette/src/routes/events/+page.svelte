@@ -9,7 +9,7 @@
 </svelte:head>
 
 <Hero
-    title="Mariages & Baptemes"
+    title="Mariages & Baptêmes"
     subtitle="Des créations sur mesure pour vos plus beaux jours"
     cta="Demander un devis"
     link="about"
@@ -18,7 +18,7 @@
 
 <div class="page-content events-page">
     <section class="card split-content intro">
-        <h2 class="section-title">Vos grands evenements .</h2>
+        <h2 class="section-title">Vos grands événements .</h2>
         <span>
             <p>La Recette accompagne vos plus belles occasions : mariages, baptêmes, communions et fiançailles.</p>
             <p>De la <em>pièce montée classique</em> au <em>fameux wedding cake</em>, chaque création est imaginée avec vous pour clore le repas sur une note gourmande et inoubliable.</p>
@@ -48,7 +48,7 @@
         <div class="event-card card">
             <div class="event-image" style="background-image: url('{base}/images/cupcakesPerso.webp')"></div>
             <div class="event-content">
-                <h2 class="section-title">Baptemes & Communions</h2>
+                <h2 class="section-title">Baptêmes & Communions</h2>
                 <p>Pour célébrer l'arrivée d'un enfant ou un moment de partage en famille, La Recette imagine des douceurs tendres et joyeuses.</p>
                 <p>Des décors faits main, des couleurs douces et des saveurs choisies avec soin pour faire briller les yeux des petits comme des grands.</p>
                 <ul class="feature-list">
@@ -89,7 +89,7 @@
             </div>
             <div class="step card">
                 <span class="step-number">4</span>
-                <h3>Reception</h3>
+                <h3>Réception</h3>
                 <p>Vous récupérez votre commande à la boutique de Canny-sur-Matz, fraîche et prête pour le grand jour.</p>
             </div>
         </div>

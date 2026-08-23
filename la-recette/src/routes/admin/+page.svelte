@@ -34,9 +34,9 @@
 </div>
 
 <div class="admin-card card">
-    <h2>Prochaines livraisons</h2>
+    <h2>Prochains retraits</h2>
     {#if !data.upcoming.length}
-        <p>Aucune livraison prévue.</p>
+        <p>Aucun retrait prévu.</p>
     {:else}
         <ul class="upcoming">
             {#each data.upcoming as order}
