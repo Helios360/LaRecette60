@@ -95,6 +95,11 @@ export const actions: Actions = {
         if (deliveryDate < minDelivery) {
             return fail(400, { error: 'Le retrait doit être prévu au moins 48 h à l\'avance' });
         }
+        const pickupDay = deliveryDate.getDay();
+        // 0=Sun, 5=Fri, 6=Sat — block Mon(1), Tue(2), Wed(3), Thu(4)
+        if (pickupDay >= 1 && pickupDay <= 4) {
+            return fail(400, { error: 'Retrait possible uniquement le vendredi, samedi ou dimanche' });
+        }
 
         const rawMessage = String(form.get('message') ?? '').trim();
         if (rawMessage.length > MAX_CART_MESSAGE_LENGTH) {

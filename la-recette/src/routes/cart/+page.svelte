@@ -33,13 +33,21 @@
         syncInputFiles();
     }
 
-    const minDeliveryDate = (() => {
+    function nextPickupDatetime() {
         const d = new Date();
-        d.setDate(d.getDate() + 2);
+        d.setDate(d.getDate() + 2); // at least 48h ahead
         d.setSeconds(0, 0);
+        // Skip Mon(1), Tue(2), Wed(3), Thu(4) — only Fri(5), Sat(6), Sun(0)
+        const day = d.getDay();
+        if (day >= 1 && day <= 4) {
+            // Days until next Friday
+            const daysToAdd = day === 1 ? 4 : day === 2 ? 3 : day === 3 ? 2 : 1;
+            d.setDate(d.getDate() + daysToAdd);
+        }
         const pad = (n: number) => String(n).padStart(2, '0');
         return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    })();
+    }
+    const minDeliveryDate = nextPickupDatetime();
 
     function fmtPrice(n: any) {
         const v = Number(n ?? 0);
@@ -161,7 +169,7 @@
                         min={minDeliveryDate}
                         bind:value={deliveryDate}
                     />
-                    <small class="hint-counter">Choisissez au moins 48 h à l'avance</small>
+                    <small class="hint-counter">Retrait possible uniquement le vendredi, samedi ou dimanche</small>
                 </label>
 
                 <label class="field">
