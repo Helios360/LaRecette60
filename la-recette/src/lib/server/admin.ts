@@ -97,6 +97,33 @@ export async function getOrder(id: string) {
     return { ...order, items: itemRows as any[] };
 }
 
+export async function getOrdersForDay(date: Date) {
+    const from = new Date(date);
+    from.setHours(0, 0, 0, 0);
+    const to = new Date(from);
+    to.setDate(to.getDate() + 1);
+    const orders = await listOrders({ from, to });
+    const full = await Promise.all(
+        (orders as any[]).map(async (o) => {
+            const items = await getOrderItems(o.id);
+            return { ...o, items };
+        })
+    );
+    return full;
+}
+
+async function getOrderItems(id: string) {
+    const [rows] = await db.query(
+        `SELECT ci.*, a.title, a.slug
+         FROM cart_items ci
+         LEFT JOIN articles a ON a.id = ci.article_id
+         WHERE ci.cart_id = ?
+         ORDER BY ci.id DESC`,
+        [id]
+    );
+    return rows as any[];
+}
+
 export async function updateOrder(
     id: string,
     fields: { status?: string; delivery_date?: Date | null; customer_message?: string | null }

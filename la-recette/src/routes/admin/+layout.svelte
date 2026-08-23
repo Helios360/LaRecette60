@@ -20,6 +20,7 @@
             <a href="/admin" class:active={isActive('/admin')}>Tableau de bord</a>
             <a href="/admin/clients" class:active={isActive('/admin/clients')}>Clients</a>
             <a href="/admin/calendar" class:active={isActive('/admin/calendar')}>Calendrier</a>
+            <a href="/admin/daily-orders" class:active={isActive('/admin/daily-orders')}>Commandes du jour</a>
             <a href="/admin/articles" class:active={isActive('/admin/articles')}>Articles</a>
             <a href="/admin/categories" class:active={isActive('/admin/categories')}>Catégories</a>
         </nav>
