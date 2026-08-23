@@ -102,7 +102,19 @@
                         {#each order.items as item}
                             <tr>
                                 <td>{item.quantity}</td>
-                                <td>{item.title ?? `#${item.article_id}`}</td>
+                                <td>
+                                    {item.title ?? `#${item.article_id}`}
+                                    {#if item.options && Object.keys(item.options).length > 0}
+                                        <div class="item-opts">
+                                            {#each Object.entries(item.options) as [k, v]}
+                                                <span class="opt-tag">
+                                                    {k === 'extras' ? 'Options' : k}:
+                                                    {Array.isArray(v) ? v.join(', ') : v}
+                                                </span>
+                                            {/each}
+                                        </div>
+                                    {/if}
+                                </td>
                                 <td>{item.slices}</td>
                                 <td class="num">{fmtPrice(item.unit_price)}</td>
                             </tr>
@@ -196,6 +208,8 @@
         color: var(--secondary);
     }
     .photos code { background-color: var(--tertiary); padding: 0.1rem 0.3rem; border-radius: 3px; }
+    .item-opts { display: flex; flex-wrap: wrap; gap: 0.2rem 0.4rem; margin-top: 0.2rem; }
+    .opt-tag { background-color: #e8e0f0; color: #4a3055; padding: 0.05rem 0.4rem; border-radius: 3px; font-size: 0.75rem; white-space: nowrap; }
     .status {
         padding: 0.15rem 0.6rem;
         border-radius: 999px;

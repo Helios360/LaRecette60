@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ url }) => {
 };
 
 function groupForProduction(orders: any[]) {
-    const map = new Map<string, { title: string; slug: string; quantity: number; totalPrice: number; slicesList: string[]; clients: { name: string; time: string; message: string | null }[] }>();
+    const map = new Map<string, { title: string; slug: string; quantity: number; totalPrice: number; slicesList: string[]; clients: { name: string; time: string; message: string | null; options: any }[] }>();
     for (const o of orders) {
         const client = o.user_fname ?? o.user_name ?? o.user_email ?? "Invité";
         const time = o.delivery_date ? new Date(o.delivery_date).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "—";
@@ -26,7 +26,7 @@ function groupForProduction(orders: any[]) {
             g.quantity += Number(it.quantity);
             g.totalPrice += Number(it.unit_price);
             g.slicesList.push(`${it.quantity}× ${it.slices} parts`);
-            g.clients.push({ name: client, time, message: o.customer_message ?? null });
+            g.clients.push({ name: client, time, message: o.customer_message ?? null, options: it.options ?? {} });
         }
     }
     return Array.from(map.values()).sort((a, b) => a.title.localeCompare(b.title));

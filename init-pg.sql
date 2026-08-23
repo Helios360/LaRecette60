@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS cart_items (
     article_id INTEGER NOT NULL REFERENCES articles(id),
     slices INTEGER NOT NULL CHECK (slices >= 1),
     quantity INTEGER NOT NULL CHECK (quantity >= 1),
-    unit_price NUMERIC(10,2) NOT NULL
+    unit_price NUMERIC(10,2) NOT NULL,
+    options JSONB NOT NULL DEFAULT '{}'::jsonb
 );
 CREATE INDEX IF NOT EXISTS cart_items_cart_id_idx ON cart_items(cart_id);

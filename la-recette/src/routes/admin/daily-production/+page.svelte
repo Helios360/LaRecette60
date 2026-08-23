@@ -68,8 +68,18 @@
                 <div class="prod-detail">
                     <span class="prod-slices">{group.slicesList.join(", ")}</span>
                     <span class="prod-clients">{group.clients.map((c: any) => c.name + " (" + c.time + ")").join(", ")}</span>
-                    {#each group.clients.filter((c: any) => c.message) as c}
-                        <p class="prod-msg">📝 {c.name} : {c.message}</p>
+                    {#each group.clients as c}
+                        {#if c.message}
+                            <p class="prod-msg">📝 {c.name} : {c.message}</p>
+                        {/if}
+                        {#if c.options && Object.keys(c.options).length > 0}
+                            <div class="prod-opts">
+                                {#each Object.entries(c.options) as [k, v]}
+                                    {@const label = {extras: "Options", theme_description: "Thème", colors: "Couleurs"}[k] ?? k}
+                                    <span class="opt"><strong>{label}:</strong> {Array.isArray(v) ? v.join(", ") : v}</span>
+                                {/each}
+                            </div>
+                        {/if}
                     {/each}
                 </div>
             </div>
@@ -168,6 +178,20 @@
         margin: 0.15rem 0;
         padding: 0.2rem 0.5rem;
         background-color: var(--tertiary);
+        border-radius: var(--smaller-radius);
+    }
+    .prod-opts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem 0.8rem;
+        margin: 0.15rem 0;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    .opt {
+        background-color: #e8e0f0;
+        color: #4a3055;
+        padding: 0.1rem 0.5rem;
         border-radius: var(--smaller-radius);
     }
 

@@ -174,6 +174,18 @@
                             <span>{it.quantity}× {it.title ?? `#${it.article_id}`} <em>({it.slices} parts)</em></span>
                             <span>{fmtPrice(it.unit_price)}</span>
                         </li>
+                        {#if it.options && Object.keys(it.options).length > 0}
+                            <li class="item-opts">
+                                <small>
+                                    {#each Object.entries(it.options) as [k, v]}
+                                        <span class="item-opt">
+                                            {k === 'extras' ? 'Options' : k === 'theme_description' ? 'Thème' : k === 'colors' ? 'Couleurs' : k}:
+                                            {Array.isArray(v) ? v.join(', ') : v}
+                                        </span>
+                                    {/each}
+                                </small>
+                            </li>
+                        {/if}
                     {/each}
                 </ul>
             {/if}
@@ -336,6 +348,8 @@
     font-family: "Visibility", serif;
     color: var(--secondary);
 }
+.item-opts { list-style: none; padding: 0 0.6rem 0.3rem; display: flex; flex-wrap: wrap; gap: 0.2rem 0.4rem; }
+.item-opt { background-color: #e8e0f0; color: #4a3055; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.75rem; }
 .modal-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
 .modal-form label { display: flex; flex-direction: column; gap: 0.3rem; font-family: "Visibility", serif; font-size: 0.9rem; color: var(--secondary); }
 .modal-form .wide { grid-column: 1 / -1; }

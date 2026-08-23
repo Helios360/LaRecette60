@@ -24,7 +24,23 @@ export const actions: Actions = {
         if (!Number.isInteger(articleId) || !Number.isInteger(slices)) {
             return fail(400, { error: 'Invalid form data' });
         }
-        await addItemToCart(cookies, user, articleId, slices);
+
+        // Collect customization options if present
+        const options: Record<string, any> = {};
+        const rawExtras = form.getAll('extras');
+        if (rawExtras.length) {
+            options.extras = rawExtras;
+        }
+        const themeDesc = String(form.get('theme_description') ?? '').trim();
+        if (themeDesc) {
+            options.theme_description = themeDesc;
+        }
+        const colors = String(form.get('colors') ?? '').trim();
+        if (colors) {
+            options.colors = colors;
+        }
+
+        await addItemToCart(cookies, user, articleId, slices, options);
         return { success: true };
     },
 };

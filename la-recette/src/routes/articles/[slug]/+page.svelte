@@ -7,8 +7,23 @@
     let { data }: { data: PageData } = $props();
     let article = $derived(data.article);
     let rations = $derived(article.slices.match(/\d+/g)?.map(Number) ?? []);
+    let isConfigurable = $derived(['theme-cake', 'tinycake'].includes(article.slug));
 
     let popup: HTMLDialogElement;
+    let selectedSlices = $state('');
+    let themeDesc = $state('');
+    let colors = $state('');
+    let extras = $state<string[]>([]);
+
+    function toggleExtra(val: string) {
+        if (extras.includes(val)) extras = extras.filter((e) => e !== val);
+        else extras = [...extras, val];
+    }
+
+    function submitForm(nb: number) {
+        selectedSlices = String(nb);
+        // Submit happens via form submit button below
+    }
 
     const SITE_URL = 'https://www.larecette60.com';
     let imageUrl = $derived(
@@ -73,26 +88,73 @@
     </article>
 
     <dialog bind:this={popup}>
-        <h3>Combien de parts ?</h3>
-        {#each rations as nb}
-            <form
-                method="POST"
-                action="?/addToCart"
-                use:enhance={() => {
-                    return async ({ result, update }) => {
-                        if (result.type === 'success') {
-                            popup.close();
-                            await update();
-                        }
-                    };
-                }}
-            >
+        <form method="POST" action="?/addToCart" use:enhance={() => {
+            return async ({ result, update }) => {
+                if (result.type === 'success') {
+                    popup.close();
+                    themeDesc = '';
+                    colors = '';
+                    extras = [];
+                    selectedSlices = '';
+                    await update();
+                }
+            };
+        }}>
+            <h3>Configuration</h3>
+
+            <label class="field">
+                <span>Nombre de parts *</span>
+                <div class="slice-grid">
+                    {#each rations as nb}
+                        <button
+                            type="button"
+                            class="slice-btn"
+                            class:selected={selectedSlices === String(nb)}
+                            onclick={() => selectedSlices = String(nb)}
+                        >{nb}</button>
+                    {/each}
+                </div>
+                <input type="hidden" name="slices" value={selectedSlices} />
+            </label>
+
+            {#if isConfigurable}
                 <input type="hidden" name="articleId" value={article.id} />
-                <input type="hidden" name="slices" value={nb} />
-                <button type="submit">{nb}</button>
-            </form>
-        {/each}
-        <button onclick={() => popup.close()}>Retour</button>
+
+                <label class="field">
+                    <span>Décrivez votre thème</span>
+                    <textarea
+                        name="theme_description"
+                        bind:value={themeDesc}
+                        rows="2"
+                        placeholder="Ex: Anniversaire 30 ans, thème jungle, personnalisé au prénom…"
+                    ></textarea>
+                </label>
+
+                <label class="field">
+                    <span>Couleurs souhaitées (optionnel)</span>
+                    <input type="text" name="colors" bind:value={colors} placeholder="Ex: Rose, blanc, or" />
+                </label>
+
+                <fieldset class="extras">
+                    <legend>Options supplémentaires</legend>
+                    <label class="extra-row">
+                        <input type="checkbox" name="extras" value="plaque-decor" checked={extras.includes('plaque-decor')} onchange={() => toggleExtra('plaque-decor')} />
+                        <span>Plaque décor fait main <em>(+10 €)</em></span>
+                    </label>
+                    <label class="extra-row">
+                        <input type="checkbox" name="extras" value="photo-sucre" checked={extras.includes('photo-sucre')} onchange={() => toggleExtra('photo-sucre')} />
+                        <span>Photo en sucre / disque <em>(+10 €)</em></span>
+                    </label>
+                </fieldset>
+            {:else}
+                <input type="hidden" name="articleId" value={article.id} />
+            {/if}
+
+            <div class="actions">
+                <button type="button" onclick={() => popup.close()}>Retour</button>
+                <button type="submit" disabled={!selectedSlices}>Ajouter au panier</button>
+            </div>
+        </form>
     </dialog>
 </div>
 
@@ -149,6 +211,87 @@
 }
 .back:hover { background-color: var(--secondary); color: var(--primary); }
 .add { width: 100%; }
+
+dialog {
+    padding: 1.5rem;
+    border: 2px solid var(--secondary);
+    border-radius: var(--smaller-radius);
+    max-width: 480px;
+    width: min(92vw, 480px);
+}
+dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+dialog h3 {
+    font-family: "Artistic", serif;
+    font-size: 1.3rem;
+    color: var(--headers);
+}
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-family: "Visibility", serif;
+    font-size: 0.95rem;
+    color: var(--secondary);
+}
+.field input, .field textarea {
+    padding: 0.5rem;
+    border: 2px solid var(--secondary);
+    border-radius: var(--smaller-radius);
+    font-family: "Visibility", serif;
+    font-size: 0.9rem;
+    background-color: transparent;
+    color: var(--secondary);
+}
+.slice-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.slice-btn {
+    padding: 0.5rem 1rem;
+    min-width: 3rem;
+    border: 2px solid var(--secondary);
+    border-radius: var(--smaller-radius);
+    background-color: transparent;
+    color: var(--secondary);
+    font-family: "Visibility", serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.slice-btn.selected {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+.slice-btn:hover { background-color: var(--tertiary); }
+fieldset.extras {
+    border: 2px solid var(--secondary);
+    border-radius: var(--smaller-radius);
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+fieldset.extras legend {
+    font-family: "Visibility", serif;
+    font-size: 0.9rem;
+    color: var(--secondary);
+    padding: 0 0.3rem;
+}
+.extra-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "Visibility", serif;
+    font-size: 0.9rem;
+    color: var(--secondary);
+    cursor: pointer;
+}
+.extra-row em { font-size: 0.8rem; opacity: 0.8; }
 
 @media (max-width: 800px), (hover: none), (pointer: coarse) {
     .detail { flex-direction: column; padding: 1rem; }

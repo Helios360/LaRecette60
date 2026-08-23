@@ -103,17 +103,19 @@ export async function addItemToCart(
 	cookies: Cookies,
 	user: SessionUser,
 	articleId: number,
-	slices: number
+	slices: number,
+	options: Record<string, any> = {}
 ) {
 	const cart = await resolveCart(cookies, user);
+	const optionsStr = JSON.stringify(options);
 	const [existingRows] = await db.query(
 		`
 		SELECT *
 		FROM cart_items
-		WHERE cart_id = ? AND article_id = ? AND slices = ?
+		WHERE cart_id = ? AND article_id = ? AND slices = ? AND options::text = ?
 		LIMIT 1
 		`,
-		[cart!.id, articleId, slices]
+		[cart!.id, articleId, slices, optionsStr]
 	);
 	const existing = (existingRows as any[])[0];
 	if (existing) {
@@ -130,16 +132,17 @@ export async function addItemToCart(
 	} else {
 		await db.query(
 			`
-			INSERT INTO cart_items (cart_id, article_id, slices, quantity, unit_price)
+			INSERT INTO cart_items (cart_id, article_id, slices, quantity, unit_price, options)
 			VALUES (
 				?,
 				?,
 				?,
 				1,
-				1 * (? * (SELECT price FROM articles WHERE id = ?))
+				1 * (? * (SELECT price FROM articles WHERE id = ?)),
+				?::jsonb
 			)
 			`,
-			[cart!.id, articleId, slices, slices, articleId]
+			[cart!.id, articleId, slices, slices, articleId, optionsStr]
 		);
 	}
 	return getCartById(cart!.id);
@@ -266,10 +269,10 @@ export async function mergeCartIntoUserCart(sourceCartId: string, targetCartId: 
 			`
 			SELECT *
 			FROM cart_items
-			WHERE cart_id = ? AND article_id = ? AND slices = ?
+			WHERE cart_id = ? AND article_id = ? AND slices = ? AND options::text = ?
 			LIMIT 1
 			`,
-			[targetCartId, item.article_id, item.slices]
+			[targetCartId, item.article_id, item.slices, JSON.stringify(item.options ?? {})]
 		);
 		const existing = (existingRows as any[])[0];
 		if (existing) {
@@ -286,8 +289,8 @@ export async function mergeCartIntoUserCart(sourceCartId: string, targetCartId: 
 		} else {
 			await db.query(
 				`
-				INSERT INTO cart_items (cart_id, article_id, slices, quantity, unit_price)
-				VALUES (?, ?, ?, ?, ? * (? * (SELECT price FROM articles WHERE id = ?))
+				INSERT INTO cart_items (cart_id, article_id, slices, quantity, unit_price, options)
+				VALUES (?, ?, ?, ?, ? * (? * (SELECT price FROM articles WHERE id = ?)), ?::jsonb
 				)
 				`,
 				[
@@ -297,7 +300,8 @@ export async function mergeCartIntoUserCart(sourceCartId: string, targetCartId: 
 					item.quantity,
 					item.quantity,
 					item.slices,
-					item.article_id
+					item.article_id,
+					JSON.stringify(item.options ?? {})
 				]
 			);
 		}
