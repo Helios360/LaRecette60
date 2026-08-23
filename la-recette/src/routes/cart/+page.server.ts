@@ -85,15 +85,15 @@ export const actions: Actions = {
 
         const rawDeliveryDate = String(form.get('deliveryDate') ?? '').trim();
         if (!rawDeliveryDate) {
-            return fail(400, { error: 'Date de livraison requise' });
+            return fail(400, { error: 'Date de retrait requise' });
         }
         const deliveryDate = new Date(rawDeliveryDate);
         if (Number.isNaN(deliveryDate.getTime())) {
-            return fail(400, { error: 'Date de livraison invalide' });
+            return fail(400, { error: 'Date de retrait invalide' });
         }
         const minDelivery = new Date(Date.now() + 48 * 60 * 60 * 1000);
         if (deliveryDate < minDelivery) {
-            return fail(400, { error: 'La livraison doit être prévue au moins 48 h à l\'avance' });
+            return fail(400, { error: 'Le retrait doit être prévu au moins 48 h à l\'avance' });
         }
 
         const rawMessage = String(form.get('message') ?? '').trim();

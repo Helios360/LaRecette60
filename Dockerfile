@@ -1,7 +1,7 @@
 # Build stage
 FROM node:22-alpine AS builder
 WORKDIR /app
-COPY la-recette/package*.json la-recette/bun.lock ./
+COPY la-recette/package*.json ./
 RUN npm ci
 COPY la-recette/ .
 RUN npm run build

@@ -29,7 +29,7 @@ export const actions: Actions = {
         try {
             await createCategory(parsed.name);
         } catch (e: any) {
-            if (e?.code === "ER_DUP_ENTRY") return fail(400, { error: "Nom déjà utilisé" });
+            if (e?.code === "23505") return fail(400, { error: "Nom déjà utilisé" });
             throw e;
         }
         return { success: true, message: "Catégorie créée" };
@@ -48,7 +48,7 @@ export const actions: Actions = {
         try {
             await updateCategory(id, parsed.name);
         } catch (e: any) {
-            if (e?.code === "ER_DUP_ENTRY") return fail(400, { id, error: "Nom déjà utilisé" });
+            if (e?.code === "23505") return fail(400, { id, error: "Nom déjà utilisé" });
             throw e;
         }
         return { success: true, message: "Catégorie mise à jour" };
@@ -64,7 +64,7 @@ export const actions: Actions = {
         try {
             await deleteCategory(id);
         } catch (e: any) {
-            if (e?.code === "ER_ROW_IS_REFERENCED_2") {
+            if (e?.code === "23503") {
                 return fail(400, { error: "Catégorie utilisée par des articles — réaffectez-les avant de supprimer" });
             }
             throw e;

@@ -153,7 +153,7 @@
                 class="extras"
             >
                 <label class="field">
-                    <span>Date et heure de livraison *</span>
+                    <span>Date et heure de retrait *</span>
                     <input
                         type="datetime-local"
                         name="deliveryDate"

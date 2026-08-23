@@ -52,9 +52,8 @@
                 <p>Pour célébrer l'arrivée d'un enfant ou un moment de partage en famille, La Recette imagine des douceurs tendres et joyeuses.</p>
                 <p>Des décors faits main, des couleurs douces et des saveurs choisies avec soin pour faire briller les yeux des petits comme des grands.</p>
                 <ul class="feature-list">
+                    <li>Pièce montée en choux</li>
                     <li>Gâteaux à thème personnalisés (animaux, prénoms, motifs)</li>
-                    <li>Cupcakes décorés en lot</li>
-                    <li>Number cakes en forme d'âge ou d'initiale</li>
                     <li>Plaques décor et photos en sucre</li>
                     <li>Mignardises et macarons assortis</li>
                 </ul>
@@ -63,11 +62,10 @@
     </section>
 
     <section class="card split-content traiteur">
-        <h2 class="section-title">Et cote sale ?</h2>
+        <h2 class="section-title">Et côté salé ?</h2>
         <span>
-            <p>Pour compléter le buffet, je propose également une sélection <strong>traiteur</strong> : navettes fraîcheur, mini-burgers, mini-kebabs et plateaux apéritifs.</p>
+            <p>Pour compléter le buffet, je propose également une sélection <strong>traiteur</strong> : navettes fraîcheur, mini-burgers, mini-pitas et plateaux apéritifs.</p>
             <p>De quoi prolonger le plaisir tout au long de la réception, avec une qualité artisanale et des saveurs travaillées.</p>
-            <p><strong>Tarif traiteur :</strong> 16 € les 20 pièces.</p>
         </span>
     </section>
 
@@ -76,13 +74,13 @@
         <div class="steps-grid">
             <div class="step card">
                 <span class="step-number">1</span>
-                <h3>Echange</h3>
+                <h3>Échange</h3>
                 <p>Vous me contactez par téléphone ou par mail pour me parler de votre événement, de la date et du nombre de convives.</p>
             </div>
             <div class="step card">
                 <span class="step-number">2</span>
-                <h3>Creation</h3>
-                <p>Je vous propose une création sur mesure : saveurs, formes, décors, couleurs. Tout est adaptable à vos envies.</p>
+                <h3>Création</h3>
+                <p>Faites-moi part de vos envies et nous étudierons ensemble le design, les saveurs et le décor.</p>
             </div>
             <div class="step card">
                 <span class="step-number">3</span>

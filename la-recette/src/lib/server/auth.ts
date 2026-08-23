@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { env } from "$env/dynamic/private";
-import { db } from "./db";
+import { pool } from "./db";
 
 const trustedOrigins = (env.BETTER_AUTH_TRUSTED_ORIGINS ?? "")
     .split(",")
@@ -8,7 +8,7 @@ const trustedOrigins = (env.BETTER_AUTH_TRUSTED_ORIGINS ?? "")
     .filter(Boolean);
 
 export const auth = betterAuth({
-    database: db,
+    database: pool,
     trustedOrigins,
     emailAndPassword: { enabled: true },
     user: {

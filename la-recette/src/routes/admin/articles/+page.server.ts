@@ -72,7 +72,7 @@ export const actions: Actions = {
         try {
             await createArticle({ ...parsed.data, cover_image_key });
         } catch (e: any) {
-            if (e?.code === "ER_DUP_ENTRY") return fail(400, { error: "Slug déjà utilisé" });
+            if (e?.code === "23505") return fail(400, { error: "Slug déjà utilisé" });
             throw e;
         }
         return { success: true, message: "Article créé" };
@@ -100,7 +100,7 @@ export const actions: Actions = {
         try {
             await updateArticle(id, { ...parsed.data, cover_image_key });
         } catch (e: any) {
-            if (e?.code === "ER_DUP_ENTRY") return fail(400, { id, error: "Slug déjà utilisé" });
+            if (e?.code === "23505") return fail(400, { id, error: "Slug déjà utilisé" });
             throw e;
         }
         return { success: true, message: "Article mis à jour" };
@@ -116,7 +116,7 @@ export const actions: Actions = {
         try {
             await deleteArticle(id);
         } catch (e: any) {
-            if (e?.code === "ER_ROW_IS_REFERENCED_2") {
+            if (e?.code === "23503") {
                 return fail(400, { error: "Article référencé dans des commandes — impossible à supprimer" });
             }
             throw e;

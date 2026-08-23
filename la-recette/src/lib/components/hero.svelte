@@ -17,9 +17,14 @@
     } = $props();
 
     let bg = $derived(background.startsWith('/') ? `${base}${background}` : background);
+    let bgJpg = $derived(bg.replace(/\.webp$/i, '.jpg'));
 </script>
 
-<div class="hero" style="--hero-bg: url('{bg}')">
+<div class="hero">
+    <picture class="hero-bg">
+        <source srcset={bg} type="image/webp" />
+        <img src={bgJpg} alt="" aria-hidden="true" decoding="async" />
+    </picture>
     <div class="hero-overlay"></div>
     <div class="hero-body">
         <h1>{title}</h1>
@@ -38,11 +43,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-image: var(--hero-bg);
-        background-size: cover;
-        background-position: center 30%;
-        background-repeat: no-repeat;
         overflow: hidden;
+    }
+
+    .hero-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 30%;
     }
 
     .hero-overlay {
@@ -116,7 +130,9 @@
     @media (max-width: 800px), (hover: none), (pointer: coarse) {
         .hero {
             min-height: 58svh;
-            background-position: center 20%;
+        }
+        .hero-bg img {
+            object-position: center 20%;
         }
         .hero-body {
             padding: 6rem 1.2rem 2.5rem;

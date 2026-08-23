@@ -35,7 +35,7 @@ export async function updateClient(
              address = COALESCE(?, address),
              city = COALESCE(?, city),
              role = COALESCE(?, role),
-             updatedAt = CURRENT_TIMESTAMP(3)
+             updatedAt = CURRENT_TIMESTAMP
          WHERE id = ?`,
         [
             fields.name ?? null,
@@ -141,9 +141,10 @@ export async function createArticle(fields: {
     price: number;
     details_html: string | null;
 }) {
-    const [result]: any = await db.query(
+    const [rows]: any = await db.query(
         `INSERT INTO articles (category_id, slug, title, subtitle, cover_image_key, slices, price, details_html)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+         RETURNING id`,
         [
             fields.category_id,
             fields.slug,
@@ -155,7 +156,7 @@ export async function createArticle(fields: {
             fields.details_html
         ]
     );
-    return result.insertId as number;
+    return rows[0].id as number;
 }
 
 export async function updateArticle(
@@ -209,8 +210,8 @@ export async function getCategory(id: number) {
 }
 
 export async function createCategory(name: string) {
-    const [result]: any = await db.query(`INSERT INTO categories (name) VALUES (?)`, [name]);
-    return result.insertId as number;
+    const [rows]: any = await db.query(`INSERT INTO categories (name) VALUES (?) RETURNING id`, [name]);
+    return rows[0].id as number;
 }
 
 export async function updateCategory(id: number, name: string) {
