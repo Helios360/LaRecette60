@@ -1,22 +1,23 @@
 services:
-  postgres:
-    image: postgres:17-alpine
-    container_name: larecette-pg
+  mysql:
+    image: mysql:8.4
+    container_name: larecette-mysql
     restart: unless-stopped
     environment:
-      POSTGRES_DB: larecette
-      POSTGRES_USER: larecetteuser
-      POSTGRES_PASSWORD: macaronnette
+      MYSQL_DATABASE: larecette
+      MYSQL_USER: larecetteuser
+      MYSQL_PASSWORD: macaronnette
+      MYSQL_ROOT_PASSWORD: rootpass
     ports:
-      - "5433:5432"
+      - "3307:3306"
     volumes:
-      - pg_data:/var/lib/postgresql/data
-      - ./init-pg.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
-      - ./seed-pg.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
     networks:
       - proxy
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U larecetteuser -d larecette"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u larecetteuser -pmacaronnette"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -29,7 +30,7 @@ services:
       - "3000:3000"
     env_file: .env
     depends_on:
-      postgres:
+      mysql:
         condition: service_healthy
     volumes:
       - uploads_data:/app/uploads
@@ -37,7 +38,7 @@ services:
       - proxy
 
 volumes:
-  pg_data:
+  mysql_data:
   uploads_data:
 
 networks:

@@ -1,32 +1,26 @@
 import { env } from "$env/dynamic/private";
-import pg from "pg";
+import mysql from "mysql2/promise";
 
-const pool = new pg.Pool({
+const pool = mysql.createPool({
     host: env.DB_HOST,
-    port: Number(env.DB_PORT ?? 5432),
+    port: Number(env.DB_PORT ?? 3306),
     user: env.DB_USER,
     password: env.DB_PASSWORD,
     database: env.DB_NAME,
-    max: 20,
-    idleTimeoutMillis: 30000,
+    waitForConnections: true,
+    connectionLimit: 20,
+    queueLimit: 0,
 });
-
-// Thin wrapper: auto-numbers ? placeholders → $1, $2, ...
-// and returns [rows] tuple like mysql2 for backward compat
-function prepare(sql: string, params?: any[]) {
-    if (!params || params.length === 0) return { text: sql, values: params };
-    let idx = 0;
-    const text = sql.replace(/\?/g, () => `$${++idx}`);
-    return { text, values: params };
-}
 
 export const db = {
     query: async (sql: string, params?: any[]) => {
-        const { text, values } = prepare(sql, params);
-        const result = await pool.query(text, values);
-        return [result.rows];
+        // mysql2 uses ? natively — no conversion needed
+        const [rows] = await pool.query(sql, params);
+        // For SELECT: rows is an array of row objects
+        // For INSERT/UPDATE/DELETE: rows is a ResultSetHeader
+        return [rows as any];
     },
 };
 
-// better-auth needs the raw pool passed as `database`
+// better-auth auto-detects mysql2 pool via `getConnection` method
 export { pool };

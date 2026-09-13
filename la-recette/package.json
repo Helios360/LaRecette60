@@ -20,7 +20,6 @@
 		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@types/node": "^26.4.1",
-		"@types/pg": "^8.23.1",
 		"svelte": "^5.51.0",
 		"svelte-check": "^4.4.2",
 		"typescript": "^5.9.3",
@@ -28,7 +27,7 @@
 	},
 	"dependencies": {
 		"better-auth": "^1.7.3",
-		"pg": "^8.23.0",
+		"mysql2": "^3.14.1",
 		"resend": "^6.27.0"
 	}
 }

@@ -168,10 +168,9 @@ export async function createArticle(fields: {
     price: number;
     details_html: string | null;
 }) {
-    const [rows]: any = await db.query(
+    const [result]: any = await db.query(
         `INSERT INTO articles (category_id, slug, title, subtitle, cover_image_key, slices, price, details_html)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-         RETURNING id`,
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
         [
             fields.category_id,
             fields.slug,
@@ -183,7 +182,7 @@ export async function createArticle(fields: {
             fields.details_html
         ]
     );
-    return rows[0].id as number;
+    return result.insertId as number;
 }
 
 export async function updateArticle(
@@ -237,8 +236,8 @@ export async function getCategory(id: number) {
 }
 
 export async function createCategory(name: string) {
-    const [rows]: any = await db.query(`INSERT INTO categories (name) VALUES (?) RETURNING id`, [name]);
-    return rows[0].id as number;
+    const [result]: any = await db.query(`INSERT INTO categories (name) VALUES (?)`, [name]);
+    return result.insertId as number;
 }
 
 export async function updateCategory(id: number, name: string) {

@@ -112,7 +112,7 @@ export async function addItemToCart(
 		`
 		SELECT *
 		FROM cart_items
-		WHERE cart_id = ? AND article_id = ? AND slices = ? AND options::text = ?
+		WHERE cart_id = ? AND article_id = ? AND slices = ? AND CAST(options AS CHAR) = ?
 		LIMIT 1
 		`,
 		[cart!.id, articleId, slices, optionsStr]
@@ -139,7 +139,7 @@ export async function addItemToCart(
 				?,
 				1,
 				1 * (? * (SELECT price FROM articles WHERE id = ?)),
-				?::jsonb
+				?
 			)
 			`,
 			[cart!.id, articleId, slices, slices, articleId, optionsStr]
@@ -269,7 +269,7 @@ export async function mergeCartIntoUserCart(sourceCartId: string, targetCartId: 
 			`
 			SELECT *
 			FROM cart_items
-			WHERE cart_id = ? AND article_id = ? AND slices = ? AND options::text = ?
+			WHERE cart_id = ? AND article_id = ? AND slices = ? AND CAST(options AS CHAR) = ?
 			LIMIT 1
 			`,
 			[targetCartId, item.article_id, item.slices, JSON.stringify(item.options ?? {})]
@@ -290,7 +290,7 @@ export async function mergeCartIntoUserCart(sourceCartId: string, targetCartId: 
 			await db.query(
 				`
 				INSERT INTO cart_items (cart_id, article_id, slices, quantity, unit_price, options)
-				VALUES (?, ?, ?, ?, ? * (? * (SELECT price FROM articles WHERE id = ?)), ?::jsonb
+				VALUES (?, ?, ?, ?, ? * (? * (SELECT price FROM articles WHERE id = ?)), ?
 				)
 				`,
 				[

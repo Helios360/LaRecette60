@@ -43,11 +43,9 @@ From your local machine (or the Hostinger SSH terminal):
 ```sh
 # Auth tables (better-auth schema)
 cd la-recette
+mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p $DB_NAME < ../init.sql
 bunx @better-auth/cli@latest migrate   # or: npx @better-auth/cli@latest migrate
-
-# Application tables + seed
-mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p $DB_NAME < ../db/init/01-init.sql
-mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p $DB_NAME < ../db/seed.sql   # optional
+mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p $DB_NAME < ../seed.sql   # optional
 ```
 
 ## 4. Upload the project
