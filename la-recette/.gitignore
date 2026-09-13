@@ -7,16 +7,30 @@ node_modules
 .wrangler
 /.svelte-kit
 /build
-
-# OS
-.DS_Store
-Thumbs.db
+/dist
 
 # Env
 .env
 .env.*
 !.env.example
 !.env.test
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# TypeScript
+*.tsbuildinfo
 
 # Vite
 vite.config.js.timestamp-*
