@@ -12,7 +12,7 @@
     title="Mariages & Baptêmes"
     subtitle="Des créations sur mesure pour vos plus beaux jours"
     cta="Demander un devis"
-    link="about"
+    link="contact"
     background="/images/macaron-tower.webp"
 />
 
@@ -28,7 +28,7 @@
 
     <section class="event-block">
         <div class="event-card card">
-            <div class="event-image" style="background-image: url('{base}/images/theme-cake.webp')"></div>
+            <div class="event-image" style="background-image: url('{base}/images/macaron-tower.webp')"></div>
             <div class="event-content">
                 <h2 class="section-title">Mariages</h2>
                 <p>Un mariage, c'est une journée unique. Le gâteau qui la clôture doit l'être aussi.</p>
@@ -70,7 +70,7 @@
     </section>
 
     <section class="steps">
-        <h2 class="section-title steps-title">Comment ca se passe .</h2>
+        <h2 class="section-title steps-title">Comment ça se passe .</h2>
         <div class="steps-grid">
             <div class="step card">
                 <span class="step-number">1</span>

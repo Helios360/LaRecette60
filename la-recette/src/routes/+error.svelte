@@ -6,4 +6,4 @@
 <svelte:head>
     <title>{page.status} - Error</title>
 </svelte:head>
-<Hero title={page.status} subtitle={page.error?.message}/>
+<Hero title={String(page.status)} subtitle={page.error?.message ?? 'Erreur inconnue'}/>

@@ -255,6 +255,7 @@
                             oninput={() => { if (signinErrors.password) signinErrors.password = signin.password ? null : 'Mot de passe requis'; }}/>
                         {#if signinErrors.password}<span class="field-error">{signinErrors.password}</span>{/if}
                     </label>
+                    <a class="link" href="/forgot-password" style="text-align:right;display:block;font-size:0.9rem">Mot de passe oublié ?</a>
                     <button type="submit" disabled={busy}>Se connecter</button>
                 </form>
             {:else}

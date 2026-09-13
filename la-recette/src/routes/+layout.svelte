@@ -75,14 +75,13 @@
 <header>
     <a href="{base}/"><img src="{base}/images/larecette.webp" height="90" width="90" alt="La Recette - pâtisserie artisanale" decoding="async"></a>
     <nav class="desktop-nav">
-        <a href="/events" class:active={isActive('/events')} aria-current={isActive('/events') ? 'page' : undefined}>Evenements</a>
+        <a href="/events" class:active={isActive('/events')} aria-current={isActive('/events') ? 'page' : undefined}>Événements</a>
         <a href="/articles" class:active={isActive('/articles')} aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a>
         <a href="/about" class:active={isActive('/about')} aria-current={isActive('/about') ? 'page' : undefined}>A propos</a>
-        <a href="/cart" class:active={isActive('/cart')} aria-current={isActive('/cart') ? 'page' : undefined} aria-label="Panier" style="display:inline-flex;align-items:center;gap:4px">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <a href="/cart" aria-label="Panier" class="cart-link" class:active={isActive('/cart')} aria-current={isActive('/cart') ? 'page' : undefined}>
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2m10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2M7 14l.01.01L18 16l3-8H6.5l-.94-3H2v2h2l3.6 7.59-1.35 2.44C5.52 17.37 6 18.12 6 18.5c0 .28.22.5.5.5H19v-2H7.41c-.09 0-.16-.06-.16-.14l.05-.11Z"/>
             </svg>
-            Panier
         </a>
         {#if data?.isAdmin}
             <a href="/admin" class:active={isActive('/admin')} aria-current={isActive('/admin') ? 'page' : undefined}>Admin</a>
@@ -105,7 +104,7 @@
         <span></span><span></span><span></span>
     </button>
     <nav class="burger-menu" class:open={menuOpen} id="burger-menu">
-        <a href="/events" class:active={isActive('/events')} aria-current={isActive('/events') ? 'page' : undefined}>Evenements</a>
+        <a href="/events" class:active={isActive('/events')} aria-current={isActive('/events') ? 'page' : undefined}>Événements</a>
         <a href="/articles" class:active={isActive('/articles')} aria-current={isActive('/articles') ? 'page' : undefined}>Commander</a>
         <a href="/account" class:active={isActive('/account')} aria-current={isActive('/account') ? 'page' : undefined}>Mon compte</a>
         <a href="/about" class:active={isActive('/about')} aria-current={isActive('/about') ? 'page' : undefined}>A propos</a>
@@ -167,6 +166,16 @@
 }
 .account-link:hover { transform: scale(1.1); }
 .account-link.active {
+    color: var(--tertiary);
+    text-decoration: none;
+}
+.cart-link {
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+.cart-link:hover { transform: scale(1.1); }
+.cart-link.active {
     color: var(--tertiary);
     text-decoration: none;
 }

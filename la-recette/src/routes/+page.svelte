@@ -6,7 +6,7 @@
 
     let { data } : { data: PageData } = $props();
 
-    type Article = { id: number; category_id: number; slug: string; title: string };
+    type Article = { id: number; category_id: number; slug: string; title: string; cover_image_key: string | null };
     type Category = { id: number; name: string };
     type GalleryItem = { category: Category; articles: Article[] };
 
@@ -57,7 +57,7 @@
     />
 <div class="page-content home">
     <section class="gallery-section">
-        <h2 class="section-title gallery-title">Decouvrez la carte .</h2>
+        <h2 class="section-title gallery-title">Découvrez la carte .</h2>
         <p class="gallery-subtitle">Cliquez sur une catégorie pour la parcourir</p>
         <div class="menu-gallery">
             {#each galleryItems as item, idx (item.category.id)}
@@ -119,7 +119,7 @@
                     </svg>
                 </div>
                 <h3>Artisanal</h3>
-                <p>Tout est fait maison dans notre atelier de Pâtisserie de Canny sur Matz.</p>
+                <p>Tout est fait maison dans notre atelier de Pâtisserie de Canny-sur-Matz.</p>
             </div>
             <div class="value card">
                 <div class="value-icon" aria-hidden="true">
@@ -294,26 +294,6 @@
     background-size: cover;
     background-position: center;
     min-height: 280px;
-}
-
-.cta-section {
-    text-align: center;
-    padding: 3rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-.cta-section p {
-    max-width: 600px;
-    line-height: 1.6;
-}
-.cta-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 1rem;
 }
 
 .social-section {

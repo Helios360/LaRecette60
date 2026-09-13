@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { env } from "$env/dynamic/private";
 import { pool } from "./db";
+import { sendForgotPasswordEmail } from "./mail";
 
 const trustedOrigins = (env.BETTER_AUTH_TRUSTED_ORIGINS ?? "")
     .split(",")
@@ -10,7 +11,16 @@ const trustedOrigins = (env.BETTER_AUTH_TRUSTED_ORIGINS ?? "")
 export const auth = betterAuth({
     database: pool,
     trustedOrigins,
-    emailAndPassword: { enabled: true },
+    emailAndPassword: {
+        enabled: true,
+        sendResetPassword: async ({ user, url }: { user: { email: string; name: string }; url: string }) => {
+            await sendForgotPasswordEmail({
+                email: user.email,
+                name: user.name,
+                url,
+            });
+        },
+    },
     user: {
         additionalFields: {
             phone:   { type: "string", required: true },

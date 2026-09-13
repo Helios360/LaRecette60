@@ -171,8 +171,8 @@
         color: var(--secondary);
         opacity: 0.85;
     }
-    .prod-slices { }
-    .prod-clients { }
+    .prod-slices { display: none; }
+    .prod-clients { display: none; }
     .prod-msg {
         font-style: italic;
         margin: 0.15rem 0;

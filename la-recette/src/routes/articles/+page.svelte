@@ -2,7 +2,7 @@
     import Hero from '$lib/components/hero.svelte';
     import Card from '$lib/components/card.svelte';
     import { base } from '$app/paths';
-    import type { PageData } from '../$types';
+    import type { PageData } from './$types';
     import { enhance } from '$app/forms';
     import { page } from '$app/state';
     let { data } : { data: PageData } = $props();
@@ -41,7 +41,7 @@
 <div class="page-content">
     <aside>
         <div class="search">
-            <h3 for="search">Recherche :</h3>
+            <label for="search">Recherche :</label>
             <input
                 id="search"
                 type="search"

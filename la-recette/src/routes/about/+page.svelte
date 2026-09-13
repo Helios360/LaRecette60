@@ -17,9 +17,10 @@
     <section class="card split-content">
         <h2 class="section-title">Qui sommes-nous .</h2>
         <span>
-            <p>La Recette est une pâtisserie artisanale où chaque gourmandise est préparée avec des ingrédients de qualité et beaucoup de soin.</p>
-            <p>Je mets à disposition mon savoir-faire et mon sérieux pour répondre à vos attentes, pour vos mariages, baptêmes, anniversaires, événements professionnels ou simplement pour le plaisir.</p>
-            <p>J'accorde une attention particulière aux décors faits main, la partie la plus créative et joyeuse de mon travail. Toujours à l'écoute, je prends le temps de comprendre vos envies afin de créer des douceurs uniques.</p>
+            <p>La recette est une pâtisserie artisanale,</p>
+            <p>toutes les gourmandises sont faites avec des ingrédients de qualité et avec soin.</p>
+            <p>Je mets à disposition mon savoir-faire et mon sérieux pour répondre à vos attentes.</p>
+            <p>Pour les grandes occasions, comme pour les petites, contactez-moi par téléphone, mail ou Facebook .</p>
         </span>
     </section>
 
@@ -121,7 +122,7 @@
     </section>
 
     <section class="decors card split-content">
-        <h2 class="section-title">Plus de decors .</h2>
+        <h2 class="section-title">Plus de décors .</h2>
         <span>
             <p><strong>Plaque décor fait main :</strong> 10 € (en fonction de la taille du décor).</p>
             <p><strong>Photo en sucre / disque :</strong> 10 €.</p>
@@ -134,7 +135,7 @@
         <p>Découvrez la carte et passez commande en ligne, ou contactez-nous directement pour un projet sur mesure.</p>
         <div class="cta-buttons">
             <a class="cta" href="/articles">Voir la carte</a>
-            <a class="cta outline" href="mailto:larecette60@gmail.com">Nous écrire</a>
+            <a class="cta outline" href="/contact">Nous écrire</a>
         </div>
     </section>
 </div>
