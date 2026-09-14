@@ -136,6 +136,11 @@ aside {
     gap: 1rem;
 }
 .search { gap: 0.7rem; }
+.search label {
+	color: var(--secondary);
+	font-weight: 600;
+	font-size: 0.9rem;
+}
 .cart-item {
     width: 100%;
     padding: 0.5rem;

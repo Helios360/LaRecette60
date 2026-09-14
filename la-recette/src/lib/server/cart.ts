@@ -124,7 +124,7 @@ export async function addItemToCart(
 			UPDATE cart_items
 			SET
 				quantity = quantity + 1,
-				unit_price = (quantity + 1) * (slices * (SELECT price FROM articles WHERE id = article_id))
+				unit_price = quantity * (slices * (SELECT price FROM articles WHERE id = article_id))
 			WHERE id = ?
 			`,
 			[existing.id]
@@ -171,7 +171,7 @@ export async function deleteItemFromCart(
 			UPDATE cart_items
 			SET
 				quantity = quantity - 1,
-				unit_price = (quantity - 1) * (slices * (SELECT price FROM articles WHERE id = article_id))
+				unit_price = quantity * (slices * (SELECT price FROM articles WHERE id = article_id))
 			WHERE id = ?
 			`,
 			[existing.id]
@@ -281,10 +281,10 @@ export async function mergeCartIntoUserCart(sourceCartId: string, targetCartId: 
 				UPDATE cart_items
 				SET
 					quantity = quantity + ?,
-					unit_price = (quantity + ?) * (slices * (SELECT price FROM articles WHERE id = article_id))
+					unit_price = quantity * (slices * (SELECT price FROM articles WHERE id = article_id))
 				WHERE id = ?
 				`,
-				[item.quantity, item.quantity, existing.id]
+				[item.quantity, existing.id]
 			);
 		} else {
 			await db.query(
