@@ -112,7 +112,7 @@ export async function addItemToCart(
 		`
 		SELECT *
 		FROM cart_items
-		WHERE cart_id = ? AND article_id = ? AND slices = ? AND options = CAST(? AS JSON)
+		WHERE cart_id = ? AND article_id = ? AND slices = ? AND options = ?
 		LIMIT 1
 		`,
 		[cart!.id, articleId, slices, optionsStr]
@@ -269,7 +269,7 @@ export async function mergeCartIntoUserCart(sourceCartId: string, targetCartId: 
 			`
 			SELECT *
 			FROM cart_items
-			WHERE cart_id = ? AND article_id = ? AND slices = ? AND options = CAST(? AS JSON)
+			WHERE cart_id = ? AND article_id = ? AND slices = ? AND options = ?
 			LIMIT 1
 			`,
 			[targetCartId, item.article_id, item.slices, JSON.stringify(item.options ?? {})]
